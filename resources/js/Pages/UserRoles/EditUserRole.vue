@@ -14,15 +14,10 @@ temp<template>
                             </a>
                         </li>
                         <li class="mr-2">
-                            <a href="#" class="inline-block p-4 border-b-2 text-black border-opacity border-transparent hover:text-blue hover:border-blue">
-                                2-FA
-                            </a>
-                        </li>
-                        <li class="mr-2">
                             <a 
                             :href="route('users.roles.view.edit', {user: user.data.id})" 
                             class="inline-block p-4 border-b-2 text-blue border-blue">
-                                Role & Permissions
+                                Role &amp; Permissions
                             </a>
                         </li>
                     </ul>
