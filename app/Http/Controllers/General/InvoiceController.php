@@ -28,4 +28,12 @@ class InvoiceController extends Controller
             'invoices' => Invoice::with(['products', 'customers'])->paginate(15)
         ]);
     }
+
+    /**
+     * A page to create new invoice for customers
+     * @return Inertia\Inertia
+     */
+    public function viewCreateInvoice() {
+        return Inertia::render('Invoices/CreateInvoice');
+    }
 }

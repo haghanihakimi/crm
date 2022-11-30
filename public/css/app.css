@@ -1879,6 +1879,10 @@ html,  body,  #app{
   --tw-bg-opacity: 1;
   background-color: rgb(0 89 191 / var(--tw-bg-opacity));
 }
+.bg-pink{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 73 219 / var(--tw-bg-opacity));
+}
 .bg-opacity-25{
   --tw-bg-opacity: 0.25;
 }
