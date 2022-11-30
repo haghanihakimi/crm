@@ -100,6 +100,7 @@ Route::middleware(['auth'])->group(function () {
     //Invoices Page routes
     Route::controller(InvoiceController::class)->group(function () {
         Route::get('/dashboard/invoice/list', 'index')->middleware(['role_or_permission:admin|read invoices'])->name('invoice.list.view');
+        Route::get('/dashboard/invoice/create', 'viewCreateInvoice')->middleware(['role_or_permission:admin|create invoices'])->name('invoice.create.view');
     });
 
     //Countries Route

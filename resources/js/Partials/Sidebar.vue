@@ -41,7 +41,7 @@
                 </HyperlinkBlack>
                 <!-- Sidebar - Roles & Permissions links -->
                 <HyperlinkBlack v-if="$page.props.abilities.isSuper" :href="route('roles.permissions.list')" target="_self">
-                    Roles & Permissions
+                    Roles &amp; Permissions
                 </HyperlinkBlack>
                 <!-- Sidebar - Users links -->
                 <Disclosure v-if="$page.props.abilities.isSuper" v-slot="{ open }">
@@ -164,7 +164,7 @@
                     leave-to-class="transform opacity-0">
                         <DisclosurePanel class="p-0 border-b border-black border-opacity-5">
                             <Hyperlink v-if="$page.props.abilities.canReadInvoices" :value="'View Invoices'" :link="route('invoice.list.view')" />
-                            <Hyperlink v-if="$page.props.abilities.canCreateInvoices" :value="'Add Invoice'" :link="'#'" />
+                            <Hyperlink v-if="$page.props.abilities.canCreateInvoices" :value="'Add Invoice'" :link="route('invoice.create.view')" />
                         </DisclosurePanel>
                     </transition>
                 </Disclosure>
