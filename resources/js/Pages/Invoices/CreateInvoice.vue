@@ -1,9 +1,6 @@
 <template>
     <Layout :title="'Invoices'" :auth="auth">
         <div class="w-full relative m-auto px-4">
-            <div class="w-full max-w-7xl m-auto my-8 overflow-x-auto relative shadow-md rounded border border-black border-opacity-10">
-                
-            </div>
         </div>
     </Layout>
 </template>
@@ -16,12 +13,12 @@
         PencilIcon as Edit,
         ArrowDownTrayIcon as Download,
     } from '@heroicons/vue/24/solid'
+    import Multiselect from '@vueform/multiselect'
+    import "@vueform/multiselect/themes/default.css"
 
 
     const props = defineProps({
         auth: Object,
     });
-
-    const store = useStore()
     
 </script>

@@ -36,4 +36,8 @@ class InvoiceController extends Controller
     public function viewCreateInvoice() {
         return Inertia::render('Invoices/CreateInvoice');
     }
+
+    public function testRequest(Request $request) {
+        dd($request->all());
+    }
 }
