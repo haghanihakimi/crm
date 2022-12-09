@@ -24,6 +24,8 @@
                     type="password" 
                     name="password" 
                     id="password" 
+                    @keydown="capLock($event)"
+                    @click="capLock($event)"
                     autocomplete="false"
                     autofocus="false"
                     v-model="signinForm.password"
@@ -31,6 +33,9 @@
                     <label for="password" class="w-full px-2 capitalize peer-focus:font-medium absolute text-sm text-smooth-black duration-200 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-8">
                         password
                     </label>
+                    <p v-if="data.caps" class="w-full flex flex-row gap-1 text-orange text-sm py-2">
+                        <Warning class="text-orange w-5 h-5"/>Caps Lock is on!
+                    </p>
                 </div>
                 <!-- remember me checkbox -->
                 <div class="select-none flex justify-between items-center">
@@ -74,8 +79,10 @@
 </template>
 <script setup>
     import GeneralLayout from '../../Layouts/GeneralLayout.vue'
-    import { useForm } from '@inertiajs/inertia-vue3';
+    import { useForm } from '@inertiajs/inertia-vue3'
     import {useStore} from 'vuex'
+    import { reactive } from '@vue/reactivity'
+    import { ExclamationTriangleIcon as Warning } from '@heroicons/vue/24/outline'
 
     const props = defineProps({
         auth: Object,
@@ -84,11 +91,19 @@
 
     const store = useStore()
 
+    const data = reactive({
+        caps: false
+    })
+
     const signinForm = useForm({
         email: null,
         password: null,
         remember: true,
     })
+
+    const capLock = event => {
+        data.caps = event.getModifierState && event.getModifierState( 'CapsLock' );
+    }
 
     const signin = () => {
         if (!signinForm.processing) {
