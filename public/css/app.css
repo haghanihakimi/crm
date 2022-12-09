@@ -1292,9 +1292,6 @@ html,  body,  #app{
 .mb-4{
   margin-bottom: 1rem;
 }
-.-mt-px{
-  margin-top: -1px;
-}
 .mb-2{
   margin-bottom: 0.5rem;
 }
@@ -1304,8 +1301,8 @@ html,  body,  #app{
 .mb-8{
   margin-bottom: 2rem;
 }
-.mb-10{
-  margin-bottom: 2.5rem;
+.-mt-px{
+  margin-top: -1px;
 }
 .box-content{
   box-sizing: content-box;
@@ -1387,12 +1384,6 @@ html,  body,  #app{
 .h-\[42px\]{
   height: 42px;
 }
-.h-\[200px\]{
-  height: 200px;
-}
-.h-\[100px\]{
-  height: 100px;
-}
 .max-h-60{
   max-height: 15rem;
 }
@@ -1407,12 +1398,6 @@ html,  body,  #app{
 }
 .min-h-\[120px\]{
   min-height: 120px;
-}
-.min-h-\[300px\]{
-  min-height: 300px;
-}
-.min-h-\[160px\]{
-  min-height: 160px;
 }
 .w-5{
   width: 1.25rem;
@@ -1500,9 +1485,6 @@ html,  body,  #app{
 .min-w-\[250px\]{
   min-width: 250px;
 }
-.min-w-\[100px\]{
-  min-width: 100px;
-}
 .max-w-screen-xl{
   max-width: 1280px;
 }
@@ -1511,9 +1493,6 @@ html,  body,  #app{
 }
 .max-w-xl{
   max-width: 36rem;
-}
-.max-w-6xl{
-  max-width: 72rem;
 }
 .max-w-\[120px\]{
   max-width: 120px;
@@ -1530,8 +1509,8 @@ html,  body,  #app{
 .max-w-sm{
   max-width: 24rem;
 }
-.max-w-lg{
-  max-width: 32rem;
+.max-w-6xl{
+  max-width: 72rem;
 }
 .flex-1{
   flex: 1 1 0%;
@@ -1658,9 +1637,6 @@ html,  body,  #app{
      -moz-user-select: text;
           user-select: text;
 }
-.resize-none{
-  resize: none;
-}
 .resize-y{
   resize: vertical;
 }
@@ -1771,9 +1747,6 @@ html,  body,  #app{
 }
 .whitespace-nowrap{
   white-space: nowrap;
-}
-.break-all{
-  word-break: break-all;
 }
 .rounded-md{
   border-radius: 0.375rem;
@@ -2080,9 +2053,6 @@ html,  body,  #app{
 .pb-1{
   padding-bottom: 0.25rem;
 }
-.pt-8{
-  padding-top: 2rem;
-}
 .pt-\[94px\]{
   padding-top: 94px;
 }
@@ -2103,6 +2073,9 @@ html,  body,  #app{
 }
 .pl-14{
   padding-left: 3.5rem;
+}
+.pt-8{
+  padding-top: 2rem;
 }
 .text-left{
   text-align: left;
@@ -2214,6 +2187,18 @@ html,  body,  #app{
   --tw-text-opacity: 1;
   color: rgb(14 167 133 / var(--tw-text-opacity));
 }
+.text-orange{
+  --tw-text-opacity: 1;
+  color: rgb(255 96 71 / var(--tw-text-opacity));
+}
+.text-yellow{
+  --tw-text-opacity: 1;
+  color: rgb(250 210 38 / var(--tw-text-opacity));
+}
+.text-yellow-gold{
+  --tw-text-opacity: 1;
+  color: rgb(243 180 34 / var(--tw-text-opacity));
+}
 .text-opacity-60{
   --tw-text-opacity: 0.6;
 }
@@ -2281,12 +2266,6 @@ html,  body,  #app{
 .outline-0{
   outline-width: 0px;
 }
-.outline-1{
-  outline-width: 1px;
-}
-.outline-blue{
-  outline-color: #0059bf;
-}
 .ring-1{
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
@@ -2297,18 +2276,9 @@ html,  body,  #app{
   --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(0px + var(--tw-ring-offset-width)) var(--tw-ring-color);
   box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
 }
-.ring-2{
-  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
-  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
-  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
-}
 .ring-black{
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(21 22 48 / var(--tw-ring-opacity));
-}
-.ring-blue{
-  --tw-ring-opacity: 1;
-  --tw-ring-color: rgb(0 89 191 / var(--tw-ring-opacity));
 }
 .ring-opacity-5{
   --tw-ring-opacity: 0.05;
@@ -2427,9 +2397,6 @@ html,  body,  #app{
 .focus\:outline-none:focus{
   outline: 2px solid transparent;
   outline-offset: 2px;
-}
-.focus\:outline-0:focus{
-  outline-width: 0px;
 }
 .focus\:ring:focus{
   --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);

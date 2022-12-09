@@ -1514,6 +1514,7 @@ __webpack_require__.r(__webpack_exports__);
 var map = {
 	"./Auth/Signin.vue": [
 		"./resources/js/Pages/Auth/Signin.vue",
+		"/js/vendor",
 		"resources_js_Pages_Auth_Signin_vue"
 	],
 	"./Auth/Signup.vue": [
