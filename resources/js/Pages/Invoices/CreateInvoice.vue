@@ -1,6 +1,52 @@
 <template>
     <Layout :title="'Invoices'" :auth="auth">
-        <div class="w-full relative m-auto px-4">
+        <div class="w-full relative m-auto p-4">
+            <h1 class="w-full text-black font-semibold tracking-wider text-xl mb-4">
+                Create Invoice
+            </h1>
+            <!-- All fields/inputs container -->
+            <div class="w-full flex flex-row gap-4 mx-auto">
+                <!-- All customer information inputs container -->
+                <div class="w-full mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
+                    <!-- Customer selected input container -->
+                    <div class="w-full max-w-md relative flex flex-col gap-1 select-none">
+                        <label 
+                        class="w-full text-sm font-medium tracking-wider text-black"
+                        for="customer_id">
+                            Customer
+                        </label>
+                        <div class="w-full relative flex flex-row gap-2 items-center">
+                            <Multiselect
+                                placeholder="Search by email or phone number..."
+                                v-model="value"
+                                mode="tags"
+                                :close-on-select="false"
+                                :searchable="true"
+                                :create-option="true"
+                                :options="[
+                                    { value: 'batman', label: 'Batman' },
+                                    { value: 'robin', label: 'Robin' },
+                                    { value: 'joker', label: 'Joker' },
+                                ]"
+                                class="shrink-0 text-sm tracking-wider text-black border border-black border-opacity-10 shadow-sm-spread outline-0"
+                            />
+                            <label class="shrink-0 inline-flex relative items-center cursor-pointer">
+                                <input type="checkbox" value="" class="sr-only peer">
+                                <div class="w-10 h-5 bg-black bg-opacity-10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[1px] after:left-[0px] after:bg-white after:border-black after:border-opacity-10 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue shadow-sm-spread border border-black border-opacity-10"></div>
+                                <span class="ml-2 text-sm font-medium text-black font-semibold tracking-wide">
+                                    Send invoice
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Service/Product information inputs container -->
+                <div class="w-full mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
+                    XIXI
+                </div>
+            </div>
         </div>
     </Layout>
 </template>
