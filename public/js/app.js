@@ -162,10 +162,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vendor_tightenco_ziggy_dist_vue_m__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../vendor/tightenco/ziggy/dist/vue.m */ "./vendor/tightenco/ziggy/dist/vue.m.js");
 /* harmony import */ var vue_toastification__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-toastification */ "./node_modules/vue-toastification/dist/index.mjs");
 /* harmony import */ var vue_toastification_dist_index_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vue-toastification/dist/index.css */ "./node_modules/vue-toastification/dist/index.css");
-/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/lib/framework.mjs");
-/* harmony import */ var vuetify_components__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/components */ "./node_modules/vuetify/lib/components/index.mjs");
-/* harmony import */ var vuetify_directives__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuetify/directives */ "./node_modules/vuetify/lib/directives/index.mjs");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/lib/framework.mjs");
+/* harmony import */ var vuetify_components__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuetify/components */ "./node_modules/vuetify/lib/components/index.mjs");
+/* harmony import */ var vuetify_directives__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vuetify/directives */ "./node_modules/vuetify/lib/directives/index.mjs");
+/* harmony import */ var v_calendar_dist_style_css__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! v-calendar/dist/style.css */ "./node_modules/v-calendar/dist/style.css");
+/* harmony import */ var v_calendar__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! v-calendar */ "./node_modules/v-calendar/dist/v-calendar.es.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 var _window$document$getE;
@@ -184,6 +186,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
  //import 'vuetify/styles'
+
+
 
 
 
@@ -216,9 +220,9 @@ var options = {
     return toast;
   }
 };
-var vuetify = (0,vuetify__WEBPACK_IMPORTED_MODULE_9__.createVuetify)({
-  components: vuetify_components__WEBPACK_IMPORTED_MODULE_10__,
-  directives: vuetify_directives__WEBPACK_IMPORTED_MODULE_11__
+var vuetify = (0,vuetify__WEBPACK_IMPORTED_MODULE_11__.createVuetify)({
+  components: vuetify_components__WEBPACK_IMPORTED_MODULE_12__,
+  directives: vuetify_directives__WEBPACK_IMPORTED_MODULE_13__
 });
 (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_2__.createInertiaApp)({
   title: function title(_title) {
@@ -264,7 +268,7 @@ var vuetify = (0,vuetify__WEBPACK_IMPORTED_MODULE_9__.createVuetify)({
       render: function render() {
         return (0,vue__WEBPACK_IMPORTED_MODULE_1__.h)(app, props);
       }
-    }).use(plugin).use(_vendor_tightenco_ziggy_dist_vue_m__WEBPACK_IMPORTED_MODULE_5__.ZiggyVue, Ziggy).use(vue_toastification__WEBPACK_IMPORTED_MODULE_6__["default"], options).use(vuetify).use(_store__WEBPACK_IMPORTED_MODULE_8__["default"]).component("Head", _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_2__.Head).component("Link", _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_2__.Link).mount(el);
+    }).use(plugin).use(_vendor_tightenco_ziggy_dist_vue_m__WEBPACK_IMPORTED_MODULE_5__.ZiggyVue, Ziggy).use(vue_toastification__WEBPACK_IMPORTED_MODULE_6__["default"], options).use(vuetify).use(v_calendar__WEBPACK_IMPORTED_MODULE_9__["default"], {}).use(_store__WEBPACK_IMPORTED_MODULE_10__["default"]).component("Head", _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_2__.Head).component("Link", _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_2__.Link).mount(el);
   }
 });
 _inertiajs_progress__WEBPACK_IMPORTED_MODULE_3__.InertiaProgress.init({

@@ -10,6 +10,8 @@ import "vue-toastification/dist/index.css";
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import 'v-calendar/dist/style.css';
+import VCalendar from 'v-calendar';
 import store from './store'
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
@@ -60,6 +62,7 @@ createInertiaApp({
             .use(ZiggyVue, Ziggy)
             .use(Toast, options)
             .use(vuetify)
+            .use(VCalendar, {})
             .use(store)
             .component("Head", Head)
             .component("Link", Link)
