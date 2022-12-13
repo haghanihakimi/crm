@@ -1223,6 +1223,14 @@ html,  body,  #app{
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+.my-6{
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.my-2{
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
 .ml-3{
   margin-left: 0.75rem;
 }
@@ -1292,6 +1300,9 @@ html,  body,  #app{
 .mb-4{
   margin-bottom: 1rem;
 }
+.-mt-px{
+  margin-top: -1px;
+}
 .mb-2{
   margin-bottom: 0.5rem;
 }
@@ -1300,9 +1311,6 @@ html,  body,  #app{
 }
 .mb-8{
   margin-bottom: 2rem;
-}
-.-mt-px{
-  margin-top: -1px;
 }
 .box-content{
   box-sizing: content-box;
@@ -1488,15 +1496,6 @@ html,  body,  #app{
 .min-w-\[250px\]{
   min-width: 250px;
 }
-.min-w-\[400px\]{
-  min-width: 400px;
-}
-.min-w-\[150px\]{
-  min-width: 150px;
-}
-.min-w-\[90px\]{
-  min-width: 90px;
-}
 .max-w-screen-xl{
   max-width: 1280px;
 }
@@ -1505,6 +1504,9 @@ html,  body,  #app{
 }
 .max-w-xl{
   max-width: 36rem;
+}
+.max-w-6xl{
+  max-width: 72rem;
 }
 .max-w-\[120px\]{
   max-width: 120px;
@@ -1520,9 +1522,6 @@ html,  body,  #app{
 }
 .max-w-sm{
   max-width: 24rem;
-}
-.max-w-6xl{
-  max-width: 72rem;
 }
 .flex-1{
   flex: 1 1 0%;
@@ -1683,9 +1682,6 @@ html,  body,  #app{
 }
 .items-center{
   align-items: center;
-}
-.justify-start{
-  justify-content: flex-start;
 }
 .justify-end{
   justify-content: flex-end;
@@ -2068,6 +2064,9 @@ html,  body,  #app{
 .pb-1{
   padding-bottom: 0.25rem;
 }
+.pt-8{
+  padding-top: 2rem;
+}
 .pt-\[94px\]{
   padding-top: 94px;
 }
@@ -2088,9 +2087,6 @@ html,  body,  #app{
 }
 .pl-14{
   padding-left: 3.5rem;
-}
-.pt-8{
-  padding-top: 2rem;
 }
 .text-left{
   text-align: left;
