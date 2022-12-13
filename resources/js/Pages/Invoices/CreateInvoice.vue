@@ -11,11 +11,11 @@
                     <!-- Customer selected input container -->
                     <div class="w-full max-w-md relative flex flex-col gap-1 select-none">
                         <label 
-                        class="w-full text-sm font-medium tracking-wider text-black"
+                        class="w-full text-sm font-semibold tracking-wider text-black"
                         for="customer_id">
                             Customer
                         </label>
-                        <div class="w-full relative flex flex-row gap-2 items-center">
+                        <div class="w-full relative flex flex-col gap-2 items-start justify-center">
                             <Multiselect
                                 placeholder="Search by email or phone number..."
                                 v-model="value"
@@ -39,7 +39,7 @@
                     <div class="w-full flex flex-row gap-4 relative">
                         <!-- Invoice date -->
                         <div class="w-full flex flex-col gap-1">
-                            <label for="invoice_date" class="w-full text-sm text-black font-medium tracking-wider">
+                            <label for="invoice_date" class="w-full text-sm text-black font-semibold tracking-wider">
                                 Invoice Date
                             </label>
                             <v-date-picker v-model="invoiceForm.invoiceDate" mode="date">
@@ -54,7 +54,7 @@
                         </div>
                         <!-- Invoice due date -->
                         <div class="w-full flex flex-col gap-1">
-                            <label for="invoice_date" class="w-full text-sm text-black font-medium tracking-wider">
+                            <label for="invoice_date" class="w-full text-sm text-black font-semibold tracking-wider">
                                 Invoice Due Date
                             </label>
                             <v-date-picker v-model="invoiceForm.dueDate" mode="date">
@@ -66,6 +66,100 @@
                                     />
                                 </template>
                             </v-date-picker>
+                        </div>
+                    </div>
+                    <!-- Shipping address fields container -->
+                    <div class="w-full flex flex-col gap-4 relative mt-4">
+                        <h3 class="w-full text-base font-semibold tracking-wider text-black">
+                            Shipping Address
+                        </h3>
+                        <!-- Country & state fields container -->
+                        <div class="w-full flex flex-row gap-4 flex-wrap">
+                            <div class="w-full flex flex-col gap-2 min-w-[200px] flex-1">
+                                <label for="shipping_country" class="w-full text-sm font-semibold tracking-wider text-black">
+                                    Country
+                                </label>
+                                <select 
+                                class="w-full min-h-[40px] relative rounded border border-black border-opacity-10 shadow-sm-spread cursor-pointer transition duration-200 focus:ring-1 focus:ring-blue"
+                                name="shipping_country" 
+                                id="shipping_country" 
+                                v-model="invoiceForm.shippingCountry">
+                                    <option value="australia">Australia</option>
+                                    <option value="australia">Austria</option>
+                                </select>
+                            </div>
+                            <div class="w-full flex flex-col gap-2 min-w-[200px] flex-1">
+                                <label for="shipping_state" 
+                                class="w-full text-sm font-semibold tracking-wider text-black">
+                                    State
+                                </label>
+                                <input 
+                                    class="w-full min-h-[40px] relative rounded border border-black border-opacity-10 shadow-sm-spread transition duration-200 focus:ring-1 focus:ring-blue"
+                                    name="shipping_state" 
+                                    id="shipping_state"
+                                    type="text"
+                                    placeholder="Type your current state"
+                                    v-model="invoiceForm.shippingState"
+                                />
+                            </div>
+                        </div>
+                        <!-- House address & suburb container -->
+                        <div class="w-full flex flex-row gap-4 flex-wrap">
+                            <div class="w-full flex flex-col gap-2 min-w-[200px] flex-1">
+                                <label for="shipping_house_address" class="w-full text-sm font-semibold tracking-wider text-black">
+                                    House Address
+                                </label>
+                                <input
+                                    class="w-full min-h-[40px] relative rounded border border-black border-opacity-10 shadow-sm-spread transition duration-200 focus:ring-1 focus:ring-blue"
+                                    name="shipping_house_address" 
+                                    id="shipping_house_address"
+                                    type="text"
+                                    placeholder="e.g Building 2, example street"
+                                    v-model="invoiceForm.shippingHouseAddress"
+                                />
+                            </div>
+                            <div class="w-full flex flex-col gap-2 min-w-[200px] flex-1">
+                                <label for="shipping_suburb" class="w-full text-sm font-semibold tracking-wider text-black">
+                                    City/Suburb
+                                </label>
+                                <input
+                                    class="w-full min-h-[40px] relative rounded border border-black border-opacity-10 shadow-sm-spread transition duration-200 focus:ring-1 focus:ring-blue"
+                                    name="shipping_suburb" 
+                                    id="shipping_suburb"
+                                    type="text"
+                                    placeholder="Your current city or suburb"
+                                    v-model="invoiceForm.shippingSuburb"
+                                />
+                            </div>
+                        </div>
+                        <!-- Suburb & pincode container -->
+                        <div class="w-full flex flex-row gap-4 flex-wrap">
+                            <div class="w-full flex flex-col gap-2 min-w-[200px] flex-1">
+                                <label for="shipping_house_address" class="w-full text-sm font-semibold tracking-wider text-black">
+                                    House Address
+                                </label>
+                                <input
+                                    class="w-full min-h-[40px] relative rounded border border-black border-opacity-10 shadow-sm-spread transition duration-200 focus:ring-1 focus:ring-blue"
+                                    name="shipping_house_address" 
+                                    id="shipping_house_address"
+                                    type="text"
+                                    placeholder="e.g Building 2, example street"
+                                    v-model="invoiceForm.shippingHouseAddress"
+                                />
+                            </div>
+                            <div class="w-full flex flex-col gap-2 min-w-[200px] flex-1">
+                                <label for="shipping_suburb" class="w-full text-sm font-semibold tracking-wider text-black">
+                                    City/Suburb
+                                </label>
+                                <input
+                                    class="w-full min-h-[40px] relative rounded border border-black border-opacity-10 shadow-sm-spread transition duration-200 focus:ring-1 focus:ring-blue"
+                                    name="shipping_suburb" 
+                                    id="shipping_suburb"
+                                    type="text"
+                                    placeholder="Your current city or suburb"
+                                    v-model="invoiceForm.shippingSuburb"
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -105,6 +199,10 @@
         sendMail: true,
         invoiceDate: new Date(),
         dueDate: new Date(),
+        shippingCountry: null,
+        shippingState: null,
+        shippingHouseAddress: null,
+        shippingSuburb: null,
     })
     
 </script>
