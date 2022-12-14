@@ -37,7 +37,7 @@ var _hoisted_3 = {
   "class": "w-full flex flex-row flex-wrap gap-4 mx-auto"
 };
 var _hoisted_4 = {
-  "class": "w-full min-w-[700px] flex-1 flex flex-col gap-6 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread"
+  "class": "w-full lg:max-w-full xl:max-w-full xxl:max-w-sm min-w-[700px] flex-1 flex flex-col gap-6 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread"
 };
 var _hoisted_5 = {
   "class": "w-full max-w-md relative flex flex-col gap-1 select-none"
@@ -269,6 +269,9 @@ var _hoisted_48 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 }, " GST "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   scope: "col",
   "class": "py-3 px-6 text-center border-r border-black border-opacity-5"
+}, " Total "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
+  scope: "col",
+  "class": "py-3 px-6 text-center border-r border-black border-opacity-5"
 }, " Date "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", {
   scope: "col",
   "class": "w-[70px] py-3 px-6 text-center"
@@ -297,26 +300,30 @@ var _hoisted_54 = {
 var _hoisted_55 = ["onUpdate:modelValue"];
 var _hoisted_56 = {
   scope: "row",
-  "class": "max-w-[100px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0"
+  "class": "max-w-[100px] text-black text-center border-r border-black border-opacity-5 last:border-0"
 };
 var _hoisted_57 = ["onUpdate:modelValue"];
 var _hoisted_58 = {
   scope: "row",
+  "class": "max-w-[100px] font-medium text-md py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0"
+};
+var _hoisted_59 = {
+  scope: "row",
   "class": "max-w-[140px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0"
 };
-var _hoisted_59 = ["value"];
-var _hoisted_60 = {
+var _hoisted_60 = ["value"];
+var _hoisted_61 = {
   "class": "w-full flex items-center justify-center text-center flex-wrap space-x-2"
 };
-var _hoisted_61 = ["onClick"];
+var _hoisted_62 = ["onClick"];
 
-var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" More Services ");
+var _hoisted_63 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" More Services ");
 
-var _hoisted_63 = {
+var _hoisted_64 = {
   "class": "w-full relative flex flex-col gap-2 py-2"
 };
 
-var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Subtotal:  ", -1
+var _hoisted_65 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("strong", null, "Subtotal:  ", -1
 /* HOISTED */
 );
 
@@ -527,7 +534,9 @@ function render(_ctx, _cache) {
           "class": "w-full min-w-[90px] no-arrow rounded border border-black border-opacity-10 transition duration-250 focus:ring-1 focus:ring-blue"
         }, null, 8
         /* PROPS */
-        , _hoisted_57), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, input.gst]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_date_picker, {
+        , _hoisted_57), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, input.gst]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_58, " $" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)((input.gst > 0 ? input.price * input.quantity / input.gst + input.price * input.quantity : input.price * input.quantity).toFixed(2)), 1
+        /* TEXT */
+        ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_59, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_v_date_picker, {
           modelValue: input.date,
           "onUpdate:modelValue": function onUpdateModelValue($event) {
             return input.date = $event;
@@ -542,25 +551,25 @@ function render(_ctx, _cache) {
               value: inputValue
             }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toHandlers)(inputEvents)), null, 16
             /* FULL_PROPS */
-            , _hoisted_59)];
+            , _hoisted_60)];
           }),
           _: 2
           /* DYNAMIC */
 
         }, 1032
         /* PROPS, DYNAMIC_SLOTS */
-        , ["modelValue", "onUpdate:modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        , ["modelValue", "onUpdate:modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
           onClick: function onClick($event) {
             return _ctx.removeRows(i);
           },
           type: "button",
           role: "button",
-          "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([i + 1 > 1 ? 'opacity-100' : 'opacity-50', 'w-full h-16 flex items-center justify-center p-0 m-0'])
+          "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)([_ctx.invoiceForm.inputs.length > 1 ? 'opacity-100' : 'opacity-50', 'w-full h-16 flex items-center justify-center p-0 m-0'])
         }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Remove, {
           "class": "w-6 h-6 text-red"
         })], 10
         /* CLASS, PROPS */
-        , _hoisted_61)])]);
+        , _hoisted_62)])]);
       }), 128
       /* KEYED_FRAGMENT */
       ))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
@@ -572,7 +581,7 @@ function render(_ctx, _cache) {
         "class": "w-fit min-h[45px] mr-0 text-sm text-white tracking-wider font-medium flex flex-row gap-1 items-center justify-center p-2 rounded bg-warm-blue transition duration-250 hover:bg-blue"
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_More, {
         "class": "w-5 h-5 text-white"
-      }), _hoisted_62])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Total calculation and details container "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, [_hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" $" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.subTotalCalculator), 1
+      }), _hoisted_63])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Total calculation and details container "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, [_hoisted_65, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" $" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.subTotalCalculator), 1
       /* TEXT */
       )])])])])])];
     }),
