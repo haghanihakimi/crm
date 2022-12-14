@@ -5,9 +5,9 @@
                 Create Invoice
             </h1>
             <!-- All fields/inputs container -->
-            <div class="w-full flex flex-row gap-4 mx-auto">
+            <div class="w-full flex flex-row flex-wrap gap-4 mx-auto">
                 <!-- All customer information inputs container -->
-                <div class="w-full flex flex-col gap-6 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
+                <div class="w-full min-w-[700px] flex-1 flex flex-col gap-6 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
                     <!-- Customer selected input container -->
                     <div class="w-full max-w-md relative flex flex-col gap-1 select-none">
                         <label 
@@ -192,8 +192,128 @@
                 </div>
 
                 <!-- Service/Product information inputs container -->
-                <div class="w-full mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
-                    XIXI
+                <div class="w-full min-w-[700px] flex-1 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
+                    <!-- list of products and items container -->
+                    <div class="w-full relative flex flex-col">
+                        <h2 class="w-full mb-6 font-semibold relative text-base text-black tracking-wider">
+                            Products &amp; Services
+                        </h2>
+                    </div>
+
+                    <!-- Invoice Number field container -->
+                    <div class="w-full relative flex flex-col gap-2">
+                        <label for="invoice_number"
+                        class="w-full text-sm text-black tracking-wider">
+                            Invoice Number
+                        </label>
+                        <input type="number"
+                        id="invoice_number"
+                        placeholder="Numbers only"
+                        class="w-full relative no-arrow transition duration-250 focus:ring-1 focus:ring-blue rounded border border-black border-opacity-10 shadow-sm-spread">
+                    </div>
+                    
+                    <!-- Row of items and products on invoice -->
+                    <div class="w-full relative flex flex-col gap-6 select-none border-b border-black border-opacity-10 py-4">
+                        <table class="w-full text-sm text-left text-black">
+                            <thead class="text-sm text-black uppercase bg-black bg-opacity-10 rounded">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6 text-center border-r border-black border-opacity-5">
+                                        #
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-center border-r border-black border-opacity-5">
+                                        Service
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-center border-r border-black border-opacity-5">
+                                        Quantity
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-center border-r border-black border-opacity-5">
+                                        Price
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-center border-r border-black border-opacity-5">
+                                        GST
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-center border-r border-black border-opacity-5">
+                                        Total
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-center border-r border-black border-opacity-5">
+                                        Date
+                                    </th>
+                                    <th 
+                                    scope="col" 
+                                    class="w-[70px] py-3 px-6 text-center">
+                                        Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr 
+                                v-for="(input, i) in invoiceForm.inputs"
+                                :key="i"
+                                class="bg-white border-b border-black border-opacity-5 last:border-0 transition duration-150 hover:bg-black hover:bg-opacity-[0.015]">
+                                    <td scope="row" class="py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
+                                        {{i + 1 < 10 ? `0${i + 1}` : i + 1}}
+                                    </td>
+                                    <td scope="row" class="py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
+                                        <input type="text"
+                                        v-model="input.service"
+                                        class="w-full rounded border border-black border-opacity-10 transition duration-250 focus:ring-1 focus:ring-blue">
+                                    </td>
+                                    <td scope="row" class="max-w-[100px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
+                                        <input type="number"
+                                        v-model="input.quantity"
+                                        class="w-full no-arrow rounded border border-black border-opacity-10 transition duration-250 focus:ring-1 focus:ring-blue">
+                                    </td>
+                                    <td scope="row" class="max-w-[100px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
+                                        <input type="number"
+                                        v-model="input.price"
+                                        class="w-full no-arrow rounded border border-black border-opacity-10 transition duration-250 focus:ring-1 focus:ring-blue">
+                                    </td>
+                                    <td scope="row" class="max-w-[100px] text-black text-center border-r border-black border-opacity-5 last:border-0">
+                                        <input type="number"
+                                        v-model="input.gst"
+                                        class="w-full min-w-[90px] no-arrow rounded border border-black border-opacity-10 transition duration-250 focus:ring-1 focus:ring-blue">
+                                    </td>
+                                    <td scope="row" class="max-w-[100px] font-medium text-md py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
+                                        ${{ (input.gst > 0 ? (input.price * input.quantity) / input.gst + (input.price * input.quantity) : (input.price * input.quantity)).toFixed(2) }}
+                                    </td>
+                                    <td scope="row" class="max-w-[140px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
+                                        <v-date-picker v-model="input.date" mode="date">
+                                            <template v-slot="{ inputValue, inputEvents }">
+                                                <input
+                                                    class="w-full min-h-[40px] px-2 border border-black border-opacity-10 shadow-sm-spread rounded transition duration-200 outline-0 focus:ring-2 focus:ring-blue"
+                                                    :value="inputValue"
+                                                    v-on="inputEvents"
+                                                />
+                                            </template>
+                                        </v-date-picker>
+                                    </td>
+                                    <td class="w-full flex items-center justify-center text-center flex-wrap space-x-2">
+                                        <button 
+                                        @click="removeRows(i)"
+                                        type="button" role="button"
+                                        :class="[(i + 1) > 1 ? 'opacity-100' : 'opacity-50', 'w-full h-16 flex items-center justify-center p-0 m-0']">
+                                            <Remove class="w-6 h-6 text-red" />
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <button 
+                        @click="moreRows"
+                        type="button" role="button"
+                        class="w-fit min-h[45px] mr-0 text-sm text-white tracking-wider font-medium flex flex-row gap-1 items-center justify-center p-2 rounded bg-warm-blue transition duration-250 hover:bg-blue">
+                            <More class="w-5 h-5 text-white" />
+                            More Services
+                        </button>
+                    </div>
+
+                    <!-- Total calculation and details container -->
+                    <div class="w-full relative flex flex-col gap-2 py-2">
+                        <span>
+                            <strong>Subtotal:&nbsp;&nbsp;</strong>
+                            ${{ subTotalCalculator }}
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -207,21 +327,34 @@
     import {
         PencilIcon as Edit,
         ArrowDownTrayIcon as Download,
+        ArchiveBoxXMarkIcon as Remove,
+        PlusIcon as More
     } from '@heroicons/vue/24/solid'
     import Multiselect from '@vueform/multiselect'
     import "@vueform/multiselect/themes/default.css"
     import { useForm } from '@inertiajs/inertia-vue3'
+import { computed } from '@vue/runtime-core'
 
 
     const props = defineProps({
         auth: Object,
     });
 
+    const subTotalCalculator = computed(() => {
+        let x = []
+        for (let total of invoiceForm.inputs) {
+            x.push((total.gst > 0 ? (total.price * total.quantity) / total.gst + (total.price * total.quantity) : (total.price * total.quantity)).toFixed(2))
+        }
+        return x
+        //return parseInt(invoiceForm.inputs.map(input => input.price * input.quantity)) + parseInt(invoiceForm.inputs.map(input => input.price * input.quantity))
+    })
+
     const invoiceForm = useForm({
         customers: [
             { value: 'batman', label: 'Batman' },
             { value: 'robin', label: 'Robin' },
             { value: 'joker', label: 'Joker' },
+            { value: 'spiderman', label: 'Spider Man' },
         ],
         sendMail: true,
         invoiceDate: new Date(),
@@ -233,6 +366,27 @@
         shippingHouseAddress: null,
         shippingSuburb: null,
         shippingPostcode: null,
+        inputs: [{
+            service: null,
+            quantity: 0,
+            price: 0,
+            gst: 0,
+            date: new Date(),
+        }]
     })
     
+    const moreRows = () => {
+        invoiceForm.inputs.push({
+            service: null,
+            quantity: 0,
+            price: 0,
+            gst: 0,
+            date: new Date(),
+        })
+    }
+    const removeRows = i => {
+        if((i + 1) > 1) {
+            invoiceForm.inputs.splice(i, 1)
+        }
+    }
 </script>
