@@ -1223,10 +1223,6 @@ html,  body,  #app{
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
-.my-6{
-  margin-top: 1.5rem;
-  margin-bottom: 1.5rem;
-}
 .my-2{
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
@@ -1312,6 +1308,9 @@ html,  body,  #app{
 .mb-8{
   margin-bottom: 2rem;
 }
+.mr-0{
+  margin-right: 0px;
+}
 .box-content{
   box-sizing: content-box;
 }
@@ -1391,6 +1390,9 @@ html,  body,  #app{
 }
 .h-\[42px\]{
   height: 42px;
+}
+.h-14{
+  height: 3.5rem;
 }
 .max-h-60{
   max-height: 15rem;
@@ -1472,6 +1474,15 @@ html,  body,  #app{
 .w-\[48px\]{
   width: 48px;
 }
+.w-\[90px\]{
+  width: 90px;
+}
+.w-\[70px\]{
+  width: 70px;
+}
+.w-\[100px\]{
+  width: 100px;
+}
 .min-w-0{
   min-width: 0px;
 }
@@ -1495,6 +1506,27 @@ html,  body,  #app{
 }
 .min-w-\[250px\]{
   min-width: 250px;
+}
+.min-w-\[150px\]{
+  min-width: 150px;
+}
+.min-w-\[90px\]{
+  min-width: 90px;
+}
+.min-w-\[400px\]{
+  min-width: 400px;
+}
+.min-w-\[700px\]{
+  min-width: 700px;
+}
+.min-w-\[500px\]{
+  min-width: 500px;
+}
+.min-w-\[600px\]{
+  min-width: 600px;
+}
+.min-w-\[650px\]{
+  min-width: 650px;
 }
 .max-w-screen-xl{
   max-width: 1280px;
@@ -1522,6 +1554,24 @@ html,  body,  #app{
 }
 .max-w-sm{
   max-width: 24rem;
+}
+.max-w-\[150px\]{
+  max-width: 150px;
+}
+.max-w-\[90px\]{
+  max-width: 90px;
+}
+.max-w-\[180px\]{
+  max-width: 180px;
+}
+.max-w-\[140px\]{
+  max-width: 140px;
+}
+.max-w-\[100px\]{
+  max-width: 100px;
+}
+.max-w-\[50px\]{
+  max-width: 50px;
 }
 .flex-1{
   flex: 1 1 0%;
@@ -1886,6 +1936,10 @@ html,  body,  #app{
 .bg-blue{
   --tw-bg-opacity: 1;
   background-color: rgb(0 89 191 / var(--tw-bg-opacity));
+}
+.bg-pink{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 73 219 / var(--tw-bg-opacity));
 }
 .bg-opacity-25{
   --tw-bg-opacity: 0.25;
@@ -2414,6 +2468,10 @@ html,  body,  #app{
   --tw-bg-opacity: 1;
   background-color: rgb(227 52 47 / var(--tw-bg-opacity));
 }
+.hover\:bg-warm-blue:hover{
+  --tw-bg-opacity: 1;
+  background-color: rgb(16 122 216 / var(--tw-bg-opacity));
+}
 .hover\:bg-opacity-\[0\.015\]:hover{
   --tw-bg-opacity: 0.015;
 }
@@ -2588,6 +2646,9 @@ html,  body,  #app{
 .peer:focus ~ .peer-focus\:outline-none{
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+.peer:disabled ~ .peer-disabled\:text-opacity-50{
+  --tw-text-opacity: 0.5;
 }
 @media (min-width: 640px){
   .sm\:col-span-4{
