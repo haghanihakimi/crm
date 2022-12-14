@@ -7,7 +7,7 @@
             <!-- All fields/inputs container -->
             <div class="w-full flex flex-row flex-wrap gap-4 mx-auto">
                 <!-- All customer information inputs container -->
-                <div class="w-full min-w-[700px] flex-1 flex flex-col gap-6 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
+                <div class="w-full lg:max-w-full xl:max-w-full xxl:max-w-sm min-w-[700px] flex-1 flex flex-col gap-6 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
                     <!-- Customer selected input container -->
                     <div class="w-full max-w-md relative flex flex-col gap-1 select-none">
                         <label 
@@ -245,13 +245,13 @@
                                     </th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="border border-black border-opacity-10">
                                 <tr 
                                 v-for="(input, i) in invoiceForm.inputs"
                                 :key="i"
                                 class="bg-white border-b border-black border-opacity-5 last:border-0 transition duration-150 hover:bg-black hover:bg-opacity-[0.015]">
                                     <td scope="row" class="py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
-                                        {{i + 1 < 10 ? `0${i + 1}` : i + 1}}
+                                        {{i + 1}}
                                     </td>
                                     <td scope="row" class="py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
                                         <input type="text"
@@ -263,15 +263,15 @@
                                         v-model="input.quantity"
                                         class="w-full no-arrow rounded border border-black border-opacity-10 transition duration-250 focus:ring-1 focus:ring-blue">
                                     </td>
-                                    <td scope="row" class="max-w-[100px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
+                                    <td scope="row" class="max-w-[120px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
                                         <input type="number"
                                         v-model="input.price"
                                         class="w-full no-arrow rounded border border-black border-opacity-10 transition duration-250 focus:ring-1 focus:ring-blue">
                                     </td>
-                                    <td scope="row" class="max-w-[100px] text-black text-center border-r border-black border-opacity-5 last:border-0">
+                                    <td scope="row" class="max-w-[100px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
                                         <input type="number"
                                         v-model="input.gst"
-                                        class="w-full min-w-[90px] no-arrow rounded border border-black border-opacity-10 transition duration-250 focus:ring-1 focus:ring-blue">
+                                        class="w-full no-arrow rounded border border-black border-opacity-10 transition duration-250 focus:ring-1 focus:ring-blue">
                                     </td>
                                     <td scope="row" class="max-w-[100px] font-medium text-md py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
                                         ${{ (input.gst > 0 ? (input.price * input.quantity) / input.gst + (input.price * input.quantity) : (input.price * input.quantity)).toFixed(2) }}
@@ -291,7 +291,7 @@
                                         <button 
                                         @click="removeRows(i)"
                                         type="button" role="button"
-                                        :class="[(i + 1) > 1 ? 'opacity-100' : 'opacity-50', 'w-full h-16 flex items-center justify-center p-0 m-0']">
+                                        :class="[invoiceForm.inputs.length > 1 ? 'opacity-100' : 'opacity-50', 'w-full h-16 flex items-center justify-center p-0 m-0']">
                                             <Remove class="w-6 h-6 text-red" />
                                         </button>
                                     </td>
@@ -333,7 +333,7 @@
     import Multiselect from '@vueform/multiselect'
     import "@vueform/multiselect/themes/default.css"
     import { useForm } from '@inertiajs/inertia-vue3'
-import { computed } from '@vue/runtime-core'
+    import { computed } from '@vue/runtime-core'
 
 
     const props = defineProps({
@@ -341,12 +341,16 @@ import { computed } from '@vue/runtime-core'
     });
 
     const subTotalCalculator = computed(() => {
-        let x = []
-        for (let total of invoiceForm.inputs) {
-            x.push((total.gst > 0 ? (total.price * total.quantity) / total.gst + (total.price * total.quantity) : (total.price * total.quantity)).toFixed(2))
+        if (invoiceForm.inputs.length > 1) {
+            let subtotal = []
+
+            for (let total of invoiceForm.inputs) {
+                subtotal.push((total.gst > 0 ? parseFloat((total.price * total.quantity) / total.gst + (total.price * total.quantity)) : parseInt((total.price * total.quantity)).toFixed(2)))
+            }
+            return (subtotal.map(parseFloat).reduce((partialSum, a) => partialSum + a, 0)).toFixed(2)
+        } else {
+            return invoiceForm.inputs.map(input => input.gst > 0 ? ((input.price * input.quantity) / input.gst + (input.price * input.quantity)).toFixed(2) : (input.price * input.quantity).toFixed(2) )[0]
         }
-        return x
-        //return parseInt(invoiceForm.inputs.map(input => input.price * input.quantity)) + parseInt(invoiceForm.inputs.map(input => input.price * input.quantity))
     })
 
     const invoiceForm = useForm({
@@ -385,7 +389,7 @@ import { computed } from '@vue/runtime-core'
         })
     }
     const removeRows = i => {
-        if((i + 1) > 1) {
+        if(invoiceForm.inputs.length > 1) {
             invoiceForm.inputs.splice(i, 1)
         }
     }
