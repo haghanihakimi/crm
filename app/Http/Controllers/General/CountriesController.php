@@ -15,7 +15,7 @@ use Inertia\Inertia;
 
 class CountriesController extends Controller
 {
-    protected function getCountries () {
+    public static function getCountries () {
         $countries = Country::select('id', 'name')->orderBy('name', 'ASC')->get();
 
         return response()->json(['countries' => $countries]);

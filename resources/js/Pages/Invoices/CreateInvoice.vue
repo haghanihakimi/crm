@@ -123,9 +123,11 @@
                                 class="w-full min-h-[40px] relative rounded border border-black border-opacity-10 shadow-sm-spread cursor-pointer transition duration-200 focus:ring-1 focus:ring-blue"
                                 name="shipping_country" 
                                 id="shipping_country" 
-                                v-model="invoiceForm.shippingCountry">
-                                    <option value="australia">Australia</option>
-                                    <option value="australia">Austria</option>
+                                v-model="invoiceForm.shippingCountry"
+                                @click="loadCountries">
+                                    <option v-for="(country, i) in store.getters.countries.countries" 
+                                    :key="i"
+                                    :value="country.id">{{country.name}}</option>
                                 </select>
                             </div>
                             <div class="w-full flex flex-col gap-2 min-w-[200px] flex-1">
@@ -338,7 +340,10 @@
 
     const props = defineProps({
         auth: Object,
+        countries: Object,
     });
+
+    const store = useStore()
 
     const subTotalCalculator = computed(() => {
         if (invoiceForm.inputs.length > 1) {
@@ -365,7 +370,7 @@
         dueDate: new Date(),
         shippingDate: new Date(),
         trackingNumber: null,
-        shippingCountry: null,
+        shippingCountry: 1,
         shippingState: null,
         shippingHouseAddress: null,
         shippingSuburb: null,
@@ -392,5 +397,13 @@
         if(invoiceForm.inputs.length > 1) {
             invoiceForm.inputs.splice(i, 1)
         }
+    }
+
+    const loadCountries = () => {
+        if (store.getters.countries.length <= 0) {
+            store.dispatch('fetchCountries')
+            return true
+        }
+        return false
     }
 </script>

@@ -1501,9 +1501,6 @@ html,  body,  #app{
 .min-w-\[700px\]{
   min-width: 700px;
 }
-.min-w-\[90px\]{
-  min-width: 90px;
-}
 .max-w-screen-xl{
   max-width: 1280px;
 }
@@ -2790,17 +2787,11 @@ html,  body,  #app{
   }
 }
 @media (min-width: 1280px){
-  .xl\:max-w-sm{
-    max-width: 24rem;
-  }
   .xl\:max-w-full{
     max-width: 100%;
   }
 }
 @media (min-width: 1440px){
-  .xxl\:max-w-full{
-    max-width: 100%;
-  }
   .xxl\:max-w-sm{
     max-width: 24rem;
   }

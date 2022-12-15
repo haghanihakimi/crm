@@ -8,8 +8,11 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Cache;
 use App\Models\Invoice;
+use App\Http\Controllers\General\CountriesController as Countries;
 use Inertia\Inertia;
+use Carbon\Carbon;
 
 class InvoiceController extends Controller
 {
@@ -34,7 +37,11 @@ class InvoiceController extends Controller
      * @return Inertia\Inertia
      */
     public function viewCreateInvoice() {
-        return Inertia::render('Invoices/CreateInvoice');
+        Cache::add('countries', Countries::getCountries(), now()->addDays(5));
+        $countries = Cache::get('countries');
+        return Inertia::render('Invoices/CreateInvoice', [
+            'countries' => $countries,
+        ]);
     }
 
     public function testRequest(Request $request) {
