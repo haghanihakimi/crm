@@ -113,6 +113,24 @@ class CustomersController extends Controller
     }
 
     /**
+     * Search through customers
+     * @return response|json
+     */
+    public function searchCustomers (Request $request) {
+        $request->validate([
+            'keywords' => ['required', 'string', 'min:1']
+        ]);
+
+        $customers = Customer::search($request->input('keywords'))
+        ->select('id', 'first_name', 'surname', 'email', 'phone')
+        ->limit(10)
+        ->orderBy('first_name', 'ASC')
+        ->get();
+
+        return response()->json($customers);
+    }
+
+    /**
      * Fetches and returns list of all customers
      * @return response
      */

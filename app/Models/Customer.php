@@ -42,7 +42,9 @@ class Customer extends Model
     }
 
     public function scopeSearch ($query, $input) {
-        return $query->where('phone', 'LIKE', '%' .$input. '%')
+        return $query->where('first_name', 'LIKE', '%' .$input. '%')
+        ->orWhere('surname', 'LIKE', '%' .$input. '%')
+        ->orWhere('phone', 'LIKE', '%' .$input. '%')
         ->orWhere('email', 'LIKE', '%'.$input.'%');
     }
 

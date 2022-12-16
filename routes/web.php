@@ -71,6 +71,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard/customers/new', 'viewNewCustomer')->middleware(['role_or_permission:admin|create customers'])->name('customers.new.view');
         // Edit selected customer - view page - ADMIN ONLY ACCESS!
         Route::get('/dashboard/customer/edit/{customer}', 'editCustomerView')->middleware(['role_or_permission:admin|edit customers'])->whereNumber('customer')->name('customers.edit.view');
+        // Search for customers on "Create new Invoice page"
+        Route::get('/list/customers/search', 'searchCustomers')->middleware(['role_or_permission:admin|edit customers'])->name('customers.edit.view');
         // Add new customer to list - post action - ADMIN ONLY ACCESS!
         Route::post('/dashboard/add/customer', 'newCustomer')->middleware(['role_or_permission:admin|create customers'])->name('customers.new');
         // Edit selected customer - post action - ADMIN ONLY ACCESS!
@@ -102,7 +104,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard/invoice/list', 'index')->middleware(['role_or_permission:admin|read invoices'])->name('invoice.list.view');
         Route::get('/dashboard/invoice/create', 'viewCreateInvoice')->middleware(['role_or_permission:admin|create invoices'])->name('invoice.create.view');
     
-        Route::post('/dashboard/test/request', 'testRequest')->name('test.request');
+        Route::post('/dashboard/invoice/create', 'createInvoice')->middleware(['role_or_permission:admin|create invoices'])->name('invoice.create');
     });
 
     //Countries Route

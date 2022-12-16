@@ -37,14 +37,13 @@ class InvoiceController extends Controller
      * @return Inertia\Inertia
      */
     public function viewCreateInvoice() {
-        Cache::add('countries', Countries::getCountries(), now()->addDays(5));
-        $countries = Cache::get('countries');
+        Cache::add('countries', Countries::getCountries());
         return Inertia::render('Invoices/CreateInvoice', [
-            'countries' => $countries,
+            'countries' => Cache::get('countries'),
         ]);
     }
 
-    public function testRequest(Request $request) {
+    public function createInvoice(Request $request) {
         dd($request->all());
     }
 }
