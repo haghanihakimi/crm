@@ -151,4 +151,21 @@ class ProductsController extends Controller
         }
         return back()->with('message', ['product_create_failed' => "Creating new product failed. Please try again later."]);
     }
+
+    /**
+     * A function to search through all products on Create New Invoice page.
+     */
+    public function searchProducts(Request $request){
+        $request->validate([
+            'keywords' => ['required', 'string', 'min:1']
+        ]);
+
+        $products = Product::search($request->input('keywords'))
+        ->select('id', 'name', 'sku')
+        ->limit(10)
+        ->orderBy('id', 'ASC')
+        ->get();
+
+        return response()->json($products);
+    }
 }

@@ -95,6 +95,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/dashboard/products/list/view', 'index')->middleware(['role_or_permission:admin|read products'])->name('product.view.list');
         Route::get('/dashboard/product/view/edit/{product}', 'viewProductEdit')->whereNumber('product')->middleware(['role_or_permission:admin|edit products'])->name('products.view.edit');
         Route::get('/dashboard/product/view/create', 'viewCreateProduct')->middleware(['role_or_permission:admin|create products'])->name('product.create.view');
+        Route::get('/list/products/search', 'searchProducts')->middleware(['role_or_permission:admin|create products'])->name('search.product');
         Route::post('/dashboard/product/save/edit/{product}', 'saveProductEdit')->whereNumber('product')->middleware(['role_or_permission:admin|edit products'])->name('product.save.edit');
         Route::post('/dashboard/product/submit/create', 'createProduct')->middleware(['role_or_permission:admin|create products'])->name('product.create.new');
     });
