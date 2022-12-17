@@ -15,19 +15,7 @@ class Invoice extends Model
      * @var string[]
      */
     protected $fillable = [
-        'customer_id',
-        'product_id',
-        'customer_email', 
-        'invoice_date',
-        'invoice_due',
-        'billing_address',
-        'shipping_address',
-        'shipping_date',
         'tracking_number',
-        'service_date',
-        'service_description',
-        'service_quantity',
-        'total_amount',
     ];
 
     public function products () {

@@ -291,17 +291,6 @@ class CountrySeeder extends Seeder
             $customer->save();
         }
 
-        // Fill and place required fields in Invoices table
-        $invoices = Invoice::all();
-        foreach($invoices as $invoice) {
-            $customer = Customer::find($invoice->customer_id);
-            $product = Product::find($invoice->product_id);
-
-            $invoice->customer_email = $customer->email;
-            $invoice->total_amount = $invoice->service_quantity * $product->price;
-            $invoice->save();
-        }
-
         $this->manageRoles();
     }
 

@@ -232,9 +232,6 @@
                                         <th scope="col" class="py-3 px-6 text-center border-r border-black border-opacity-5">
                                             Subtotal
                                         </th>
-                                        <th scope="col" class="py-3 px-6 text-center border-r border-black border-opacity-5">
-                                            Date
-                                        </th>
                                         <th 
                                         scope="col" 
                                         class="w-[70px] py-3 px-6 text-center">
@@ -251,9 +248,11 @@
                                             {{i + 1}}
                                         </td>
                                         <td scope="row" class="py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
-                                            <input type="text"
-                                            v-model="input.service"
-                                            class="w-full rounded border border-black border-opacity-10 transition duration-250 focus:ring-1 focus:ring-blue">
+                                            <Multiselect
+                                                v-model="input.service"
+                                                v-bind="queryProducts"
+                                                class="w-[300px] shrink-0 text-sm tracking-wider text-black border border-black border-opacity-10 shadow-sm-spread outline-0"
+                                            />
                                         </td>
                                         <td scope="row" class="max-w-[100px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
                                             <input type="number"
@@ -279,17 +278,6 @@
                                         </td>
                                         <td scope="row" class="max-w-[100px] font-medium text-md py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
                                             ${{ (input.price * input.quantity).toFixed(2) }}
-                                        </td>
-                                        <td scope="row" class="max-w-[170px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
-                                            <v-date-picker v-model="input.date" mode="date">
-                                                <template v-slot="{ inputValue, inputEvents }">
-                                                    <input
-                                                        class="w-full min-h-[40px] px-2 border border-black border-opacity-10 shadow-sm-spread rounded transition duration-200 outline-0 focus:ring-2 focus:ring-blue"
-                                                        :value="inputValue"
-                                                        v-on="inputEvents"
-                                                    />
-                                                </template>
-                                            </v-date-picker>
                                         </td>
                                         <td class="px-2 py-0 m-0 text-center">
                                             <button 
@@ -322,9 +310,12 @@
                 </div>
                 <div class="w-full p-4 flex justify-start items-center bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
                     <button 
+                    @click="createInvoice"
                     type="button"
                     role="button"
-                    class="w-fit rounded px-4 py-2 text-white text-md font-semibold tracking-wider bg-warm-blue transition duration-250 hover:bg-blue">
+                    :disabled="invoiceForm.processing"
+                    :class="[invoiceForm.processing ? 'opacity-80' : 'opacity-100', 'w-fit rounded px-4 py-2 flex justify-center items-center gap-2 text-white text-md font-semibold tracking-wider bg-warm-blue transition duration-250 hover:bg-blue']">
+                        <Spinner :width='4' :height="4" v-if="invoiceForm.processing"></Spinner>
                         Create Invoice
                     </button>
                 </div>
@@ -343,6 +334,7 @@
         ArchiveBoxXMarkIcon as Remove,
         PlusIcon as More
     } from '@heroicons/vue/24/solid'
+    import Spinner from '../../Partials/Spinner'
     import Multiselect from '@vueform/multiselect'
     import "@vueform/multiselect/themes/default.css"
     import { useForm } from '@inertiajs/inertia-vue3'
@@ -352,6 +344,7 @@
     const props = defineProps({
         auth: Object,
         countries: Object,
+        tracking: Number
     });
 
     const store = useStore()
@@ -375,7 +368,7 @@
         invoiceDate: new Date(),
         dueDate: new Date(),
         shippingDate: new Date(),
-        trackingNumber: null,
+        trackingNumber: props.tracking,
         shippingCountry: 1,
         shippingState: null,
         shippingHouseAddress: null,
@@ -385,8 +378,7 @@
             service: null,
             quantity: 0,
             price: 0,
-            gst: false,
-            date: new Date(),
+            gst: false
         }]
     })
     
@@ -422,7 +414,25 @@
         }
     }
 
+    const queryProducts = {
+        placeholder: 'Select a product',
+        filterResults: false,
+        minChars: 1,
+        resolveOnLoad: false,
+        delay: 600,
+        searchable: true,
+        options: async (query) => {
+            return await axios.get('/list/products/search', {params: {keywords: query}}).then(response => {
+                return response.data.map(product => {
+                    return { value: product.id, label: product.name + ' - ' + product.sku }
+                })
+            })
+        }
+    }
+
     const createInvoice = () => {
-        invoiceForm.post(route('invoice.create'))
+        if (!invoiceForm.processing) {
+            invoiceForm.post(route('invoice.create'))
+        }
     }
 </script>
