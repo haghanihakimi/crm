@@ -15,6 +15,7 @@ class InvoiceCustomer extends Model
     * @var string[]
     */
    protected $fillable = [
-       'customer_id',
+        'invoice_id',
+        'customer_id',
    ];
 }

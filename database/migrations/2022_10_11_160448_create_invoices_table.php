@@ -17,6 +17,13 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->string('tracking_number')->unique();
+            $table->date('invoice_date');
+            $table->date('due_date');
+            $table->date('shipping_date');
+            $table->string('state');
+            $table->string('house_address');
+            $table->string('city');
+            $table->string('postcode');
             $table->timestamps();
         });
     }
