@@ -20,7 +20,7 @@
                                 <Multiselect
                                     v-model="invoiceForm.customers"
                                     v-bind="queryCustomers"
-                                    class="shrink-0 text-sm tracking-wider text-black border border-black border-opacity-10 shadow-sm-spread outline-0"
+                                    class="w-full shrink-0 text-sm tracking-wider text-black border border-black border-opacity-10 shadow-sm-spread outline-0"
                                 />
                                 <label class="shrink-0 inline-flex relative items-center cursor-pointer">
                                     <input type="checkbox" v-model="invoiceForm.sendMail" class="sr-only peer">
@@ -30,38 +30,52 @@
                                     </span>
                                 </label>
                             </div>
+
+                            <!-- Field Error -->
+                            <p v-if="invoiceForm.errors.customers" class="w-full text-sm font-medium tracking-wide text-red">
+                                {{invoiceForm.errors.customers}} At least one customer should be selected.
+                            </p>
                         </div>
                         <!-- Invoice date & due date fields container -->
-                        <div class="w-full flex flex-row gap-4 relative">
-                            <!-- Invoice date -->
-                            <div class="w-full flex flex-col gap-1">
-                                <label for="invoice_date" class="w-full text-sm text-black tracking-wider">
-                                    Invoice Date
-                                </label>
-                                <v-date-picker v-model="invoiceForm.invoiceDate" mode="date">
-                                    <template v-slot="{ inputValue, inputEvents }">
-                                        <input
-                                            class="w-full min-h-[40px] px-2 border border-black border-opacity-10 shadow-sm-spread rounded transition duration-200 outline-0 focus:ring-2 focus:ring-blue"
-                                            :value="inputValue"
-                                            v-on="inputEvents"
-                                        />
-                                    </template>
-                                </v-date-picker>
-                            </div>
-                            <!-- Invoice due date -->
-                            <div class="w-full flex flex-col gap-1">
-                                <label for="invoice_date" class="w-full text-sm text-black tracking-wider">
-                                    Invoice Due Date
-                                </label>
-                                <v-date-picker v-model="invoiceForm.dueDate" mode="date">
-                                    <template v-slot="{ inputValue, inputEvents }">
-                                        <input
-                                            class="w-full min-h-[40px] px-2 border border-black border-opacity-10 shadow-sm-spread rounded transition duration-200 outline-0 focus:ring-2 focus:ring-blue"
-                                            :value="inputValue"
-                                            v-on="inputEvents"
-                                        />
-                                    </template>
-                                </v-date-picker>
+                        <div class="w-full flex flex-col gap-1 relative">
+                            <div class="w-full flex flex-row gap-4 relative">
+                                <!-- Invoice date -->
+                                <div class="w-full flex flex-col gap-1">
+                                    <label for="invoice_date" class="w-full text-sm text-black tracking-wider">
+                                        Invoice Date
+                                    </label>
+                                    <v-date-picker v-model="invoiceForm.invoiceDate" mode="date">
+                                        <template v-slot="{ inputValue, inputEvents }">
+                                            <input
+                                                class="w-full min-h-[40px] px-2 border border-black border-opacity-10 shadow-sm-spread rounded transition duration-200 outline-0 focus:ring-2 focus:ring-blue"
+                                                :value="inputValue"
+                                                v-on="inputEvents"
+                                            />
+                                        </template>
+                                    </v-date-picker>
+                                    <!-- Field Error -->
+                                    <p v-if="invoiceForm.errors.invoiceDate" class="w-full text-sm font-medium tracking-wide text-red">
+                                        {{invoiceForm.errors.invoiceDate}}
+                                    </p>
+                                </div>
+                                <!-- Invoice due date -->
+                                <div class="w-full flex flex-col gap-1">
+                                    <label for="invoice_date" class="w-full text-sm text-black tracking-wider">
+                                        Invoice Due Date
+                                    </label>
+                                    <v-date-picker v-model="invoiceForm.dueDate" mode="date">
+                                        <template v-slot="{ inputValue, inputEvents }">
+                                            <input
+                                                class="w-full min-h-[40px] px-2 border border-black border-opacity-10 shadow-sm-spread rounded transition duration-200 outline-0 focus:ring-2 focus:ring-blue"
+                                                :value="inputValue"
+                                                v-on="inputEvents"
+                                            />
+                                        </template>
+                                    </v-date-picker>
+                                    <p v-if="invoiceForm.errors.dueDate" class="w-full text-sm font-medium tracking-wide text-red">
+                                        {{invoiceForm.errors.dueDate}}
+                                    </p>
+                                </div>
                             </div>
                         </div>
 
@@ -87,6 +101,11 @@
                                         />
                                     </template>
                                 </v-date-picker>
+
+                                <!-- Field Error -->
+                                <p v-if="invoiceForm.errors.shippingDate" class="w-full text-sm font-medium tracking-wide text-red">
+                                    {{invoiceForm.errors.shippingDate}}
+                                </p>
                             </div>
                             <!-- tracking number -->
                             <div class="w-full flex flex-col gap-1">
@@ -101,6 +120,10 @@
                                     placeholder="Numbers only"
                                     v-model="invoiceForm.trackingNumber"
                                 />
+                                <!-- Field Error -->
+                                <p v-if="invoiceForm.errors.trackingNumber" class="w-full text-sm font-medium tracking-wide text-red">
+                                    {{invoiceForm.errors.trackingNumber}}
+                                </p>
                             </div>
                         </div>
 
@@ -124,6 +147,9 @@
                                         :key="i"
                                         :value="country.id">{{country.name}}</option>
                                     </select>
+                                    <p v-if="invoiceForm.errors.shippingCountry" class="w-full text-sm font-medium tracking-wide text-red">
+                                        {{invoiceForm.errors.shippingCountry}}
+                                    </p>
                                 </div>
                                 <div class="w-full flex flex-col gap-2 min-w-[200px] flex-1">
                                     <label for="shipping_state" 
@@ -138,6 +164,9 @@
                                         placeholder="Type your current state"
                                         v-model="invoiceForm.shippingState"
                                     />
+                                    <p v-if="invoiceForm.errors.shippingState" class="w-full text-sm font-medium tracking-wide text-red">
+                                        {{invoiceForm.errors.shippingState}}
+                                    </p>
                                 </div>
                             </div>
                             <!-- House address container -->
@@ -154,6 +183,9 @@
                                         placeholder="e.g Building 2, example street"
                                         v-model="invoiceForm.shippingHouseAddress"
                                     />
+                                    <p v-if="invoiceForm.errors.shippingHouseAddress" class="w-full text-sm font-medium tracking-wide text-red">
+                                        {{invoiceForm.errors.shippingHouseAddress}}
+                                    </p>
                                 </div>
                             </div>
                             <!-- Suburb & pincode container -->
@@ -170,6 +202,9 @@
                                         placeholder="Your current suburb or city"
                                         v-model="invoiceForm.shippingSuburb"
                                     />
+                                    <p v-if="invoiceForm.errors.shippingSuburb" class="w-full text-sm font-medium tracking-wide text-red">
+                                        {{invoiceForm.errors.shippingSuburb}}
+                                    </p>
                                 </div>
                                 <div class="w-full flex flex-col gap-2 min-w-[200px] flex-1">
                                     <label for="shipping_postcode" class="w-full text-sm tracking-wider text-black">
@@ -183,6 +218,9 @@
                                         placeholder="Enter postcode/zipcode"
                                         v-model="invoiceForm.shippingPostcode"
                                     />
+                                    <p v-if="invoiceForm.errors.shippingPostcode" class="w-full text-sm font-medium tracking-wide text-red">
+                                        {{invoiceForm.errors.shippingPostcode}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -197,18 +235,6 @@
                             </h2>
                         </div>
 
-                        <!-- Invoice Number field container -->
-                        <div class="w-full relative flex flex-col gap-2">
-                            <label for="invoice_number"
-                            class="w-full text-sm text-black tracking-wider">
-                                Invoice Number
-                            </label>
-                            <input type="number"
-                            id="invoice_number"
-                            placeholder="Numbers only"
-                            class="w-full relative no-arrow transition duration-250 focus:ring-1 focus:ring-blue rounded border border-black border-opacity-10 shadow-sm-spread">
-                        </div>
-                        
                         <!-- Row of items and products on invoice -->
                         <div class="w-full relative flex flex-col gap-6 select-none border-b border-black border-opacity-10 py-4">
                             <table class="w-full text-sm text-left text-black">
@@ -297,6 +323,11 @@
                                 <More class="w-5 h-5 text-white" />
                                 More Services
                             </button>
+                            <div v-for="(input, i) in invoiceForm.inputs" :key="i">
+                                <p v-if="invoiceForm.errors.customers" class="w-full text-sm font-medium tracking-wide text-red">
+                                    {{invoiceForm.errors.inputs}}
+                                </p>
+                            </div>
                         </div>
 
                         <!-- Total calculation and details container -->
@@ -313,8 +344,8 @@
                     @click="createInvoice"
                     type="button"
                     role="button"
-                    :disabled="invoiceForm.processing"
-                    :class="[invoiceForm.processing ? 'opacity-80' : 'opacity-100', 'w-fit rounded px-4 py-2 flex justify-center items-center gap-2 text-white text-md font-semibold tracking-wider bg-warm-blue transition duration-250 hover:bg-blue']">
+                    :disabled="invoiceForm.processing || !invoiceForm.isDirty"
+                    :class="[invoiceForm.processing || !invoiceForm.isDirty ? 'opacity-80' : 'opacity-100', 'w-fit rounded px-4 py-2 flex justify-center items-center gap-2 text-white text-md font-semibold tracking-wider bg-warm-blue transition duration-250 hover:bg-blue']">
                         <Spinner :width='4' :height="4" v-if="invoiceForm.processing"></Spinner>
                         Create Invoice
                     </button>
@@ -432,7 +463,11 @@
 
     const createInvoice = () => {
         if (!invoiceForm.processing) {
-            invoiceForm.post(route('invoice.create'))
+            invoiceForm.post(route('invoice.create'), {
+                onSuccess: () => {
+                    invoiceForm.defaults()
+                }
+            })
         }
     }
 </script>

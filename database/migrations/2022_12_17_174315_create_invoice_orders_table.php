@@ -21,13 +21,6 @@ return new class extends Migration
             $table->integer('quantity');
             $table->double('price', 12, 2);
             $table->boolean('gst');
-            $table->date('invoice_date');
-            $table->date('due_date');
-            $table->date('shipping_date');
-            $table->string('state');
-            $table->string('house_address');
-            $table->string('city');
-            $table->string('postcode');
             $table->timestamps();
         });
     }

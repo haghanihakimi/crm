@@ -1471,6 +1471,9 @@ html,  body,  #app{
 .w-\[70px\]{
   width: 70px;
 }
+.w-\[300px\]{
+  width: 300px;
+}
 .w-\[140px\]{
   width: 140px;
 }
@@ -1479,15 +1482,6 @@ html,  body,  #app{
 }
 .w-\[48px\]{
   width: 48px;
-}
-.w-24{
-  width: 6rem;
-}
-.w-\[200px\]{
-  width: 200px;
-}
-.w-\[300px\]{
-  width: 300px;
 }
 .min-w-0{
   min-width: 0px;

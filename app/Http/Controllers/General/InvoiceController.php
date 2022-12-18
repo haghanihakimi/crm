@@ -43,7 +43,7 @@ class InvoiceController extends Controller
         Cache::add('countries', Countries::getCountries());
         return Inertia::render('Invoices/CreateInvoice', [
             'countries' => Cache::get('countries'),
-            'tracking' => substr(preg_replace("/[^0-9]/", "", Str::uuid()), 0, 10),
+            'tracking' => (int)substr(preg_replace("/[^0-9]/", "", Str::uuid()), 0, 10),
         ]);
     }
 
@@ -51,24 +51,11 @@ class InvoiceController extends Controller
         $this->validateInvoiceCreate($request);
         if ($invoice = $this->onlyCreateInvoice($request)) {
             foreach ($request->inputs as $input) {
-                InvoiceOrder::create([
-                    'invoice_id' => $invoice->id,
-                    'product_id' => $input['service'],
-                    'country_id' => $request->shippingCountry,
-                    'quantity' => $input['quantity'],
-                    'price' => $input['price'],
-                    'gst' => $input['gst'],
-                    'invoice_date' => Carbon::parse($request->invoiceDate)->format('Y-m-d'),
-                    'due_date' => Carbon::parse($request->dueDate)->format('Y-m-d'),
-                    'shipping_date' => Carbon::parse($request->shippingDate)->format('Y-m-d'),
-                    'state' => $request->shippingState,
-                    'house_address' => $request->shippingHouseAddress,
-                    'city' => $request->shippingSuburb,
-                    'postcode' => $request->shippingPostcode
-                ]);
+                $this->createInvoiceOrder($invoice, $input, $request);
             }
             foreach ($request->customers as $customer) {
                 InvoiceCustomer::create([
+                    'invoice_id' => $invoice->id,
                     'customer_id' => $customer
                 ]);
             }
@@ -99,6 +86,24 @@ class InvoiceController extends Controller
     private function onlyCreateInvoice ($request) {
         return Invoice::create([
             'tracking_number' => empty($request->trackingNumber) ? substr(preg_replace("/[^0-9]/", "", Str::orderedUuid()), 0, 16) : $request->trackingNumber,
+            'invoice_date' => Carbon::parse($request->invoiceDate)->format('Y-m-d'),
+            'due_date' => Carbon::parse($request->dueDate)->format('Y-m-d'),
+            'shipping_date' => Carbon::parse($request->shippingDate)->format('Y-m-d'),
+            'state' => $request->shippingState,
+            'house_address' => $request->shippingHouseAddress,
+            'city' => $request->shippingSuburb,
+            'postcode' => $request->shippingPostcode
+        ]);
+    }
+
+    private function createInvoiceOrder($invoice, $input, $request){
+        InvoiceOrder::create([
+            'invoice_id' => $invoice->id,
+            'product_id' => $input['service'],
+            'country_id' => $request->shippingCountry,
+            'quantity' => $input['quantity'],
+            'price' => $input['price'],
+            'gst' => $input['gst'],
         ]);
     }
 }

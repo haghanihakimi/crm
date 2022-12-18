@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('invoice_customers', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('invoice_id')->references("id")->on('invoices')->onDelete('cascade');
             $table->foreignId('customer_id')->references("id")->on('customers')->onDelete('cascade');
             $table->timestamps();
         });

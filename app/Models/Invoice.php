@@ -16,6 +16,13 @@ class Invoice extends Model
      */
     protected $fillable = [
         'tracking_number',
+        'invoice_date',
+        'due_date',
+        'shipping_date',
+        'state',
+        'house_address',
+        'city',
+        'postcode',
     ];
 
     public function products () {
