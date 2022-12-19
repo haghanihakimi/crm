@@ -31,4 +31,8 @@ class InvoiceOrder extends Model
        'created_at',
        'updated_at',
    ];
+
+   public function invoices() {
+    return $this->belongsTo(Invoice::class, 'invoice_id');
+   }
 }

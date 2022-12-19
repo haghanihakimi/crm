@@ -1907,6 +1907,10 @@ html,  body,  #app{
   --tw-bg-opacity: 1;
   background-color: rgb(0 89 191 / var(--tw-bg-opacity));
 }
+.bg-pink{
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 73 219 / var(--tw-bg-opacity));
+}
 .bg-opacity-25{
   --tw-bg-opacity: 0.25;
 }
@@ -2790,6 +2794,12 @@ html,  body,  #app{
   .md\:grid{
     display: grid;
   }
+  .md\:w-full{
+    width: 100%;
+  }
+  .md\:max-w-full{
+    max-width: 100%;
+  }
   .md\:grid-cols-3{
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
@@ -2810,6 +2820,9 @@ html,  body,  #app{
   .lg\:col-span-4{
     grid-column: span 4 / span 4;
   }
+  .lg\:w-full{
+    width: 100%;
+  }
   .lg\:max-w-full{
     max-width: 100%;
   }
@@ -2819,6 +2832,9 @@ html,  body,  #app{
   }
 }
 @media (min-width: 1280px){
+  .xl\:w-full{
+    width: 100%;
+  }
   .xl\:max-w-full{
     max-width: 100%;
   }

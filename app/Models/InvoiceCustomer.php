@@ -18,4 +18,12 @@ class InvoiceCustomer extends Model
         'invoice_id',
         'customer_id',
    ];
+
+   public function invoices() {
+     return $this->belongsToMany(Invoice::class, 'invoice_id');
+   }
+
+   public function customers() {
+     return $this->belongsTo(Customer::class, 'customer_id');
+   }
 }

@@ -15,6 +15,7 @@ class Invoice extends Model
      * @var string[]
      */
     protected $fillable = [
+        'country_id',
         'tracking_number',
         'invoice_date',
         'due_date',
@@ -25,12 +26,12 @@ class Invoice extends Model
         'postcode',
     ];
 
-    public function products () {
-        return $this->belongsTo(Product::class, 'product_id');
+    public function orders () {
+        return $this->hasMany(InvoiceOrder::class, 'invoice_id');
     }
 
     public function customers () {
-        return $this->belongsTo(Customer::class, 'customer_id');
+        return $this->hasMany(InvoiceCustomer::class, 'invoice_id');
     }
 
     public function scopeSearch ($query, $input) {

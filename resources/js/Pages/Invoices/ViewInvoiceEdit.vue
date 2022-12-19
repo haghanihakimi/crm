@@ -1,14 +1,15 @@
 <template>
-    <Layout :title="'Invoices'" :auth="auth">
+    <Layout :title="'Edit Invoice'" :auth="auth">
         <div class="w-full relative m-auto p-4">
             <h1 class="w-full text-black font-semibold tracking-wider text-xl mb-4">
-                Create Invoice
+                Edit Invoice
             </h1>
             <div v-if="$page.props.flash.message" class="w-full relative">
                 <p class="w-full px-2 py-3 mb-4 text-green text-md font-semibold tracking-wide" v-for="(message, i) in $page.props.flash.message" :key="i">
                     {{ message }}
                 </p>
             </div>
+            {{ invoiceForm.currentValue.length }}
             <!-- All fields/inputs container -->
             <div class="w-full flex flex-col gap-4 mx-auto">
                 <div class="w-full flex flex-row flex-wrap gap-4 mx-auto">
@@ -377,13 +378,13 @@
     import Multiselect from '@vueform/multiselect'
     import "@vueform/multiselect/themes/default.css"
     import { useForm } from '@inertiajs/inertia-vue3'
-    import { computed } from '@vue/runtime-core'
+    import { computed, onMounted } from '@vue/runtime-core'
 
 
     const props = defineProps({
         auth: Object,
-        countries: Object,
-        tracking: Number
+        invoice: Object,
+        countries: Object
     });
 
     const store = useStore()
@@ -402,23 +403,27 @@
     })
 
     const invoiceForm = useForm({
-        customers: null,
+        customers: [1],
+        currentValue: '',
         sendMail: true,
-        invoiceDate: new Date(),
-        dueDate: new Date(),
-        shippingDate: new Date(),
-        trackingNumber: props.tracking,
-        shippingCountry: 1,
-        shippingState: null,
-        shippingHouseAddress: null,
-        shippingSuburb: null,
-        shippingPostcode: null,
-        inputs: [{
-            service: null,
-            quantity: 0,
-            price: 0,
-            gst: false
-        }]
+        invoiceDate: moment(props.invoice[0].invoice_date).format('M/D/YYYY'),
+        dueDate: moment(props.invoice[0].due_date).format('M/D/YYYY'),
+        shippingDate: moment(props.invoice[0].shipping_date).format("M/D/YYYY"),
+        trackingNumber: props.invoice[0].tracking_number,
+        shippingCountry: props.invoice[0].country_id,
+        shippingState: props.invoice[0].state,
+        shippingHouseAddress: props.invoice[0].house_address,
+        shippingSuburb: props.invoice[0].city,
+        shippingPostcode: props.invoice[0].postcode,
+        // inputs: [{
+        //     service: null,
+        //     quantity: 0,
+        //     price: 0,
+        //     gst: false
+        // }]
+        inputs: props.invoice[0].orders.map(order => {
+            return {service: null, quantity: order.quantity, price: order.price, gst: order.gst}
+        })
     })
     
     const moreRows = () => {
@@ -443,14 +448,17 @@
         minChars: 1,
         resolveOnLoad: false,
         delay: 600,
+        oninput: async (query) => {
+            invoiceForm.currentValue = await query.target.value
+        },
         searchable: true,
-        options: async (query) => {
+        options: invoiceForm.currentValue.length >= 1 ? async (query) => {
             return await axios.get('/list/customers/search', {params: {keywords: query}}).then(response => {
                 return response.data.map(customer => {
                     return { value: customer.id, label: customer.first_name + ' ' + customer.surname + ' - ' + customer.email }
                 })
             })
-        }
+        } : [{value: 1, label: "Daniel"}]
     }
 
     const queryProducts = {
@@ -469,7 +477,7 @@
         }
     }
 
-    const createInvoice = () => {
+    const editInvoice = () => {
         if (!invoiceForm.processing) {
             invoiceForm.post(route('invoice.create'), {
                 onSuccess: () => {
