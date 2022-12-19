@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('invoice_id')->references("id")->on('invoices')->onDelete('cascade');
             $table->foreignId('product_id')->references("id")->on('products')->onDelete('cascade');
-            $table->foreignId('country_id')->references("id")->on('countries')->onDelete('cascade');
             $table->integer('quantity');
             $table->double('price', 12, 2);
             $table->boolean('gst');

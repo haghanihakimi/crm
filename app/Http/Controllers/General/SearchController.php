@@ -20,12 +20,6 @@ class SearchController extends Controller
         //$this->validateKeywords($request);
         $results = new \Illuminate\Database\Eloquent\Collection;
 
-        $invoices = Invoice::search($request->input('keywords'))
-        ->with('customers')
-        ->select('id', 'tracking_number', 'invoice_date', 'invoice_due')
-        ->limit(2)
-        ->get();
-
         $customers = Customer::search($request->input('keywords'))
         ->select('id', 'first_name', 'surname', 'email', 'phone')
         ->limit(3)
@@ -35,7 +29,6 @@ class SearchController extends Controller
         ->select('id', 'name', 'sku', 'price', 'sale_price');
 
         $results = $results->merge($customers);
-        $results = $results->merge($invoices);
         $results = $results->merge($products);
 
         return response()->json(["results" => $results]);

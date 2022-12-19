@@ -1578,6 +1578,11 @@ var map = {
 		"/js/vendor",
 		"node_modules_moment_locale_sync_recursive_-resources_js_Pages_Invoices_CreateInvoice_vue"
 	],
+	"./Invoices/ViewInvoiceEdit.vue": [
+		"./resources/js/Pages/Invoices/ViewInvoiceEdit.vue",
+		"/js/vendor",
+		"node_modules_moment_locale_sync_recursive_-resources_js_Pages_Invoices_ViewInvoiceEdit_vue"
+	],
 	"./Invoices/ViewInvoices.vue": [
 		"./resources/js/Pages/Invoices/ViewInvoices.vue",
 		"/js/vendor",

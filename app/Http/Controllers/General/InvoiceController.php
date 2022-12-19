@@ -31,7 +31,7 @@ class InvoiceController extends Controller
 
         return Inertia::render('Invoices/ViewInvoices', [
             'params' => $request->input(),
-            'invoices' => Invoice::with(['products', 'customers'])->paginate(15)
+            'invoices' => $this->listInvoices($request->input('sort')),
         ]);
     }
 
@@ -47,6 +47,10 @@ class InvoiceController extends Controller
         ]);
     }
 
+    /**
+     * Create new invoice
+     * @return redirect
+     */
     public function createInvoice(Request $request) {
         $this->validateInvoiceCreate($request);
         if ($invoice = $this->onlyCreateInvoice($request)) {
@@ -59,9 +63,27 @@ class InvoiceController extends Controller
                     'customer_id' => $customer
                 ]);
             }
+            return back()->with('message', ['successful_new_invoice' => 'New invoice has been created successfully.']);
         }
+        return back()->with('message', ['new_invoice_failure' => 'Creating new invoice failed. Please try again later.']);
     }
 
+    /**
+     * A page to view and edit selected invoice
+     * @return Inertia\Inertia
+     */
+    public function viewEditInvoice($invoice) {
+        Cache::add('countries', Countries::getCountries());
+        return Inertia::render('Invoices/ViewInvoiceEdit', [
+            'invoice' => Invoice::where('id', $invoice)->with(['orders', 'customers'])->get(),
+            'countries' => Cache::get('countries'),
+        ]);
+    }
+
+    /**
+     * Check and validate all inputs to create new invoice
+     * @return response
+     */
     private function validateInvoiceCreate($request) {
         return $request->validate([
             'customers' => ['required', 'array', 'min:1'],
@@ -83,8 +105,13 @@ class InvoiceController extends Controller
         ]);
     }
 
+    /**
+     * Creates ONLY invoices. It inserts data into Invoices table
+     * @return collection
+     */
     private function onlyCreateInvoice ($request) {
         return Invoice::create([
+            'country_id' => $request->shippingCountry,
             'tracking_number' => empty($request->trackingNumber) ? substr(preg_replace("/[^0-9]/", "", Str::orderedUuid()), 0, 16) : $request->trackingNumber,
             'invoice_date' => Carbon::parse($request->invoiceDate)->format('Y-m-d'),
             'due_date' => Carbon::parse($request->dueDate)->format('Y-m-d'),
@@ -96,14 +123,51 @@ class InvoiceController extends Controller
         ]);
     }
 
+    /**
+     * Creates Invoice Order data and pushes data into InvoiceOrders table
+     * @return collection
+     */
     private function createInvoiceOrder($invoice, $input, $request){
         InvoiceOrder::create([
             'invoice_id' => $invoice->id,
             'product_id' => $input['service'],
-            'country_id' => $request->shippingCountry,
             'quantity' => $input['quantity'],
             'price' => $input['price'],
             'gst' => $input['gst'],
         ]);
+    }
+
+    /**
+     * List available invoices and prepare them for sorting
+     * @return Collection
+     */
+    private function listInvoices($sort) {
+        $invoices = Invoice::with(['orders', 'customers'])->paginate(15);
+
+        $this->sortInvoice($sort, $invoices);
+
+        return $invoices;
+    }
+
+    /**
+     * Get list of invoice and sort them
+     * @return Collection
+     */
+    private function sortInvoice($sort, $invoice) {
+        switch ($sort) {
+            case 'oldest':
+                $sortedResult = $invoice->getCollection()->sortByDesc('created_at')->values();
+                $invoice->setCollection($sortedResult);
+                break;
+            case 'newest':
+                $sortedResult = $invoice->getCollection()->sortBy('created_at')->values();
+                $invoice->setCollection($sortedResult);
+                break;
+            default:
+                $sortedResult = $invoice->getCollection()->sortBy('id')->values();
+                $invoice->setCollection($sortedResult);
+                break;
+        }
+        return false;
     }
 }

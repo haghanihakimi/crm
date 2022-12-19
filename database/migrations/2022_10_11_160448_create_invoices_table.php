@@ -16,6 +16,7 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('country_id')->references("id")->on('countries')->onDelete('cascade');
             $table->string('tracking_number')->unique();
             $table->date('invoice_date');
             $table->date('due_date');
