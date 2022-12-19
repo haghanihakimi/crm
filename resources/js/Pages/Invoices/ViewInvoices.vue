@@ -1,6 +1,6 @@
 <template>
     <Layout :title="'Invoices'" :auth="auth">
-        <div class="w-full relative m-auto px-4 flex flex-col gap-4">
+        <div v-if="invoices && invoices.length > 0" class="w-full relative m-auto px-4 flex flex-col gap-4">
             <h1 class="text-lg font-semibold tracking-wider capitalize pt-4">
                 All Invoices
             </h1>
@@ -104,6 +104,9 @@
                 <Pagination :links="invoices.links" :params="params" />
             </div>
         </div>
+        <h2 class="w-full px-4 py-12 text-center text-lg font-semibold text-black text-opacity-75 tracking-wider">
+            No invoice found!
+        </h2>
     </Layout>
 </template>
 <script setup>
