@@ -31,6 +31,10 @@ class Product extends Model
         return $this->belongsTo(Brand::class, 'brand_id');
     }
 
+    public function invoiceProducts() {
+        return $this->hasMany(InvoiceProduct::class, 'product_id');
+    }
+
     public function scopeSearch ($query, $input) {
         return $query->where('name', 'LIKE', '%' .$input. '%')
         ->orWhere('sku','LIKE', '%'.$input.'%');

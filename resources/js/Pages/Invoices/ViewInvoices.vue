@@ -1,6 +1,6 @@
 <template>
     <Layout :title="'Invoices'" :auth="auth">
-        <div v-if="invoices && invoices.length > 0" class="w-full relative m-auto px-4 flex flex-col gap-4">
+        <div v-if="invoices && Object.keys(invoices.data).length" class="w-full relative m-auto px-4 flex flex-col gap-4">
             <h1 class="text-lg font-semibold tracking-wider capitalize pt-4">
                 All Invoices
             </h1>
@@ -69,7 +69,7 @@
                                 </span>
                             </td>
                             <td class="py-4 px-6 text-center border-r border-black border-opacity-5">
-                                ${{ invoice.orders.map(order => order.gst ? ((order.price * order.quantity) / 10 + (order.price * order.quantity)).toFixed(2) : (order.price * order.quantity).toFixed(2) ).map(parseFloat).reduce((sum, number) => sum + number, 0).toFixed(2) }}
+                                ${{ invoice.products.map(product => product.gst ? ((product.price * product.quantity) / 10 + (product.price * product.quantity)).toFixed(2) : (product.price * product.quantity).toFixed(2) ).map(parseFloat).reduce((sum, number) => sum + number, 0).toFixed(2) }}
                             </td>
                             <td class="py-4 px-6 text-center border-r border-black border-opacity-5">
                                 <span v-if="moment(invoice.due_date).diff(moment(), 'days') <= 1" class="text-red font-semibold tracking-wider">
@@ -104,7 +104,7 @@
                 <Pagination :links="invoices.links" :params="params" />
             </div>
         </div>
-        <h2 class="w-full px-4 py-12 text-center text-lg font-semibold text-black text-opacity-75 tracking-wider">
+        <h2 v-else class="w-full px-4 py-12 text-center text-lg font-semibold text-black text-opacity-75 tracking-wider">
             No invoice found!
         </h2>
     </Layout>

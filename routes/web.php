@@ -103,10 +103,11 @@ Route::middleware(['auth'])->group(function () {
     //Invoices Page routes
     Route::controller(InvoiceController::class)->group(function () {
         Route::get('/dashboard/invoice/list', 'index')->middleware(['role_or_permission:admin|read invoices'])->name('invoice.list.view');
-        Route::get('/dashboard/invoice/create', 'viewCreateInvoice')->middleware(['role_or_permission:admin|create invoices'])->name('invoice.create.view');
-        Route::get('/dashboard/invoice/edit/{invoice}', 'viewEditInvoice')->middleware(['role_or_permission:admin|edit invoices'])->whereNumber('invoice')->name('invoice.edit.view');
+        Route::get('/dashboard/invoice/view/create', 'viewCreateInvoice')->middleware(['role_or_permission:admin|create invoices'])->name('invoice.create.view');
+        Route::get('/dashboard/invoice/view/edit/{invoice}', 'viewEditInvoice')->middleware(['role_or_permission:admin|edit invoices'])->whereNumber('invoice')->name('invoice.edit.view');
         
         Route::post('/dashboard/invoice/create', 'createInvoice')->middleware(['role_or_permission:admin|create invoices'])->name('invoice.create');
+        Route::post('/dashboard/invoice/edit/{invoice}', 'editInvoice')->middleware(['role_or_permission:admin|edit invoices'])->whereNumber('invoice')->name('invoice.save.edit');
     });
 
     //Countries Route

@@ -35,4 +35,8 @@ class InvoiceOrder extends Model
    public function invoices() {
     return $this->belongsTo(Invoice::class, 'invoice_id');
    }
+
+   public function products() {
+    return $this->belongsTo(Product::class, "product_id");
+   }
 }

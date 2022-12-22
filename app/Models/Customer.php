@@ -34,6 +34,10 @@ class Customer extends Model
         return $this->belongsTo(Country::class, 'country_id');
     }
 
+    public function invoiceCustomers() {
+        return $this->hasMany(InvoiceCustomers::class, 'customer_id');
+    }
+
     public function scopeAnalytics ($query) {
         return $query->whereBetween('created_at', [now()->subMonth(1), now()])->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
             ->groupBy('date')

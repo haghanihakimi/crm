@@ -75,9 +75,25 @@ class InvoiceController extends Controller
     public function viewEditInvoice($invoice) {
         Cache::add('countries', Countries::getCountries());
         return Inertia::render('Invoices/ViewInvoiceEdit', [
-            'invoice' => Invoice::where('id', $invoice)->with(['orders', 'customers'])->get(),
+            'invoice' => Invoice::where('id', $invoice)->with(['products', 'products.products', 'customers', 'customers.customers'])->get(),
             'countries' => Cache::get('countries'),
         ]);
+    }
+
+    /**
+     * Recieve user inputs and save changes
+     * @return response|json
+     */
+    public function editInvoice($invoice, Request $request) {
+        $this->validateInvoiceCreate($request);
+        dd($request->customers);
+        
+        if ($this->saveOrdersChanges($invoice, $request)) {
+            foreach ($request->customers as $key => $customer) {
+                dd($customer);
+            }
+        }
+        dd("Bad");
     }
 
     /**
@@ -102,6 +118,23 @@ class InvoiceController extends Controller
             'inputs.*.quantity' => ['required', 'numeric', 'min:1'],
             'inputs.*.price' => ['required', 'numeric', 'min:1'],
             'inputs.*.gst' => ['required', 'boolean'],
+        ]);
+    }
+
+    /**
+     * Save all changes to "Orders" table
+     * @return response
+     */
+    private function saveOrdersChanges($invoice, $request) {
+        return Invoice::find($invoice)->update([
+            'tracking_number' => $request->trackingNumber,
+            'invoice_date' => Carbon::parse($request->invoiceDate)->format('Y-m-d'),
+            'due_date' => Carbon::parse($request->dueDate)->format('Y-m-d'),
+            'shipping_date' => Carbon::parse($request->shippingDate)->format('Y-m-d'),
+            'state' => $request->shippingState,
+            'house_address' => $request->shippingHouseAddress,
+            'city' => $request->shippingSuburb,
+            'postcode' => $request->shippingPostcode
         ]);
     }
 
@@ -142,7 +175,7 @@ class InvoiceController extends Controller
      * @return Collection
      */
     private function listInvoices($sort) {
-        $invoices = Invoice::with(['orders', 'customers'])->paginate(15);
+        $invoices = Invoice::with(['products', 'customers'])->paginate(15);
 
         $this->sortInvoice($sort, $invoices);
 
