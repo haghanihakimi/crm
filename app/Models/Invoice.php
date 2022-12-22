@@ -26,12 +26,12 @@ class Invoice extends Model
         'postcode',
     ];
 
-    public function orders () {
-        return $this->hasMany(InvoiceOrder::class, 'invoice_id');
+    public function products () {
+        return $this->hasManyThrough(InvoiceOrder::class, Product::class, 'id', 'invoice_id');
     }
 
     public function customers () {
-        return $this->hasMany(InvoiceCustomer::class, 'invoice_id');
+        return $this->hasManyThrough(InvoiceCustomer::class, Customer::class, 'id', 'invoice_id');
     }
 
     public function scopeSearch ($query, $input) {

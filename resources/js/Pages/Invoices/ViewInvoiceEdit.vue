@@ -9,7 +9,7 @@
                     {{ message }}
                 </p>
             </div>
-            {{ invoiceForm.currentValue.length }}
+            {{  }}
             <!-- All fields/inputs container -->
             <div class="w-full flex flex-col gap-4 mx-auto">
                 <div class="w-full flex flex-row flex-wrap gap-4 mx-auto">
@@ -53,6 +53,7 @@
                                     <v-date-picker v-model="invoiceForm.invoiceDate" mode="date">
                                         <template v-slot="{ inputValue, togglePopover }">
                                             <input
+                                                id="invoice_date"
                                                 class="w-full min-h-[40px] cursor-pointer px-2 border border-black border-opacity-10 shadow-sm-spread rounded transition duration-200 outline-0 focus:ring-2 focus:ring-blue"
                                                 :value="inputValue"
                                                 @click="togglePopover"
@@ -67,12 +68,13 @@
                                 </div>
                                 <!-- Invoice due date -->
                                 <div class="w-full flex flex-col gap-1">
-                                    <label for="invoice_date" class="w-full text-sm text-black tracking-wider">
+                                    <label for="due_date" class="w-full text-sm text-black tracking-wider">
                                         Invoice Due Date
                                     </label>
                                     <v-date-picker v-model="invoiceForm.dueDate" mode="date">
                                         <template v-slot="{ inputValue, togglePopover }">
                                             <input
+                                                id="due_date"
                                                 class="w-full min-h-[40px] cursor-pointer px-2 border border-black border-opacity-10 shadow-sm-spread rounded transition duration-200 outline-0 focus:ring-2 focus:ring-blue"
                                                 :value="inputValue"
                                                 @click="togglePopover"
@@ -350,7 +352,7 @@
                 </div>
                 <div class="w-full p-4 flex justify-start items-center bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
                     <button 
-                    @click="createInvoice"
+                    @click="editInvoice()"
                     type="button"
                     role="button"
                     :disabled="invoiceForm.processing || !invoiceForm.isDirty"
@@ -403,8 +405,7 @@
     })
 
     const invoiceForm = useForm({
-        customers: [1],
-        currentValue: '',
+        customers: props.invoice.map(invoiceCustomers => invoiceCustomers.customers.map(customer => customer.customer_id))[0],
         sendMail: true,
         invoiceDate: moment(props.invoice[0].invoice_date).format('M/D/YYYY'),
         dueDate: moment(props.invoice[0].due_date).format('M/D/YYYY'),
@@ -415,14 +416,8 @@
         shippingHouseAddress: props.invoice[0].house_address,
         shippingSuburb: props.invoice[0].city,
         shippingPostcode: props.invoice[0].postcode,
-        // inputs: [{
-        //     service: null,
-        //     quantity: 0,
-        //     price: 0,
-        //     gst: false
-        // }]
-        inputs: props.invoice[0].orders.map(order => {
-            return {service: null, quantity: order.quantity, price: order.price, gst: order.gst}
+        inputs: props.invoice[0].products.map(product => {
+            return {service: product.products.id, quantity: product.quantity, price: product.price, gst: product.gst}
         })
     })
     
@@ -448,17 +443,8 @@
         minChars: 1,
         resolveOnLoad: false,
         delay: 600,
-        oninput: async (query) => {
-            invoiceForm.currentValue = await query.target.value
-        },
         searchable: true,
-        options: invoiceForm.currentValue.length >= 1 ? async (query) => {
-            return await axios.get('/list/customers/search', {params: {keywords: query}}).then(response => {
-                return response.data.map(customer => {
-                    return { value: customer.id, label: customer.first_name + ' ' + customer.surname + ' - ' + customer.email }
-                })
-            })
-        } : [{value: 1, label: "Daniel"}]
+        options: props.invoice.map(product => product.customers.map(customer => customer.customers))[0].map(customer => {return {value: customer.id, label: customer.first_name + ' ' + customer.surname + ' - ' + customer.email} })
     }
 
     const queryProducts = {
@@ -468,18 +454,12 @@
         resolveOnLoad: false,
         delay: 600,
         searchable: true,
-        options: async (query) => {
-            return await axios.get('/list/products/search', {params: {keywords: query}}).then(response => {
-                return response.data.map(product => {
-                    return { value: product.id, label: product.name + ' - ' + product.sku }
-                })
-            })
-        }
+        options: props.invoice.map(product => product.products.map(product2 => product2.products))[0].map(product => { return {value: product.id, label: product.name} })
     }
 
     const editInvoice = () => {
         if (!invoiceForm.processing) {
-            invoiceForm.post(route('invoice.create'), {
+            invoiceForm.post(route('invoice.save.edit', {invoice: props.invoice.map(invoice => invoice.id)[0]}), {
                 onSuccess: () => {
                     invoiceForm.reset()
                 }
