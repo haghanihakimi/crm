@@ -52,7 +52,7 @@
                             Remember me
                         </label>
                     </div>
-                    <Link href="#" class="text-[13px] font-[600] capitalize text-blue tracking-wide">
+                    <Link :href="route('forgotten.account')" class="text-[13px] font-[600] capitalize text-blue tracking-wide">
                         forgotten account
                     </Link>
                 </div>
@@ -107,7 +107,7 @@
 
     const signin = () => {
         if (!signinForm.processing) {
-            signinForm.post('signin', {
+            signinForm.post(route('signin'), {
                 onSuccess: () => {
                     store.dispatch('toggleSignedIn', true)
                     store.dispatch('toggleSignedOut', false)

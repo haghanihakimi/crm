@@ -4,17 +4,11 @@
             <h1 class="w-full text-black font-semibold tracking-wider text-xl mb-4">
                 Edit Invoice
             </h1>
-            <div v-if="$page.props.flash.message" class="w-full relative">
-                <p class="w-full px-2 py-3 mb-4 text-green text-md font-semibold tracking-wide" v-for="(message, i) in $page.props.flash.message" :key="i">
-                    {{ message }}
-                </p>
-            </div>
-            {{  }}
             <!-- All fields/inputs container -->
             <div class="w-full flex flex-col gap-4 mx-auto">
                 <div class="w-full flex flex-row flex-wrap gap-4 mx-auto">
                     <!-- All customer information inputs container -->
-                    <div class="w-full min-w-[700px] flex-1 flex flex-col gap-6 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
+                    <div class="w-full xxl:max-w-[720px] xl:max-w-[100%] xxl:min-w-[720px] flex-1 flex flex-col gap-6 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
                         <!-- Customer selected input container -->
                         <div class="w-full relative flex flex-col gap-1 select-none">
                             <label 
@@ -238,7 +232,7 @@
                     </div>
 
                     <!-- Service/Product information inputs container -->
-                    <div class="w-full min-w-[700px] flex-1 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
+                    <div class="w-full xxl:min-w-[1030px] flex-1 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
                         <!-- list of products and items container -->
                         <div class="w-full relative flex flex-col">
                             <h2 class="w-full mb-6 font-semibold relative text-base text-black tracking-wider">
@@ -380,7 +374,8 @@
     import Multiselect from '@vueform/multiselect'
     import "@vueform/multiselect/themes/default.css"
     import { useForm } from '@inertiajs/inertia-vue3'
-    import { computed, onMounted } from '@vue/runtime-core'
+    import { computed } from '@vue/runtime-core'
+    import { useToast } from 'vue-toastification'
 
 
     const props = defineProps({
@@ -390,6 +385,8 @@
     });
 
     const store = useStore()
+
+    const toast = useToast()
 
     const subTotalCalculator = computed(() => {
         if (invoiceForm.inputs.length > 1) {
@@ -406,7 +403,7 @@
 
     const invoiceForm = useForm({
         customers: props.invoice.map(invoiceCustomers => invoiceCustomers.customers.map(customer => customer.customer_id))[0],
-        sendMail: true,
+        sendMail: props.invoice[0].auto_mail === 'on' || props.invoice[0].auto_mail === 'timed' ? true : false,
         invoiceDate: moment(props.invoice[0].invoice_date).format('M/D/YYYY'),
         dueDate: moment(props.invoice[0].due_date).format('M/D/YYYY'),
         shippingDate: moment(props.invoice[0].shipping_date).format("M/D/YYYY"),
@@ -417,7 +414,7 @@
         shippingSuburb: props.invoice[0].city,
         shippingPostcode: props.invoice[0].postcode,
         inputs: props.invoice[0].products.map(product => {
-            return {service: product.products.id, quantity: product.quantity, price: product.price, gst: product.gst}
+            return {service: product.products.id, quantity: product.quantity, price: product.price, gst: product.gst ? true : false, order: product.id}
         })
     })
     
@@ -441,27 +438,49 @@
         placeholder: 'Select a customer',
         filterResults: false,
         minChars: 1,
-        resolveOnLoad: false,
+        resolveOnLoad: true,
         delay: 600,
         searchable: true,
-        options: props.invoice.map(product => product.customers.map(customer => customer.customers))[0].map(customer => {return {value: customer.id, label: customer.first_name + ' ' + customer.surname + ' - ' + customer.email} })
+        options: async (query) => {
+            if (query !== null && query.length >= 1) {
+                return await axios.get('/list/customers/search', {params: {keywords: query}}).then(response => {
+                    return response.data.map(customer => {
+                        return { value: customer.id, label: customer.first_name + ' ' + customer.surname + ' - ' + customer.email }
+                    })
+                })
+            }
+            return await props.invoice.map(product => product.customers.map(customer => customer.customers))[0].map(customer => {return {value: customer.id, label: customer.first_name + ' ' + customer.surname + ' - ' + customer.email} })
+        }
     }
 
     const queryProducts = {
         placeholder: 'Select a product',
         filterResults: false,
         minChars: 1,
-        resolveOnLoad: false,
+        resolveOnLoad: true,
         delay: 600,
         searchable: true,
-        options: props.invoice.map(product => product.products.map(product2 => product2.products))[0].map(product => { return {value: product.id, label: product.name} })
+        options: async (query) => {
+            if (query !== null) {
+                return await axios.get('/list/products/search', {params: {keywords: query}}).then(response => {
+                    return response.data.map(product => {
+                        return { value: product.id, label: product.name + ' - ' + product.sku }
+                    })
+                })
+            } else {
+                return await props.invoice.map(product => product.products.map(product2 => product2.products))[0].map(product => { return {value: product.id, label: product.name} })
+            }
+        }
     }
 
     const editInvoice = () => {
         if (!invoiceForm.processing) {
             invoiceForm.post(route('invoice.save.edit', {invoice: props.invoice.map(invoice => invoice.id)[0]}), {
-                onSuccess: () => {
-                    invoiceForm.reset()
+                onSuccess: (response) => {
+                    toast.success(response.props.flash.message.edit_invoice)
+                },
+                onError: (response) => {
+                    toast.error(response.props.flash.message.edit_invoice)
                 }
             })
         }

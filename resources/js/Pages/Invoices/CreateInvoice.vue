@@ -13,7 +13,7 @@
             <div class="w-full flex flex-col gap-4 mx-auto">
                 <div class="w-full flex flex-row flex-wrap gap-4 mx-auto">
                     <!-- All customer information inputs container -->
-                    <div class="w-full min-w-[700px] flex-1 flex flex-col gap-6 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
+                    <div class="w-full xxl:max-w-[720px] xl:max-w-[100%] xxl:min-w-[720px] flex-1 flex flex-col gap-6 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
                         <!-- Customer selected input container -->
                         <div class="w-full relative flex flex-col gap-1 select-none">
                             <label 
@@ -235,7 +235,7 @@
                     </div>
 
                     <!-- Service/Product information inputs container -->
-                    <div class="w-full min-w-[700px] flex-1 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
+                    <div class="w-full xxl:min-w-[1030px] flex-1 mx-auto px-4 py-8 bg-white rounded border border-black border-opacity-10 shadow-sm-spread">
                         <!-- list of products and items container -->
                         <div class="w-full relative flex flex-col">
                             <h2 class="w-full mb-6 font-semibold relative text-base text-black tracking-wider">
@@ -291,6 +291,9 @@
                                         <td scope="row" class="max-w-[100px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
                                             <input type="number"
                                             v-model="input.quantity"
+                                            min="1"
+                                            max="999"
+                                            step="1"
                                             class="w-full no-arrow rounded border border-black border-opacity-10 transition duration-250 focus:ring-1 focus:ring-blue">
                                         </td>
                                         <td scope="row" class="w-[140px] py-4 px-6 text-black text-center border-r border-black border-opacity-5 last:border-0">
@@ -415,7 +418,7 @@
         shippingPostcode: null,
         inputs: [{
             service: null,
-            quantity: 0,
+            quantity: 1,
             price: 0,
             gst: false
         }]

@@ -17,19 +17,9 @@ class InvoiceOrder extends Model
    protected $fillable = [
        'invoice_id',
        'product_id',
-       'country_id',
        'quantity',
        'price',
-       'gst',
-       'invoice_date',
-       'due_date',
-       'shipping_date',
-       'state',
-       'house_address',
-       'city',
-       'postcode',
-       'created_at',
-       'updated_at',
+       'gst'
    ];
 
    public function invoices() {

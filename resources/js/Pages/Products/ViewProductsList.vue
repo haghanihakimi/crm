@@ -6,6 +6,7 @@
                     All Products
                 </h1>
                 <Link 
+                v-if="$page.props.abilities.canCreateProducts"
                 :href="route('product.create.view')" 
                 target="_self"
                 class="w-full w-fit rounded text-md text-white font-normal tracking-wider p-2 px-4 bg-warm-blue transition duration-150 hover:bg-blue" >

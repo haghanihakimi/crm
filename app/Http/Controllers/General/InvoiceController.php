@@ -86,14 +86,15 @@ class InvoiceController extends Controller
      */
     public function editInvoice($invoice, Request $request) {
         $this->validateInvoiceCreate($request);
-        dd($request->customers);
         
         if ($this->saveOrdersChanges($invoice, $request)) {
-            foreach ($request->customers as $key => $customer) {
-                dd($customer);
-            }
+            $this->saveInvoiceCustomersChanges($invoice, $request);
+            $this->saveInvoiceOrderChanges($request, $invoice);
+            return back()->with('message', ['edit_invoice' => 'All new changes successfully saved.']);
         }
-        dd("Bad");
+
+        return back()->with('message', ['edit_invoice' => 'Editing current invoice failed. Please try again later.']);
+        
     }
 
     /**
@@ -109,14 +110,14 @@ class InvoiceController extends Controller
             'shippingDate' => ['required', 'date'],
             'trackingNumber' => ['required', 'numeric'],
             'shippingCountry' => ['required', 'numeric'],
-            'shippingState' => ['required', 'string'],
-            'shippingHouseAddress' => ['required', 'string'],
-            'shippingSuburb' => ['required', 'string'],
-            'shippingPostcode' => ['required', 'string'],
+            'shippingState' => ['nullable', 'string'],
+            'shippingHouseAddress' => ['nullable', 'string'],
+            'shippingSuburb' => ['nullable', 'string'],
+            'shippingPostcode' => ['nullable', 'string'],
             'inputs' => ['required', 'array', 'min:1'],
             'inputs.*.service' => ['required', 'numeric', 'min:1'],
             'inputs.*.quantity' => ['required', 'numeric', 'min:1'],
-            'inputs.*.price' => ['required', 'numeric', 'min:1'],
+            'inputs.*.price' => ['required', 'numeric', 'min:0.01'],
             'inputs.*.gst' => ['required', 'boolean'],
         ]);
     }
@@ -126,7 +127,8 @@ class InvoiceController extends Controller
      * @return response
      */
     private function saveOrdersChanges($invoice, $request) {
-        return Invoice::find($invoice)->update([
+        return Invoice::where('id', $invoice)->update([
+            'country_id' => $request->shippingCountry,
             'tracking_number' => $request->trackingNumber,
             'invoice_date' => Carbon::parse($request->invoiceDate)->format('Y-m-d'),
             'due_date' => Carbon::parse($request->dueDate)->format('Y-m-d'),
@@ -134,8 +136,50 @@ class InvoiceController extends Controller
             'state' => $request->shippingState,
             'house_address' => $request->shippingHouseAddress,
             'city' => $request->shippingSuburb,
-            'postcode' => $request->shippingPostcode
+            'postcode' => $request->shippingPostcode,
+            'auto_mail' => $request->sendMail ? 'on' : 'off'
         ]);
+    }
+
+    /**
+     * Save all changes made to Invoice Customers table
+     * @return response
+     */
+    private function saveInvoiceCustomersChanges($invoice, $request) {
+        foreach ($request->customers as $customerInvoice) {
+            InvoiceCustomer::where('invoice_id', $invoice)->whereNotIn('customer_id', $request->customers)->delete();
+            InvoiceCustomer::firstOrCreate([
+                'invoice_id' => $invoice,
+                'customer_id' => $customerInvoice
+            ]);
+        }
+    }
+
+    /**
+     * Save all changes made to Invoice Orders table
+     * @return response
+     */
+    private function saveInvoiceOrderChanges($request, $invoice) {
+        $order_keys = [];
+        foreach ($request->inputs as $input) {
+            if (isset($input['order'])) {
+                $order_keys[] = $input['order'];
+                InvoiceOrder::where('id', $input['order'])->update([
+                    'product_id' => $input['service'],
+                    'quantity' => $input['quantity'],
+                    'price' => $input['price'],
+                    'gst' => $input['gst']
+                ]);
+            }
+            $removeProduct = InvoiceOrder::whereNotIn('id', $order_keys)->delete();
+            InvoiceOrder::firstOrCreate([
+                'invoice_id' => $invoice,
+                'product_id' => $input['service'],
+                'quantity' => $input['quantity'],
+                'price' => $input['price'],
+                'gst' => $input['gst'],
+            ]);
+        }
     }
 
     /**

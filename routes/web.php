@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\General\HomeController;
 use App\Http\Controllers\General\Dashboard;
 use App\Http\Controllers\General\UserRolesController;
+use App\Http\Controllers\General\UserController;
 use App\Http\Controllers\General\RolePermissionController;
 use App\Http\Controllers\General\CustomersController;
 use App\Http\Controllers\General\ProductsController;
@@ -21,8 +22,8 @@ Route::middleware(['guest'])->group(function () {
     });
 });
 
-//Authenticated routes
-Route::middleware(['auth'])->group(function () {
+//Authenticated Routes for Verified ONLY users
+Route::middleware(['auth','verified'])->group(function () {
     //Home Routes
     Route::controller(Dashboard::class)->group(function () {
         // Dashboard page - ADMIN ONLY ACCESS!
@@ -127,6 +128,18 @@ Route::middleware(['auth'])->group(function () {
     });
 
 });
+
+//
+Route::middleware(['auth'])->group(function() {
+    Route::controller(UserController::class)->group(function() {
+        Route::get('/settings/general', 'userGeneralSettingsView')->name('general.settings');
+        Route::get('/settings/security', 'userSecuritySettingsView')->name('security.settings');
+        Route::patch('/settings/update/general', 'updateGeneralSettings')->name('general.settings.update');
+        Route::patch('/settings/update/security/password', 'updatePassword')->name('update.security.password');
+        Route::patch('/settings/update/security/email/address', 'updateEmailAddress')->name('update.security.email');
+    });
+});
+
 
 //Authentication Routes
 require __DIR__.'/auth.php';

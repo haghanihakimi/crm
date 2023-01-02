@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 return new class extends Migration
 {
@@ -18,13 +19,16 @@ return new class extends Migration
             $table->id();
             $table->foreignId('country_id')->references("id")->on('countries')->onDelete('cascade');
             $table->string('tracking_number')->unique();
-            $table->date('invoice_date');
-            $table->date('due_date');
-            $table->date('shipping_date');
-            $table->string('state');
-            $table->string('house_address');
-            $table->string('city');
-            $table->string('postcode');
+            $table->date('invoice_date')->default(now());
+            $table->date('due_date')->default(now());
+            $table->date('shipping_date')->nullable();
+            $table->string('state')->nullable();
+            $table->string('house_address')->nullable();
+            $table->string('city')->nullable();
+            $table->string('postcode')->nullable();
+            $table->enum('auto_mail', ["on", "off", "timed"])->default("off");
+            $table->dateTime('auto_mail_time', $precision = 0)->nullable();
+            $table->boolean('auto_mail_status')->default(false);
             $table->timestamps();
         });
     }

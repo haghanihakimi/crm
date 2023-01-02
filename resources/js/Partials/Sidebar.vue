@@ -8,7 +8,7 @@
                     <div class="w-full flex flex-row gap-0">
                         <User class="w-[45px] h-[45px] rounded-full text-blue" />
                         <H2 class="w-full my-auto mx-0 py-0 px-2">
-                            {{`${$page.props.auth.user.fname} ${$page.props.auth.user.sname}`}}
+                            {{`${$page.props.auth.user.data.first_name} ${$page.props.auth.user.data.surname}`}}
                         </H2>
                     </div>
                     <ChevronUpIcon
@@ -24,7 +24,7 @@
                 leave-from-class="transform opacity-100"
                 leave-to-class="transform opacity-0">
                     <DisclosurePanel class="p-0 bg-white border border-black border-opacity-5 rounded">
-                        <Hyperlink :value="'Settings'" :link="route('signin')" />
+                        <Hyperlink :value="'Settings'" :link="route('general.settings')" />
                         <form action="/" method="POST" enctype="multipart/form-data" @submit.prevent="logout">
                             <btnSignout :disabled="logoutForm.processing" type="submit" role="button" :value="'Sign Out'" />
                         </form>

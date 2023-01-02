@@ -5,13 +5,14 @@
                 All Invoices
             </h1>
             <Link 
+            v-if="$page.props.abilities.canCreateInvoices"
             :href="route('invoice.create.view')" 
             target="_self"
             class="w-full w-fit rounded text-md text-white font-normal tracking-wider p-2 px-4 bg-warm-blue transition duration-150 hover:bg-blue" >
                 Create Invoice
             </Link>
             <Filter :params="params" class="relative z-10" />
-            <div class="w-full max-w-7xl m-auto mt-1 overflow-x-auto relative shadow-md rounded border border-black border-opacity-10">
+            <div class="w-full m-auto mt-1 overflow-x-auto relative shadow-md rounded border border-black border-opacity-10">
                 <table class="w-full text-sm text-left text-black bg-white">
                     <thead class="text-sm text-black uppercase bg-black bg-opacity-5 border-b border-black border-opacity-10">
                         <tr>

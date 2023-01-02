@@ -1,11 +1,12 @@
 <template>
     <Layout :title="'Brands'" :auth="auth">
         <div class="w-full relative m-auto px-4">
-            <div class="w-full max-w-7xl h-auto mx-auto mt-8 mb-4 relative flex flex-col justify-center items-start gap-4 z-50">
+            <div class="w-full max-w-8xl h-auto mx-auto mt-8 mb-4 relative flex flex-col justify-center items-start gap-4 z-50">
                 <h1 class="text-lg font-semibold tracking-wider capitalize">
                     All Brands
                 </h1>
                 <Link 
+                v-if="$page.props.abilities.canCreateBrands"
                 :href="route('brands.create.view')" 
                 target="_self"
                 class="w-full w-fit rounded text-md text-white font-normal tracking-wider p-2 px-4 bg-warm-blue transition duration-150 hover:bg-blue" >
@@ -13,7 +14,7 @@
                 </Link>
                 <BrandsFilter :params="params" />
             </div>
-            <div class="w-full max-w-7xl m-auto my-4 overflow-x-auto relative shadow-md rounded border border-black border-opacity-10 z-0">
+            <div class="w-full max-w-8xl m-auto my-4 overflow-x-auto relative shadow-md rounded border border-black border-opacity-10 z-0">
                 <table class="w-full text-sm text-left text-black">
                     <thead class="select-none text-sm text-black uppercase bg-black bg-opacity-[0.0075]">
                         <tr>
