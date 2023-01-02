@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthenticateController;
 use App\Http\Controllers\Auth\EmailVerification;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use Illuminate\Support\Facades\Route;
 
 //Signin Routes
@@ -22,5 +23,16 @@ Route::controller(RegisterController::class)->group(function () {
 
 //Email Verification
 Route::controller(EmailVerification::class)->group(function () {
+    Route::get('/email/verify', 'index')->middleware(['auth'])->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', 'verifyEmail')->whereNumber('id')->whereAlphaNumeric('hash')->middleware(['auth', 'signed'])->name('verification.verify');
+    Route::post('/email/verification-notification', 'resendLink')->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+});
+
+//Password Reset routes
+Route::controller(PasswordResetController::class)->group(function () {
+    Route::get('/forgotten/account', 'recoverAccountView')->middleware(['guest'])->name('forgotten.account');
+    Route::get('/reset-password/{token}', 'resetPasswordView')->name('password.reset');
+    Route::post('/reset-password', 'resetPassword')->name('password.update');
+    Route::post('/forgot-password', 'passwordResetRequest')->middleware(['throttle:6,1'])->name('password.email');
+    Route::post('/fogotten/account/receive/link', 'receiveResetPassword')->name('recover.account.email');
 });

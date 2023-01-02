@@ -107,7 +107,7 @@ var _hoisted_20 = {
 };
 
 var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "for": "invoice_date",
+  "for": "due_date",
   "class": "w-full text-sm text-black tracking-wider"
 }, " Invoice Due Date ", -1
 /* HOISTED */
@@ -391,16 +391,7 @@ function render(_ctx, _cache) {
         );
       }), 128
       /* KEYED_FRAGMENT */
-      ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.invoice.map(function (product) {
-        return product.products.map(function (product2) {
-          return product2.products;
-        });
-      })[0].map(function (product) {
-        return {
-          value: product.id,
-          label: product.name
-        };
-      })), 1
+      ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(), 1
       /* TEXT */
       ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" All fields/inputs container "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" All customer information inputs container "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Customer selected input container "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, (0,vue__WEBPACK_IMPORTED_MODULE_0__.mergeProps)({
         modelValue: _ctx.invoiceForm.customers,
@@ -432,6 +423,7 @@ function render(_ctx, _cache) {
           var inputValue = _ref.inputValue,
               togglePopover = _ref.togglePopover;
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+            id: "invoice_date",
             "class": "w-full min-h-[40px] cursor-pointer px-2 border border-black border-opacity-10 shadow-sm-spread rounded transition duration-200 outline-0 focus:ring-2 focus:ring-blue",
             value: inputValue,
             onClick: togglePopover,
@@ -458,6 +450,7 @@ function render(_ctx, _cache) {
           var inputValue = _ref2.inputValue,
               togglePopover = _ref2.togglePopover;
           return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+            id: "due_date",
             "class": "w-full min-h-[40px] cursor-pointer px-2 border border-black border-opacity-10 shadow-sm-spread rounded transition duration-200 outline-0 focus:ring-2 focus:ring-blue",
             value: inputValue,
             onClick: togglePopover,
@@ -666,8 +659,8 @@ function render(_ctx, _cache) {
       ))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Total calculation and details container "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, [_hoisted_76, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" $" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.subTotalCalculator), 1
       /* TEXT */
       )])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-        onClick: _cache[12] || (_cache[12] = function () {
-          return _ctx.createInvoice && _ctx.createInvoice.apply(_ctx, arguments);
+        onClick: _cache[12] || (_cache[12] = function ($event) {
+          return _ctx.editInvoice();
         }),
         type: "button",
         role: "button",

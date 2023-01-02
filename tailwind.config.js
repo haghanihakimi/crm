@@ -18,7 +18,8 @@ module.exports = {
       md: '768px',
       lg: '976px',
       xl: '1280px',
-      xxl: '1440px',
+      xxl: '1920px',
+      xxxl: '1440px',
     },
     colors: {
       // Palette

@@ -1,9 +1,16 @@
 <template>
     <Layout :title="'Customers'" :auth="auth">
-        <div class="w-full relative m-auto px-4">
-            <Heading2 class="text-lg px-0 py-8">
+        <div class="w-full relative m-auto px-4 flex flex-col gap-1">
+            <Heading2 class="text-lg px-0 pt-6">
                 All Customers
             </Heading2>
+            <Link 
+            v-if="$page.props.abilities.canCreateCustomers"
+            :href="route('customers.new.view')" 
+            target="_self"
+            class="w-full w-fit relative rounded text-md text-white font-normal tracking-wider mt-4 p-2 px-4 bg-warm-blue transition duration-150 hover:bg-blue" >
+                Add Customer
+            </Link>
             <!-- Customers List container -->
             <div class="w-full relative flex flex-col gap-6 py-6 z-5">
                 <!-- Filter list of customers based on given data: 

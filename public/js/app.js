@@ -1516,6 +1516,31 @@ __webpack_require__.r(__webpack_exports__);
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 var map = {
+	"./Auth/AccountRecovery.vue": [
+		"./resources/js/Pages/Auth/AccountRecovery.vue",
+		"/js/vendor",
+		"node_modules_moment_locale_sync_recursive_-resources_js_Pages_Auth_AccountRecovery_vue"
+	],
+	"./Auth/EmailVerify.vue": [
+		"./resources/js/Pages/Auth/EmailVerify.vue",
+		"/js/vendor",
+		"node_modules_moment_locale_sync_recursive_-resources_js_Pages_Auth_EmailVerify_vue"
+	],
+	"./Auth/GeneralSettings.vue": [
+		"./resources/js/Pages/Auth/GeneralSettings.vue",
+		"/js/vendor",
+		"node_modules_moment_locale_sync_recursive_-resources_js_Pages_Auth_GeneralSettings_vue"
+	],
+	"./Auth/ResetPassword.vue": [
+		"./resources/js/Pages/Auth/ResetPassword.vue",
+		"/js/vendor",
+		"node_modules_moment_locale_sync_recursive_-resources_js_Pages_Auth_ResetPassword_vue"
+	],
+	"./Auth/SecuritySettings.vue": [
+		"./resources/js/Pages/Auth/SecuritySettings.vue",
+		"/js/vendor",
+		"node_modules_moment_locale_sync_recursive_-resources_js_Pages_Auth_SecuritySettings_vue"
+	],
 	"./Auth/Signin.vue": [
 		"./resources/js/Pages/Auth/Signin.vue",
 		"/js/vendor",

@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\UserViewResource;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -41,7 +42,7 @@ class HandleInertiaRequests extends Middleware
             //'csrf' => csrf_token(),
             'auth' => [
                 'authenticate' => Auth::guard('web')->check(),
-                'user' => Auth::guard()->check() ? Auth::guard('web')->user() : [],
+                'user' => Auth::guard()->check() ? new UserViewResource(Auth::guard('web')->user()) : [],
             ],
             'flash' => [
                 'message' => fn () => $request->session()->get('message')

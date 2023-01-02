@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('password')->nullable();
             $table->string('default_password')->nullable()->default('password');
             $table->string('gender')->nullable();
+            $table->date('bdate')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
