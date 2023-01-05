@@ -1,6 +1,7 @@
 <template>
     <Layout :title="'Dashboard'" :auth="auth">
         <div class="w-full max-w-7xl m-auto">
+            {{customers}}
             <!-- All errors and messages from other pages which are redirected to this page after submission -->
             <div 
             v-if="flash.message" 
