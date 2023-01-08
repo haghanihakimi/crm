@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Customer extends Model
 {
@@ -39,7 +40,10 @@ class Customer extends Model
     }
 
     public function scopeAnalytics ($query) {
-        return $query->whereBetween('created_at', [now()->subMonth(1), now()])->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
+        $month = Carbon::parse(now())->endOfMonth()->toDateString();
+        $formatMonth = Carbon::parse($month)->format('d');
+        $halfMonth = Carbon::parse(now())->format('d') >= 15;
+        return $query->whereBetween('created_at', [now()->subMonth($halfMonth ? 0 : 1), now()])->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
             ->groupBy('date')
             ->orderBy('date', 'ASC')
             ->get();
