@@ -1422,6 +1422,9 @@ html,  body,  #app{
 .max-h-52{
   max-height: 13rem;
 }
+.max-h-\[300px\]{
+  max-height: 300px;
+}
 .min-h-screen{
   min-height: 100vh;
 }
@@ -1570,6 +1573,9 @@ html,  body,  #app{
 }
 .max-w-sm{
   max-width: 24rem;
+}
+.max-w-\[480px\]{
+  max-width: 480px;
 }
 .flex-1{
   flex: 1 1 0%;

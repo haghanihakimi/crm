@@ -37,10 +37,10 @@
                             </strong>
                             <strong class="font-semibold flex flex-row gap-0 items-center">
                                 {{
-                                    ((customers[0].total / 100) * customers.at(-1).total).toFixed(1) > 0
-                                        ? '+'+(customers[0].total / 100 * customers.at(-1).total).toFixed(1)
+                                    ((customers[0].total / 100) * customers[0].total).toFixed(1) > 0
+                                        ? '+'+(customers[0].total / 100 * customers[0].total).toFixed(1)
 
-                                        : '-'+(customers[0].total / 100 * customers.at(-1).total).toFixed(1)
+                                        : '-'+(customers[0].total / 100 * customers[0].total).toFixed(1)
                                 }}%
                                 <Increased class="w-4 h-4 text-sm" />
                             </strong>
@@ -106,12 +106,12 @@
                     </div>
                 </div>
             </div>
-            <!-- Google analytics traffic statics container -->
+            <!-- Google analytics traffic statistics container -->
             <div class="w-full h-auto mt-2 flex flex-row flex-wrap pb-8 px-4">
-                <h3 class="w-full text-left capitalize text-smooth-black tracking-wider text-lg font-semibold py-4">
-                    Audience statistics
+                <h3 class="w-full text-left capitalize text-smooth-black tracking-wider text-lg capitalize font-semibold py-4">
+                    financial analysis
                 </h3>
-                <!-- Website users statics -->
+                <!-- Website users statistics -->
                 <div class="w-full min-h-64 px-4 py-8 rounded border border-opacity-[0.05] border-smooth-black shadow-sm-spread bg-white-fc">
                     <canvas id="viewAnalytics" width="400"></canvas>
                 </div>
@@ -320,25 +320,29 @@
             type: 'line',
             data: {
                 labels: dates,
-                datasets: [{
-                    label: 'Customers',
-                    data: data,
-                    fill: false,
-                    borderColor: '#0059bf',
-                    tension: 0.1
-                },{
-                    label: 'Invoices',
-                    data: [100, 600, 2000, 3300, 4000, 5000],
-                    fill: false,
-                    borderColor: '#0ea785',
-                    tension: 0.1
-                },{
-                    label: 'Income',
-                    data: [500, 800, 1960, 2500, 2800, 5000],
-                    fill: false,
-                    borderColor: '#ffce4e',
-                    tension: 0.1
-                }]
+                datasets: [
+                    {
+                        label: 'Customers',
+                        data: data,
+                        fill: false,
+                        borderColor: '#0059bf',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Invoices',
+                        data: [100, 600, 2000, 3300, 4000, 5000],
+                        fill: false,
+                        borderColor: '#0ea785',
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Income',
+                        data: [500, 800, 1960, 2500, 2800, 5000],
+                        fill: false,
+                        borderColor: '#ffce4e',
+                        tension: 0.1
+                    }
+                ]
             },
             options: viewAnalyticsChartOptions
         })
