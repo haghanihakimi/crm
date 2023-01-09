@@ -28,20 +28,16 @@
                     <!-- Total sale and percentage box -->
                     <div class="w-full flex flex-col gap-0 text-black">
                         <strong class="w-full capitalize tracking-wider text-lg font-bold px-6 pt-2">
-                            {{totalCustomers}}
+                            {{totalCustomers >= 0 ? totalCustomers : `-${totalCustomers}` }}
                         </strong>
                         <div class="w-full flex flex-row justify-between items-center px-6 pt-0 pb-4 capitalize text-sm tracking-wider font-normal">
                             <strong class="font-normal">
                                 {{totalCustomers >= 2 ? 'Customers' : 'Customer'}}
                             </strong>
                             <strong class="font-semibold flex flex-row gap-0 items-center">
-                                {{
-                                    ((customers[0].total / 100) * customers[0].total).toFixed(1) > 0
-                                        ? '+'+(customers[0].total / 100 * customers[0].total).toFixed(1)
-
-                                        : '-'+(customers[0].total / 100 * customers[0].total).toFixed(1)
-                                }}%
-                                <Increased class="w-4 h-4 text-sm" />
+                                {{ average.toFixed(1) }}%
+                                <Increased v-if="totalCustomers > 0" class="w-4 h-4 text-sm" />
+                                <Decreased v-if="totalCustomers < 0" class="w-4 h-4 text-sm" />
                             </strong>
                         </div>
                     </div>
@@ -126,6 +122,7 @@
     import { 
         CurrencyDollarIcon as Dollar,
         ArrowSmallUpIcon as Increased,
+        ArrowSmallDownIcon as Decreased,
         ShoppingBagIcon as Orders
     } from '@heroicons/vue/24/outline'
     import { 
@@ -136,7 +133,7 @@
         auth: Object,
         flash: Object,
         customers: Object,
-        month: String
+        average: Number,
     })
 
     const totalCustomers = computed(() => {
