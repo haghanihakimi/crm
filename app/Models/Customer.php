@@ -43,10 +43,20 @@ class Customer extends Model
         $month = Carbon::parse(now())->endOfMonth()->toDateString();
         $formatMonth = Carbon::parse($month)->format('d');
         $halfMonth = Carbon::parse(now())->format('d') >= 15;
-        return $query->whereBetween('created_at', [now()->subDays(10), now()])
+        return $query->whereBetween('created_at', [now()->subDays(14), now()])
             ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
             ->groupBy('date')
             ->orderBy('date', 'ASC')
+            ->get();
+    }
+
+    public function scopeOldAnalytics($query) {
+        $lastTwoWeeks = now()->subDays(14);
+        $lastFourWeeks = Carbon::parse($lastTwoWeeks)->subDays(14);
+
+        return $query->whereBetween('created_at', [$lastFourWeeks, $lastTwoWeeks])
+            ->select(DB::raw('count(*) as total'))
+            ->groupBy('created_at')
             ->get();
     }
 

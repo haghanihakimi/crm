@@ -18,7 +18,7 @@ class Dashboard extends Controller
         $formatMonth = Carbon::parse($month)->format('d');
         return Inertia::render('Dashboard', [
             'customers' => count(Customer::analytics()) <= 0 ? [['date' => null, 'total' => 0]] : Customer::analytics(),
-            'month' => now()->subDays(10),
+            'average' => count(Customer::analytics()) > 0 ? Customer::analytics()->sum('total') / Customer::oldAnalytics()->sum('total') : 0,
         ]);
     }
 
