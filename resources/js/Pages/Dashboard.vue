@@ -1,7 +1,6 @@
 <template>
     <Layout :title="'Dashboard'" :auth="auth">
         <div class="w-full max-w-7xl m-auto">
-            {{customers}}
             <!-- All errors and messages from other pages which are redirected to this page after submission -->
             <div 
             v-if="flash.message" 
@@ -29,11 +28,11 @@
                     <!-- Total sale and percentage box -->
                     <div class="w-full flex flex-col gap-0 text-black">
                         <strong class="w-full capitalize tracking-wider text-lg font-bold px-6 pt-2">
-                            3,600
+                            {{totalCustomers}}
                         </strong>
                         <div class="w-full flex flex-row justify-between items-center px-6 pt-0 pb-4 capitalize text-sm tracking-wider font-normal">
                             <strong class="font-normal">
-                                Customers
+                                {{totalCustomers >= 2 ? 'Customers' : 'Customer'}}
                             </strong>
                             <strong class="font-semibold flex flex-row gap-0 items-center">
                                 {{
@@ -138,7 +137,11 @@
         flash: Object,
         customers: Object,
         month: String
-    });
+    })
+
+    const totalCustomers = computed(() => {
+        return props.customers.map(customer => customer.total).reduce((sum, a) => sum + a, 0)
+    })
 
     const smallChartsOptions = {
         animations: {
@@ -330,14 +333,14 @@
                     },
                     {
                         label: 'Invoices',
-                        data: [100, 600, 2000, 3300, 4000, 5000],
+                        data: [1, 5, 7, 8, 9, 15],
                         fill: false,
                         borderColor: '#0ea785',
                         tension: 0.1
                     },
                     {
                         label: 'Income',
-                        data: [500, 800, 1960, 2500, 2800, 5000],
+                        data: [4, 8, 7, 16, 14, 18],
                         fill: false,
                         borderColor: '#ffce4e',
                         tension: 0.1
