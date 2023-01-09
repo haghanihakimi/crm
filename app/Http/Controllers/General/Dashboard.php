@@ -18,7 +18,24 @@ class Dashboard extends Controller
         $formatMonth = Carbon::parse($month)->format('d');
         return Inertia::render('Dashboard', [
             'customers' => count(Customer::analytics()) <= 0 ? [['date' => null, 'total' => 0]] : Customer::analytics(),
-            'month' => Carbon::now()->days()->format('d')
+            'month' => now()->subDays(10),
         ]);
+    }
+
+    private function filterCustomerAnalytics() {
+        $customers = [];
+        $data = [];
+        if (count(Customer::analytics()) > 0) {
+            foreach (Customer::analytics() as $customer) {
+                if (!in_array(Carbon::parse($customer->date)->format('M'), $customers)) {
+                    $data[] = $customer;
+                    $customers[] = Carbon::parse($customer->date)->format('M');
+                }
+            }
+        } else {
+            $data = [['date' => null, 'total' => 0]];
+        }
+
+        return $data;
     }
 }

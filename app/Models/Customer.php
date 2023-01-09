@@ -43,7 +43,8 @@ class Customer extends Model
         $month = Carbon::parse(now())->endOfMonth()->toDateString();
         $formatMonth = Carbon::parse($month)->format('d');
         $halfMonth = Carbon::parse(now())->format('d') >= 15;
-        return $query->whereBetween('created_at', [now()->subMonth($halfMonth ? 0 : 1), now()])->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
+        return $query->whereBetween('created_at', [now()->subDays(10), now()])
+            ->select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as total'))
             ->groupBy('date')
             ->orderBy('date', 'ASC')
             ->get();
