@@ -26,7 +26,6 @@ class CountrySeeder extends Seeder
         // to populate data into Countries table
 
         $countries = [
-            ["name"=>"Afghanistan","code"=>"AF","phone"=>93,"symbol"=>"؋","capital"=>"Kabul","currency"=>"AFN","continent"=>"Asia","continent_code"=>"AS","alpha_3"=>"AFG"],
             ["name"=>"Aland Islands","code"=>"AX","phone"=>358,"symbol"=>"€","capital"=>"Mariehamn","currency"=>"EUR","continent"=>"Europe","continent_code"=>"EU","alpha_3"=>"ALA"],
             ["name"=>"Albania","code"=>"AL","phone"=>355,"symbol"=>"Lek","capital"=>"Tirana","currency"=>"ALL","continent"=>"Europe","continent_code"=>"EU","alpha_3"=>"ALB"],
             ["name"=>"Algeria","code"=>"DZ","phone"=>213,"symbol"=>"دج","capital"=>"Algiers","currency"=>"DZD","continent"=>"Africa","continent_code"=>"AF","alpha_3"=>"DZA"],

@@ -1,7 +1,7 @@
 <template>
     <Layout :title="'Dashboard'" :auth="auth">
         <div class="w-full max-w-7xl m-auto">
-            {{ test }}
+            {{invoices.invoices}}
             <!-- All errors and messages from other pages which are redirected to this page after submission -->
             <div 
             v-if="flash.message" 
@@ -13,13 +13,13 @@
 
 
             <div class="w-full relative flex flex-row gap-4 py-8 px-4">
-                <!-- Sales statics box -->
+                <!-- Number of customers statics box -->
                 <div class="select-none w-full min-w-[280px] flex-1 rounded bg-warm-blue bg-opacity-80 shadow-md-spread">
                     <!-- Heading row -->
                     <div class="w-full py-2 px-6 flex flex-row justify-between items-center">
                         <!-- Sales icon box -->
                         <div class="w-6 h-6 relative rounded-full">
-                            <Dollar class="w-6 h-6 text-sm text-black" />
+                            <Customers class="w-6 h-6 text-sm text-black" />
                         </div>
                         <!-- Sales statics bar box -->
                         <div class="w-full max-w-[120px] flex items-center justify-center">
@@ -29,41 +29,41 @@
                     <!-- Total sale and percentage box -->
                     <div class="w-full flex flex-col gap-0 text-black">
                         <strong class="w-full capitalize tracking-wider text-lg font-bold px-6 pt-2">
-                            {{ customers >= 0 ? customers : `-${customers}` }}
+                            {{ customers.customerCounter <= 9 ? `0${customers.customerCounter}` : customers.customerCounter }}
                         </strong>
                         <div class="w-full flex flex-row justify-between items-center px-6 pt-0 pb-4 capitalize text-sm tracking-wider font-normal">
                             <strong class="font-normal">
-                                {{customers >= 2 ? 'Customers' : 'Customer'}}
+                                {{customers.customers <= 1 ? 'Customer' : 'Customers'}}
                             </strong>
                             <strong class="font-semibold flex flex-row gap-0 items-center">
-                                {{ average.toFixed(1) }}%
-                                <Increased v-if="avStatus === 'positive'" class="w-4 h-4 text-sm" />
-                                <Decreased v-if="avStatus === 'negative'" class="w-4 h-4 text-sm" />
+                                {{ customers.average.toFixed(1) }}%
+                                <Increased v-if="customers.avStatus === 'positive'" class="w-4 h-4 text-sm" />
+                                <Decreased v-if="customers.avStatus === 'negative'" class="w-4 h-4 text-sm" />
                             </strong>
                         </div>
                     </div>
                 </div>
-                <!-- Products statics box -->
+                <!-- Sales statics box -->
                 <div class="select-none w-full min-w-[280px] flex-1 rounded bg-green shadow-md-spread">
                     <!-- Heading row -->
                     <div class="w-full py-2 px-6 flex flex-row justify-between items-center">
-                        <!-- Products icon box -->
+                        <!-- Sales icon box -->
                         <div class="w-6 h-6 relative rounded-full">
-                            <Product class="w-6 h-6 text-sm text-smooth-black" />
+                            <Money class="w-6 h-6 text-sm text-smooth-black" />
                         </div>
-                        <!-- Products statics bar box -->
+                        <!-- Sales statics bar box -->
                         <div class="w-full max-w-[120px] flex items-center justify-center">
                             <canvas id="productsChart" height="90"></canvas>
                         </div>
                     </div>
-                    <!-- Number of products and percentage box -->
+                    <!-- Number of Sales and percentage box -->
                     <div class="w-full flex flex-col gap-0">
                         <strong class="w-full capitalize text-smooth-black tracking-wider text-lg font-bold px-6 pt-2">
-                            1,486
+                            $666.00
                         </strong>
                         <div class="w-full flex flex-row justify-between items-center px-6 pt-0 pb-4 capitalize text-sm tracking-wider font-normal">
                             <strong class="font-normal">
-                                All Products
+                                Sales
                             </strong>
                             <strong class="font-semibold flex flex-row gap-0 items-center">
                                 +30%
@@ -121,23 +121,18 @@
     import moment from 'moment'
     import Chart from 'chart.js/auto'
     import { 
-        CurrencyDollarIcon as Dollar,
+        UserGroupIcon as Customers,
+        CurrencyDollarIcon as Money,
         ArrowSmallUpIcon as Increased,
         ArrowSmallDownIcon as Decreased,
-        ShoppingBagIcon as Orders
+        ShoppingBagIcon as Orders,
     } from '@heroicons/vue/24/outline'
-    import { 
-        CubeIcon as Product
-    } from '@heroicons/vue/24/solid'
 
     const props = defineProps({
         auth: Object,
         flash: Object,
-        customers: Number,
-        average: Number,
-        avStatus: String,
-
-        test: Number,
+        customers: Object,
+        invoices: Object,
     })
 
     const smallChartsOptions = {
@@ -249,9 +244,9 @@
         let dates = []
         let data = []
         
-        for (let i = 0;i < props.customers.length; i++) {
-            dates.push(moment(props.customers[i].date).format('MMM D'))
-            data.push(props.customers[i].total)
+        for (let i = 0;i < props.customers.customers.length; i++) {
+            dates.push(moment(props.customers.customers[i].date).format('MMM D'))
+            data.push(props.customers.customers[i].total)
         }
         
         new Chart(ctx, {
@@ -270,15 +265,15 @@
         })
     }
 
-    const drawProductsChart = () => {
+    const drawSalesChart = () => {
         let ctx = document.getElementById('productsChart').getContext('2d')
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
                 datasets: [{
                     label: 'xxx',
-                    data: [446, 300, 594, 786, 848, 998, 998, 1024, 1084, 1100, 1110, 1128, 1128, 1128, 1128, 1245, 1245, 1364, 1245, 1245, 1245, 1400, 1420, 1440, 1450, 1455, 1464, 1468, 1470, 1485, 1486],
+                    data: [45000, 48950, 51350, 55000, 848, 998, 998, 1024, 1084, 1100, 1110, 1128, 1128, 1128, 1128],
                     fill: false,
                     borderColor: '#151630',
                     tension: 0.1
@@ -311,9 +306,9 @@
         let dates = []
         let data = []
         
-        for (let i = 0;i < props.customers.length; i++) {
-            dates.push(moment(props.customers[i].date).format('MMM D'))
-            data.push(props.customers[i].total)
+        for (let i = 0;i < props.customers.customers.length; i++) {
+            dates.push(moment(props.customers.customers[i].date).format('MMM D'))
+            data.push(props.customers.customers[i].total)
         }
 
         new Chart(ctx, {
@@ -329,15 +324,15 @@
                         tension: 0.1
                     },
                     {
-                        label: 'Invoices',
-                        data: [1, 5, 7, 8, 9, 15],
+                        label: 'Sales',
+                        data: [21050, 42000, 45000, 47000, 52000, 58000, 65000, 75000, 95000, 98000, 95000, 90000, 100000, 98000, 101000],
                         fill: false,
                         borderColor: '#0ea785',
                         tension: 0.1
                     },
                     {
-                        label: 'Income',
-                        data: [4, 8, 7, 16, 14, 18],
+                        label: 'Orders',
+                        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
                         fill: false,
                         borderColor: '#ffce4e',
                         tension: 0.1
@@ -350,7 +345,7 @@
 
     onMounted (() => {
         drawCustomerChart()
-        drawProductsChart()
+        drawSalesChart()
         drawOrdersChart()
         drawViewAnalyticsChart()
     })
