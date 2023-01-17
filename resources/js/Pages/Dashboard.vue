@@ -1,6 +1,7 @@
 <template>
     <Layout :title="'Dashboard'" :auth="auth">
         <div class="w-full max-w-7xl m-auto">
+            {{ test }}
             <!-- All errors and messages from other pages which are redirected to this page after submission -->
             <div 
             v-if="flash.message" 
@@ -28,16 +29,16 @@
                     <!-- Total sale and percentage box -->
                     <div class="w-full flex flex-col gap-0 text-black">
                         <strong class="w-full capitalize tracking-wider text-lg font-bold px-6 pt-2">
-                            {{totalCustomers >= 0 ? totalCustomers : `-${totalCustomers}` }}
+                            {{ customers >= 0 ? customers : `-${customers}` }}
                         </strong>
                         <div class="w-full flex flex-row justify-between items-center px-6 pt-0 pb-4 capitalize text-sm tracking-wider font-normal">
                             <strong class="font-normal">
-                                {{totalCustomers >= 2 ? 'Customers' : 'Customer'}}
+                                {{customers >= 2 ? 'Customers' : 'Customer'}}
                             </strong>
                             <strong class="font-semibold flex flex-row gap-0 items-center">
                                 {{ average.toFixed(1) }}%
-                                <Increased v-if="totalCustomers > 0" class="w-4 h-4 text-sm" />
-                                <Decreased v-if="totalCustomers < 0" class="w-4 h-4 text-sm" />
+                                <Increased v-if="avStatus === 'positive'" class="w-4 h-4 text-sm" />
+                                <Decreased v-if="avStatus === 'negative'" class="w-4 h-4 text-sm" />
                             </strong>
                         </div>
                     </div>
@@ -132,12 +133,11 @@
     const props = defineProps({
         auth: Object,
         flash: Object,
-        customers: Object,
+        customers: Number,
         average: Number,
-    })
+        avStatus: String,
 
-    const totalCustomers = computed(() => {
-        return props.customers.map(customer => customer.total).reduce((sum, a) => sum + a, 0)
+        test: Number,
     })
 
     const smallChartsOptions = {

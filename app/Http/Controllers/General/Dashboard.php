@@ -4,38 +4,20 @@ namespace App\Http\Controllers\General;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Hash;
 use App\Models\Customer;
 use Inertia\Inertia;
-use Carbon\Carbon;
+use App\Http\Customizations\FilterNumbers;
 
 class Dashboard extends Controller
 {
     public function index () {
-        $month = Carbon::parse(now())->endOfMonth()->toDateString();
-        $formatMonth = Carbon::parse($month)->format('d');
+        $newAnalytics = Customer::newAnalytics()->sum('total');
+        $oldAnalytidcs = Customer::oldAnalytics()->sum('total');
         return Inertia::render('Dashboard', [
-            'customers' => count(Customer::analytics()) <= 0 ? [['date' => null, 'total' => 0]] : Customer::analytics(),
-            'average' => count(Customer::analytics()) > 0 ? Customer::analytics()->sum('total') / Customer::oldAnalytics()->sum('total') : 0,
+            'customers' => count(Customer::newAnalytics()) <= 0 ? [['date' => null, 'total' => 0]] : $newAnalytics + $oldAnalytidcs,
+            'average' => count(Customer::newAnalytics()) > 0 ? abs((($oldAnalytidcs - $newAnalytics) / $oldAnalytidcs) * 100) : 0,
+            'avStatus' => $newAnalytics > $oldAnalytidcs ? 'positive' : 'negative',
+            'test' => FilterNumbers::filter(1996),
         ]);
-    }
-
-    private function filterCustomerAnalytics() {
-        $customers = [];
-        $data = [];
-        if (count(Customer::analytics()) > 0) {
-            foreach (Customer::analytics() as $customer) {
-                if (!in_array(Carbon::parse($customer->date)->format('M'), $customers)) {
-                    $data[] = $customer;
-                    $customers[] = Carbon::parse($customer->date)->format('M');
-                }
-            }
-        } else {
-            $data = [['date' => null, 'total' => 0]];
-        }
-
-        return $data;
     }
 }
