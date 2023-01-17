@@ -39,7 +39,7 @@ class Customer extends Model
         return $this->hasMany(InvoiceCustomers::class, 'customer_id');
     }
 
-    public function scopeAnalytics ($query) {
+    public function scopeNewAnalytics ($query) {
         $month = Carbon::parse(now())->endOfMonth()->toDateString();
         $formatMonth = Carbon::parse($month)->format('d');
         $halfMonth = Carbon::parse(now())->format('d') >= 15;
