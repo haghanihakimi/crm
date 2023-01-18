@@ -24,7 +24,7 @@ class CustomerFactory extends Factory
             'gender' => $this->faker->randomElement(['female', 'male']),
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->unique()->numerify('########'),
-            'created_at' => $this->faker->dateTimeBetween($startDate = '-20 days', $endDate = 'now', $timezone = null)
+            'created_at' => $this->faker->dateTimeBetween($startDate = '-28 days', $endDate = 'now', $timezone = null)
         ];
     }
 }

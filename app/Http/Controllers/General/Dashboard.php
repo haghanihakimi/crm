@@ -12,17 +12,18 @@ use App\Http\Customizations\FilterNumbers;
 class Dashboard extends Controller
 {
     public function index () {
-        $newAnalytics = Customer::newAnalytics()->sum('total');
-        $oldAnalytidcs = Customer::oldAnalytics()->sum('total');
         return Inertia::render('Dashboard', [
             'customers' => [
                 'customers' => count(Customer::newAnalytics()) <= 0 ? [['date' => null, 'total' => 0]] : Customer::newAnalytics(),
-                'average' => count(Customer::newAnalytics()) > 0 ? abs((($oldAnalytidcs - $newAnalytics) / $oldAnalytidcs) * 100) : 0,
-                'avStatus' => $newAnalytics > $oldAnalytidcs ? 'positive' : 'negative',
-                'customerCounter' => count(Customer::newAnalytics()) <= 0 ? [['date' => null, 'total' => 0]] : FilterNumbers::numbers($newAnalytics + $oldAnalytidcs),
+                'average' => count(Customer::newAnalytics()) > 0 ? abs(((Customer::oldAnalytics()->sum('total') - Customer::newAnalytics()->sum('total')) / Customer::oldAnalytics()->sum('total')) * 100) : 0,
+                'avStatus' => Customer::newAnalytics()->sum('total') > Customer::oldAnalytics()->sum('total') ? 'positive' : 'negative',
+                'customerCounter' => count(Customer::newAnalytics()) <= 0 ? [['date' => null, 'total' => 0]] : FilterNumbers::numbers(Customer::newAnalytics()->sum('total') + Customer::oldAnalytics()->sum('total')),
             ],
             'invoices' => [
-                'invoices' => Invoice::newAnalytics(),
+                'invoices' => count(Invoice::newAnalytics()) <= 0 ? [['date' => null, 'total' => 0]] : Invoice::newAnalytics(),
+                'average' => count(Invoice::newAnalytics()) > 0 ? abs(((Invoice::oldAnalytics()->sum('total') - Invoice::newAnalytics()->sum('total')) / Invoice::oldAnalytics()->sum('total')) * 100) : 0,
+                'avStatus' => Invoice::newAnalytics()->sum('total') > Invoice::oldAnalytics()->sum('total') ? 'positive' : 'negative',
+                'invoiceCounter' => count(Customer::newAnalytics()) <= 0 ? [['date' => null, 'total' => 0]] : FilterNumbers::money(Invoice::newAnalytics()->sum('total') + Invoice::oldAnalytics()->sum('total')),
             ]
         ]);
     }

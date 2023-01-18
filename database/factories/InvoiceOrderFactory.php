@@ -18,12 +18,17 @@ class InvoiceOrderFactory extends Factory
      */
     public function definition()
     {
+        $quantity = rand(1,8);
+        $price = rand(100,9999);
+        $total = ($price * $quantity) / 10;
         return [
             'invoice_id' => Invoice::all()->random()->id,
             'product_id' => Product::all()->random()->id,
-            'quantity' => rand(1,8),
-            'price' => rand(100,9999),
-            'gst' => $this->faker->randomElement([true, false]),
+            'quantity' => $quantity,
+            'price' => $price,
+            'gst' => 10,
+            'total_price' => ($price * $quantity) + $total,
+            'created_at' => $this->faker->dateTimeBetween($startDate = '-30 days', $endDate = 'now', $timezone = null)
         ];
     }
 }
