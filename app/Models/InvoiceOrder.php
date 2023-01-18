@@ -21,7 +21,8 @@ class InvoiceOrder extends Model
        'product_id',
        'quantity',
        'price',
-       'gst'
+       'gst',
+       'total_price',
    ];
 
    public function invoices() {

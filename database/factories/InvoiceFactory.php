@@ -29,7 +29,8 @@ class InvoiceFactory extends Factory
             'postcode' => '3214',
             'auto_mail' => 'on', 
             'auto_mail_time' => null,
-            'auto_mail_status' => 1
+            'auto_mail_status' => 1,
+            'created_at' => $this->faker->dateTimeBetween($startDate = '-30 days', $endDate = 'now', $timezone = null)
         ];
     }
 }

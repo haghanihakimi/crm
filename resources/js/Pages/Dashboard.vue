@@ -1,7 +1,6 @@
 <template>
     <Layout :title="'Dashboard'" :auth="auth">
         <div class="w-full max-w-7xl m-auto">
-            {{invoices.invoices}}
             <!-- All errors and messages from other pages which are redirected to this page after submission -->
             <div 
             v-if="flash.message" 
@@ -53,21 +52,22 @@
                         </div>
                         <!-- Sales statics bar box -->
                         <div class="w-full max-w-[120px] flex items-center justify-center">
-                            <canvas id="productsChart" height="90"></canvas>
+                            <canvas id="salesChart" height="90"></canvas>
                         </div>
                     </div>
                     <!-- Number of Sales and percentage box -->
                     <div class="w-full flex flex-col gap-0">
                         <strong class="w-full capitalize text-smooth-black tracking-wider text-lg font-bold px-6 pt-2">
-                            $666.00
+                            {{ invoices.invoiceCounter <= 9 ? `0${invoices.invoiceCounter}` : invoices.invoiceCounter }}
                         </strong>
                         <div class="w-full flex flex-row justify-between items-center px-6 pt-0 pb-4 capitalize text-sm tracking-wider font-normal">
                             <strong class="font-normal">
                                 Sales
                             </strong>
                             <strong class="font-semibold flex flex-row gap-0 items-center">
-                                +30%
-                                <Increased class="w-4 h-4 text-sm text-smooth-black" />
+                                {{ invoices.average.toFixed(1) }}%
+                                <Increased v-if="invoices.avStatus === 'positive'" class="w-4 h-4 text-sm" />
+                                <Decreased v-if="invoices.avStatus === 'negative'" class="w-4 h-4 text-sm" />
                             </strong>
                         </div>
                     </div>
@@ -266,14 +266,22 @@
     }
 
     const drawSalesChart = () => {
-        let ctx = document.getElementById('productsChart').getContext('2d')
+        let ctx = document.getElementById('salesChart').getContext('2d')
+        let dates = []
+        let data = []
+        
+        for (let i = 0;i < props.invoices.invoices.length; i++) {
+            dates.push(moment(props.invoices.invoices[i].date).format('MMM D'))
+            data.push(`${props.invoices.invoices[i].total}`)
+        }
+
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
+                labels: dates,
                 datasets: [{
                     label: 'xxx',
-                    data: [45000, 48950, 51350, 55000, 848, 998, 998, 1024, 1084, 1100, 1110, 1128, 1128, 1128, 1128],
+                    data: data,
                     fill: false,
                     borderColor: '#151630',
                     tension: 0.1
@@ -304,11 +312,16 @@
     const drawViewAnalyticsChart = () => {
         let ctx = document.getElementById('viewAnalytics').getContext('2d')
         let dates = []
-        let data = []
+        let customersData = []
+        let salesData = []
         
         for (let i = 0;i < props.customers.customers.length; i++) {
             dates.push(moment(props.customers.customers[i].date).format('MMM D'))
-            data.push(props.customers.customers[i].total)
+            customersData.push(props.customers.customers[i].total)
+        }
+
+        for (let i = 0;i < props.invoices.invoices.length; i++) {
+            salesData.push(props.invoices.invoices[i].total)
         }
 
         new Chart(ctx, {
@@ -318,14 +331,14 @@
                 datasets: [
                     {
                         label: 'Customers',
-                        data: data,
+                        data: customersData,
                         fill: false,
                         borderColor: '#0059bf',
                         tension: 0.1
                     },
                     {
                         label: 'Sales',
-                        data: [21050, 42000, 45000, 47000, 52000, 58000, 65000, 75000, 95000, 98000, 95000, 90000, 100000, 98000, 101000],
+                        data: salesData,
                         fill: false,
                         borderColor: '#0ea785',
                         tension: 0.1
