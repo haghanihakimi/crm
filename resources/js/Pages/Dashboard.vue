@@ -35,7 +35,7 @@
                                 {{customers.customers <= 1 ? 'Customer' : 'Customers'}}
                             </strong>
                             <strong class="font-semibold flex flex-row gap-0 items-center">
-                                {{ customers.average.toFixed(1) }}%
+                                {{ customers.avStatus === 'positive' ? customers.average.toFixed(1) : `-${customers.average.toFixed(1)}` }}%
                                 <Increased v-if="customers.avStatus === 'positive'" class="w-4 h-4 text-sm" />
                                 <Decreased v-if="customers.avStatus === 'negative'" class="w-4 h-4 text-sm" />
                             </strong>
@@ -58,16 +58,16 @@
                     <!-- Number of Sales and percentage box -->
                     <div class="w-full flex flex-col gap-0">
                         <strong class="w-full capitalize text-smooth-black tracking-wider text-lg font-bold px-6 pt-2">
-                            {{ invoices.invoiceCounter <= 9 ? `0${invoices.invoiceCounter}` : invoices.invoiceCounter }}
+                            {{ sales.salesCounter <= 9 ? `0${sales.salesCounter}` : sales.salesCounter }}
                         </strong>
                         <div class="w-full flex flex-row justify-between items-center px-6 pt-0 pb-4 capitalize text-sm tracking-wider font-normal">
                             <strong class="font-normal">
                                 Sales
                             </strong>
                             <strong class="font-semibold flex flex-row gap-0 items-center">
-                                {{ invoices.average.toFixed(1) }}%
-                                <Increased v-if="invoices.avStatus === 'positive'" class="w-4 h-4 text-sm" />
-                                <Decreased v-if="invoices.avStatus === 'negative'" class="w-4 h-4 text-sm" />
+                                {{ sales.avStatus === 'positive' ? sales.average.toFixed(1) : `-${sales.average.toFixed(1)}` }}%
+                                <Increased v-if="sales.avStatus === 'positive'" class="w-4 h-4 text-sm" />
+                                <Decreased v-if="sales.avStatus === 'negative'" class="w-4 h-4 text-sm" />
                             </strong>
                         </div>
                     </div>
@@ -88,15 +88,16 @@
                     <!-- Number of Orders and percentage box -->
                     <div class="w-full flex flex-col gap-0">
                         <strong class="w-full capitalize text-smooth-black tracking-wider text-lg font-bold px-6 pt-2">
-                            3,600
+                            {{ orders.ordersCounter <= 9 ? `0${orders.ordersCounter}` : orders.ordersCounter }}
                         </strong>
                         <div class="w-full flex flex-row justify-between items-center px-6 pt-0 pb-4 capitalize text-sm tracking-wider font-normal">
                             <strong class="font-normal">
-                                total orders
+                                Orders
                             </strong>
                             <strong class="font-semibold flex flex-row gap-0 items-center">
-                                +34%
-                                <Increased class="w-4 h-4 text-sm text-smooth-black" />
+                                {{ orders.avStatus === 'positive' ? orders.average.toFixed(1) : `-${orders.average.toFixed(1)}` }}%
+                                <Increased v-if="orders.avStatus === 'positive'" class="w-4 h-4 text-sm" />
+                                <Decreased v-if="orders.avStatus === 'negative'" class="w-4 h-4 text-sm" />
                             </strong>
                         </div>
                     </div>
@@ -110,6 +111,10 @@
                 <!-- Website users statistics -->
                 <div class="w-full min-h-64 px-4 py-8 rounded border border-opacity-[0.05] border-smooth-black shadow-sm-spread bg-white-fc">
                     <canvas id="viewAnalytics" width="400"></canvas>
+                    <button @click="resetZoom"
+                    class="w-fit h-fit px-2 py-1 text-sm font-medium tracking-wide ml-14 mt-4 rounded bg-warm-blue text-white transition duration-500 hover:bg-blue">
+                        Reset Zoom
+                    </button>
                 </div>
             </div>
         </div>
@@ -120,6 +125,7 @@
     import { computed, onMounted } from '@vue/runtime-core';
     import moment from 'moment'
     import Chart from 'chart.js/auto'
+    import zoomPlugin from 'chartjs-plugin-zoom';
     import { 
         UserGroupIcon as Customers,
         CurrencyDollarIcon as Money,
@@ -132,7 +138,8 @@
         auth: Object,
         flash: Object,
         customers: Object,
-        invoices: Object,
+        sales: Object,
+        orders: Object,
     })
 
     const smallChartsOptions = {
@@ -206,6 +213,22 @@
             },
             tooltip: {
                 // enabled: false
+            },
+            zoom: {
+                pan: {
+                    enabled: true,
+                    mode: 'xy'
+                },
+                zoom: {
+                    wheel: {
+                        enabled: true,
+                        mode: 'xy',
+                    },
+                    drag: {
+                        threshold: 1,
+                        animationDuration: 500
+                    }
+                }
             }
         },
         elements: {
@@ -218,7 +241,7 @@
         },
         scales: {
             y: {
-                beginAtZero: false,
+                beginAtZero: true,
                 grid: {
                     // display: false,
                     // drawBorder: false
@@ -270,9 +293,9 @@
         let dates = []
         let data = []
         
-        for (let i = 0;i < props.invoices.invoices.length; i++) {
-            dates.push(moment(props.invoices.invoices[i].date).format('MMM D'))
-            data.push(`${props.invoices.invoices[i].total}`)
+        for (let i = 0;i < props.sales.sales.length; i++) {
+            dates.push(moment(props.sales.sales[i].date).format('MMM D'))
+            data.push(`${props.sales.sales[i].total}`)
         }
 
         new Chart(ctx, {
@@ -280,7 +303,7 @@
             data: {
                 labels: dates,
                 datasets: [{
-                    label: 'xxx',
+                    label: dates,
                     data: data,
                     fill: false,
                     borderColor: '#151630',
@@ -293,13 +316,20 @@
 
     const drawOrdersChart = () => {
         let ctx = document.getElementById('ordersChart').getContext('2d')
+        let dates = []
+        let data = []
+        for (let i = 0;i < props.sales.sales.length; i++) {
+            dates.push(moment(props.sales.sales[i].date).format('MMM D'))
+            data.push(`${props.sales.sales[i].total}`)
+        }
+
         new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31'],
+                labels: dates,
                 datasets: [{
-                    label: 'xxx',
-                    data: [1240, 1245, 1280, 1285, 1295, 1360, 1380, 1400, 1405, 1408, 1420, 1430, 1450, 1460, 1470, 1600, 1800, 1900, 2200, 2300, 2400, 2900, 2900, 3000, 3100, 3200, 3250, 3400, 3460, 3500, 3600],
+                    label: dates,
+                    data: data,
                     fill: false,
                     borderColor: '#151630',
                     tension: 0.1
@@ -308,23 +338,30 @@
             options: smallChartsOptions
         })
     }
+
+    let chart = null
     
     const drawViewAnalyticsChart = () => {
         let ctx = document.getElementById('viewAnalytics').getContext('2d')
         let dates = []
         let customersData = []
         let salesData = []
+        let ordersData = []
         
         for (let i = 0;i < props.customers.customers.length; i++) {
             dates.push(moment(props.customers.customers[i].date).format('MMM D'))
             customersData.push(props.customers.customers[i].total)
         }
 
-        for (let i = 0;i < props.invoices.invoices.length; i++) {
-            salesData.push(props.invoices.invoices[i].total)
+        for (let i = 0;i < props.sales.sales.length; i++) {
+            salesData.push(props.sales.sales[i].total)
         }
 
-        new Chart(ctx, {
+        for (let i = 0;i < props.orders.orders.length; i++) {
+            ordersData.push(props.orders.orders[i].total)
+        }
+
+        chart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: dates,
@@ -345,7 +382,7 @@
                     },
                     {
                         label: 'Orders',
-                        data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15],
+                        data: ordersData,
                         fill: false,
                         borderColor: '#ffce4e',
                         tension: 0.1
@@ -353,7 +390,11 @@
                 ]
             },
             options: viewAnalyticsChartOptions
-        })
+        });
+        Chart.register(zoomPlugin)
+    }
+    const resetZoom = () => {
+        chart.resetZoom()
     }
 
     onMounted (() => {

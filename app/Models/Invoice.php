@@ -67,6 +67,31 @@ class Invoice extends Model
             })
             ->select(DB::raw('sum(total_price) as total'))
             ->groupBy('invoice_orders.created_at')
+            ->orderBy('invoice_orders.created_at', 'ASC')
             ->get();
+    }
+
+    public function scopeNewInvoiceAnalytics($query) {
+        return $query->join('invoice_orders', function($join) {
+            $join->on('invoices.id', '=', 'invoice_orders.invoice_id')
+            ->whereBetween('invoice_orders.created_at', [now()->subDays(14), now()]);
+        })
+        ->select(DB::raw('DATE(invoice_orders.created_at) as date'), DB::raw('count(*) as total'))
+        ->groupBy('date')
+        ->orderBy('date', 'ASC')
+        ->get();
+    }
+
+    public function scopeOldInvoiceAnalytics($query) {
+        return $query->join('invoice_orders', function($join) {
+            $lastTwoWeeks = now()->subDays(14);
+            $lastFourWeeks = Carbon::parse($lastTwoWeeks)->subDays(14);
+            $join->on('invoices.id', '=', 'invoice_orders.invoice_id')
+            ->whereBetween('invoice_orders.created_at', [$lastFourWeeks, $lastTwoWeeks]);
+        })
+        ->select(DB::raw('count(*) as total'))
+        ->groupBy('invoice_orders.created_at')
+        ->orderBy('invoice_orders.created_at', 'ASC')
+        ->get();
     }
 }
