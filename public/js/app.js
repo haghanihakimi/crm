@@ -68,7 +68,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var _hoisted_1 = {
   key: 0,
-  "class": "w-full h-full p-0 m-0 relative antialiased box-content relative"
+  "class": "w-full h-screen p-0 m-0 relative antialiased box-content relative"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
@@ -102,7 +102,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "w-full relative px-14 py-2 border-b border-black border-opacity-10"
+  "class": "w-full relative top-0 z-50 px-14 py-2 border-b border-black border-opacity-10"
 };
 var _hoisted_2 = {
   "class": "w-full relative flex flex-row gap-4"
@@ -124,7 +124,7 @@ var _hoisted_8 = {
 var _hoisted_9 = ["href"];
 function render(_ctx, _cache) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("nav", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Logo placeholder "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    href: _ctx.route('account'),
+    href: _ctx.route('root'),
     target: "_self",
     "class": "w-fit p-4 flex items-center justify-center text-lg font-semibold tracking-wider text-warm-blue"
   }, " CRM ", 8
@@ -1596,6 +1596,7 @@ var map = {
 	],
 	"./Home.vue": [
 		"./resources/js/Pages/Home.vue",
+		"/js/vendor",
 		"resources_js_Pages_Home_vue"
 	],
 	"./Invoices/CreateInvoice.vue": [

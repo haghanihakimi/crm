@@ -2,7 +2,7 @@
     <Head :title="title" />
     <div 
     v-if="!store.getters.signedIn"
-    class="w-full h-full p-0 m-0 relative antialiased box-content relative">
+    class="w-full h-screen p-0 m-0 relative antialiased box-content relative">
         <GuestNavigation :auth="auth" />
         <slot />
     </div>

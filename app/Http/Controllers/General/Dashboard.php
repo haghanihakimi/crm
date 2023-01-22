@@ -23,7 +23,7 @@ class Dashboard extends Controller
                 'sales' => count(Invoice::newAnalytics()) <= 0 ? [['date' => null, 'total' => 0]] : Invoice::newAnalytics(),
                 'average' => count(Invoice::newAnalytics()) > 0 ? abs(((Invoice::newAnalytics()->sum('total') - Invoice::oldAnalytics()->sum('total')) / Invoice::oldAnalytics()->sum('total')) * 100) : 0,
                 'avStatus' => Invoice::newAnalytics()->sum('total') > Invoice::oldAnalytics()->sum('total') ? 'positive' : 'negative',
-                'salesCounter' => count(Invoice::newAnalytics()) <= 0 ? [['date' => null, 'total' => 0]] : FilterNumbers::money(Invoice::newAnalytics()->sum('total') + Invoice::oldAnalytics()->sum('total')),
+                'salesCounter' => count(Invoice::newAnalytics()) <= 0 ? [['date' => null, 'total' => 0]] : FilterNumbers::numbers(Invoice::newAnalytics()->sum('total') + Invoice::oldAnalytics()->sum('total')),
             ],
             'orders' => [
                 'orders' => count(Invoice::newInvoiceAnalytics()) <= 0 ? [['date' => null, 'total' => 0]] : Invoice::newInvoiceAnalytics(),
