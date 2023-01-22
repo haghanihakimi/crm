@@ -34,6 +34,8 @@
         <li>Please make sure DB_DATABASE is set to "crm" in .env file AND you have created <code>crm</code> database on your local server</li>
         <li><code>php artisan key:generate</code></li>
         <li><code>php artisan migrate:fresh --seed</code></li>
-        <li><code>php artisan db:seed --class=CountrySeeder</code></li>
+        <li><code>php artisan db:seed --class=GeneralSeeder</code></li>
     </ol>
+    <h3>User with ID number 1 is always admin.</h3>
+    <h3>You <strong>cannot</strong> set anyone else as admin.</h3>
 </div>
