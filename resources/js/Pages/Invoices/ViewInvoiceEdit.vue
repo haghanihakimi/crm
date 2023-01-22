@@ -352,7 +352,7 @@
                     :disabled="invoiceForm.processing || !invoiceForm.isDirty"
                     :class="[invoiceForm.processing || !invoiceForm.isDirty ? 'opacity-80' : 'opacity-100', 'w-fit rounded px-4 py-2 flex justify-center items-center gap-2 text-white text-md font-semibold tracking-wider bg-warm-blue transition duration-250 hover:bg-blue']">
                         <Spinner :width='4' :height="4" v-if="invoiceForm.processing"></Spinner>
-                        Create Invoice
+                        Save Changes
                     </button>
                 </div>
             </div>

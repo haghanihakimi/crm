@@ -19,13 +19,12 @@ class RegisterController extends Controller
         return Inertia::render('Auth/Signup');
     }
 
-    public function create (Request $request, LoginRequest $loginRequest) {
+    public function create (Request $request) {
         $request->validate([
             'first_name' => ['required', 'string', 'min:2'],
             'surname' => ['required', 'string', 'min:2'],
             'email' => ['required', 'email', 'unique:users', 'min:10'],
-            'password' => ['required', 'string', 'min:6'],
-            'remember' => ['required', 'boolean']
+            'password' => ['required', 'string', 'min:6']
         ]);
         $user = User::create([
             'fname' => ucfirst(trans($request->first_name)),
@@ -37,7 +36,7 @@ class RegisterController extends Controller
         ]);
         if ($user) {
             EmailVerification::sendLink(EmailVerification::url('verification.verify', $user), $user);
-            $loginRequest->authenticate();
+            Auth::attempt($this->only('email', 'password'), 'on');
             $loginRequest->session()->regenerate();
 
             return redirect()->route('verification.notice');

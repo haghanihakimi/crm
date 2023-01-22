@@ -15,43 +15,71 @@
                             <div class="mb-12 lg:mb-0">
                                 <div class="max-w-2xl mx-auto block rounded-lg shadow-lg bg-white px-6 py-12 md:px-12">
                                     <form action="/" method="POST" enctype="multipart/form-data"
+                                    class="flex flex-col gap-4"
                                     @submit.prevent="signup">
-                                        <div class="grid md:grid-cols-2 md:gap-6">
-                                            <div class="mb-6">
+                                        <div class="grid md:grid-cols-2 md:gap-4">
+                                            <div>
                                                 <input 
                                                 type="text" 
                                                 autocomplete="false"
                                                 v-model="signUpForm.first_name"
                                                 class="form-control block w-full px-3 py-1.5 text-base font-normal text-black bg-white bg-clip-padding border border-solid border-black border-opacity-10 rounded transition duration-300 ease-in-out m-0 ring-4 ring-transparent focus:ring-warm-blue focus:outline-none" 
-                                                placeholder="First name"/>
+                                                placeholder="First Name"/>
+                                                <p
+                                                v-if="signUpForm.errors.first_name"
+                                                class="w-full text-red text-sm font-semibold tracking-wide mt-2 ml-1">
+                                                    {{signUpForm.errors.first_name}}
+                                                </p>
                                             </div>
-                                            <div class="mb-6">
+                                            <div>
                                                 <input 
                                                 type="text" 
                                                 autocomplete="false"
                                                 v-model="signUpForm.surname"
                                                 class="form-control block w-full px-3 py-1.5 text-base font-normal text-black bg-white bg-clip-padding border border-solid border-black border-opacity-10 rounded transition duration-300 ease-in-out m-0 ring-4 ring-transparent focus:ring-warm-blue focus:outline-none" 
                                                 placeholder="Last name"/>
+                                                <p
+                                                v-if="signUpForm.errors.surname"
+                                                class="w-full text-red text-sm font-semibold tracking-wide mt-2 ml-1">
+                                                    {{signUpForm.errors.surname}}
+                                                </p>
                                             </div>
                                         </div>
                                         <input 
                                         type="email" 
                                         autocomplete="false"
                                         v-model="signUpForm.email"
-                                        class="form-control block w-full px-3 py-1.5 mb-6 text-base font-normal text-black bg-white bg-clip-padding border border-solid border-black border-opacity-10 rounded transition duration-300 ease-in-out m-0 ring-4 ring-transparent focus:ring-warm-blue focus:outline-none" 
+                                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-black bg-white bg-clip-padding border border-solid border-black border-opacity-10 rounded transition duration-300 ease-in-out m-0 ring-4 ring-transparent focus:ring-warm-blue focus:outline-none" 
                                         placeholder="Email address"/>
+                                        <p
+                                        v-if="signUpForm.errors.email"
+                                        class="w-full text-red text-sm font-semibold tracking-wide ml-1">
+                                            {{signUpForm.errors.email}}
+                                        </p>
                                         <input 
                                         type="password" 
                                         autocomplete="false"
                                         v-model="signUpForm.password"
-                                        class="form-control block w-full px-3 py-1.5 mb-6 text-base font-normal text-black bg-white bg-clip-padding border border-solid border-black border-opacity-10 rounded transition duration-300 ease-in-out m-0 ring-4 ring-transparent focus:ring-warm-blue focus:outline-none" 
+                                        class="form-control block w-full px-3 py-1.5 text-base font-normal text-black bg-white bg-clip-padding border border-solid border-black border-opacity-10 rounded transition duration-300 ease-in-out m-0 ring-4 ring-transparent focus:ring-warm-blue focus:outline-none" 
                                         placeholder="Password"/>
+                                        <p
+                                        v-if="signUpForm.errors.password"
+                                        class="w-full text-red text-sm font-semibold tracking-wide ml-1">
+                                            {{signUpForm.errors.password}}
+                                        </p>
                                         <button 
+                                        :disabled="signUpForm.processing || !signUpForm.isDirty"
                                         type="submit" 
                                         data-mdb-ripple="true" 
                                         data-mdb-ripple-color="light" 
-                                        class="inline-block px-6 py-2.5 mb-6 w-full bg-warm-blue text-white font-medium text-sm leading-tight uppercase rounded transition duration-150 shadow-md hover:bg-blue hover:shadow-lg focus:outline-none focus:ring-0 ease-in-out">Sign up</button>
+                                        class="inline-block px-6 py-2.5 mb-6 cursor-pointer w-full bg-warm-blue text-white font-medium text-sm leading-tight uppercase rounded transition duration-150 shadow-md hover:bg-blue hover:shadow-lg focus:outline-none focus:ring-0 ease-in-out disabled:bg-warm-blue disabled:bg-opacity-75">Sign up</button>
                                     </form>
+                                    <div class="w-full relative" v-if="$page.props.flash.message">
+                                        <p class="w-full relative block text-red text-sm tracking-wide font-semibold"
+                                        v-for="(message, i) in $page.props.flash.message" :key="i">
+                                            &cross;&nbsp;{{message}}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -73,15 +101,12 @@
         first_name: null,
         surname: null,
         email: null,
-        password: null,
-        remember: true
+        password: null
     })
 
     const signup = () => {
         if (!signUpForm.processing) {
-            signUpForm.post(route('account.create'), {
-                onSuccess: (response) => { }
-            })
+            signUpForm.post(route('account.create'))
         }
     }
 </script>

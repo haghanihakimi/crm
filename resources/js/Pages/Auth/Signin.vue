@@ -60,7 +60,8 @@
                 <!-- sign in button -->
                 <div class="select-none w-full relative">
                     <button type="submit" role="button"
-                    class="text-base font-medium tracking-wide text-white bg-warm-blue p-2 rounded flex justify-center items-center cursor-pointer w-full capitalize transition duration-150 hover:bg-blue" >
+                    :disabled="signinForm.processing || !signinForm.isDirty"
+                    class="text-base font-medium tracking-wide text-white bg-warm-blue p-2 rounded flex justify-center items-center cursor-pointer w-full capitalize transition duration-150 hover:bg-blue disabled:bg-warm-blue disabled:bg-opacity-75" >
                         sign in
                     </button>
                 </div>
