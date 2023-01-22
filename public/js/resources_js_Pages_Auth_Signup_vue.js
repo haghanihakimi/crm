@@ -91,7 +91,7 @@ var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "text-warm-blue"
 }, "to manage your sales")]), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "text-black text-opacity-50"
-}, " With a user-friendly interface, you can have full control on customers, invoices and sales. ")], -1
+}, " With a user-friendly interface, you have full control on customers, invoices and sales. ")], -1
 /* HOISTED */
 );
 
