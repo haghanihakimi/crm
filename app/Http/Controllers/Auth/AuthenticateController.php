@@ -8,7 +8,6 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Inertia\Inertia;
 

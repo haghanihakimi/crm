@@ -124,6 +124,7 @@
     import Layout from '../Layouts/Dashboard'
     import { computed, onMounted } from '@vue/runtime-core';
     import moment from 'moment'
+    import { useStore } from 'vuex'
     import Chart from 'chart.js/auto'
     import zoomPlugin from 'chartjs-plugin-zoom';
     import { 
@@ -141,6 +142,8 @@
         sales: Object,
         orders: Object,
     })
+
+    const store = useStore()
 
     const smallChartsOptions = {
         animations: {
@@ -398,9 +401,11 @@
     }
 
     onMounted (() => {
-        drawCustomerChart()
-        drawSalesChart()
-        drawOrdersChart()
-        drawViewAnalyticsChart()
+        if (!store.getters.signedOut) {
+            drawCustomerChart()
+            drawSalesChart()
+            drawOrdersChart()
+            drawViewAnalyticsChart()
+        }
     })
 </script>

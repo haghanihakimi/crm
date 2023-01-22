@@ -18,7 +18,8 @@ Route::controller(AuthenticateController::class)->group(function () {
 
 //Signup Routes
 Route::controller(RegisterController::class)->group(function () {
-    Route::get('/signup', 'index')->name('signup');
+    Route::get('/signup', 'index')->middleware(['guest'])->name('signup');
+    Route::post('/signup/create', 'create')->middleware(['guest'])->name('account.create');
 });
 
 //Email Verification

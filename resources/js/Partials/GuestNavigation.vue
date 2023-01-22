@@ -1,9 +1,9 @@
 <template>
-    <nav class="w-full relative px-14 py-2 border-b border-black border-opacity-10">
+    <nav class="w-full relative top-0 z-50 px-14 py-2 border-b border-black border-opacity-10">
         <div class="w-full relative flex flex-row gap-4">
             <!-- Logo placeholder -->
             <div class="w-fit flex justify-center items-center">
-                <a :href="route('account')" target="_self"
+                <a :href="route('root')" target="_self"
                 class="w-fit p-4 flex items-center justify-center text-lg font-semibold tracking-wider text-warm-blue">
                     CRM
                 </a>
