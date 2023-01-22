@@ -12,7 +12,7 @@ use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Invoice;
 
-class CountrySeeder extends Seeder
+class GeneralSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -290,10 +290,11 @@ class CountrySeeder extends Seeder
             $customer->save();
         }
 
-        $this->manageRoles();
+        $this->createRolesPermissions();
+        $this->manageRolesPermissions();
     }
 
-    private function manageRoles () {
+    private function createRolesPermissions () {
         //Roles Array
         $roles = ["admin", "accountant", "marketer", "staff manager", "product manager", "guest"];
         //Permissions Array
@@ -342,6 +343,46 @@ class CountrySeeder extends Seeder
         foreach ($users as $user) {
             $user->assignRole('guest');
             $user->givePermissionTo('basics');
+        }
+    }
+
+    private function manageRolesPermissions() {
+        $roles = Role::all();
+        
+        foreach ($roles as $role) {
+            switch ($role->name) {
+                case 'accountant':
+                    $role->givePermissionTo(Permission::where('name', 'create invoices')->first(), 
+                    Permission::where('name', 'edit invoices')->first(), 
+                    Permission::where('name', 'read invoices')->first(), 
+                    Permission::where('name', 'export invoices')->first()); 
+                    break;
+                case 'marketer':
+                    $role->givePermissionTo(Permission::where('name', 'create brands')->first(), 
+                    Permission::where('name', 'edit brands')->first(), 
+                    Permission::where('name', 'read brands')->first(), 
+                    Permission::where('name', 'export brands')->first(), 
+                    Permission::where('name', 'read products')->first());  
+                    break;
+                case 'staff manager':
+                    $role->givePermissionTo(Permission::where('name', 'create customers')->first(), 
+                    Permission::where('name', 'edit customers')->first(), 
+                    Permission::where('name', 'read customers')->first(), 
+                    Permission::where('name', 'export customers')->first());
+                    break;
+                case 'product manager':
+                    $role->givePermissionTo(Permission::where('name', 'create products')->first(), 
+                    Permission::where('name', 'edit products')->first(), 
+                    Permission::where('name', 'read products')->first(), 
+                    Permission::where('name', 'export products')->first(), 
+                    Permission::where('name', 'read brands')->first()); 
+                    break;
+                case 'guest':
+                    $role->givePermissionTo(Permission::where('name', 'basics')->first());  
+                    break;
+                default:
+                    break;
+            }
         }
     }
 }
