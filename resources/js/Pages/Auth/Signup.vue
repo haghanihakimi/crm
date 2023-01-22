@@ -7,12 +7,9 @@
                     <div class="container mx-auto xl:px-0">
                         <div class="grid lg:grid-cols-2 gap-12 flex items-center">
                             <div class="mt-12 lg:mt-0">
-                                <h1 class="text-2xl md:text-6xl xl:text-6xl text-black font-bold tracking-tight mb-12">The best offer <br /><span class="text-warm-blue">for your business</span></h1>
+                                <h1 class="text-2xl md:text-6xl xl:text-6xl text-black font-bold tracking-tight mb-12">The best solution <br /><span class="text-warm-blue">to manage your sales</span></h1>
                                 <p class="text-black text-opacity-50">
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Eveniet, itaque accusantium odio, soluta, corrupti aliquam
-                                    quibusdam tempora at cupiditate quis eum maiores libero
-                                    veritatis? Dicta facilis sint aliquid ipsum atque?
+                                    With a user-friendly interface, you can have full control on customers, invoices and sales. 
                                 </p>
                             </div>
                             <div class="mb-12 lg:mb-0">
