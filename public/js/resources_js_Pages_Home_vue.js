@@ -141,7 +141,7 @@ var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "w-full text-black text-2xl font-semibold tracking-wider uppercase text-center p-0"
 }, " Sign In "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
   "class": "w-full text-sm tracking-wide text-black text-opacity-70 text-center"
-}, " This is paragraph ")], -1
+}, " Sign in to manage your sales ")], -1
 /* HOISTED */
 );
 

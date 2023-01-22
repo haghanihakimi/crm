@@ -10,7 +10,7 @@
                         Sign In
                     </h1>
                     <p class="w-full text-sm tracking-wide text-black text-opacity-70 text-center">
-                        This is paragraph
+                        Sign in to manage your sales
                     </p>
                 </div>
                 <!-- email/username input box -->
