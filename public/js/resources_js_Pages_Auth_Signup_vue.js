@@ -26,15 +26,12 @@ __webpack_require__.r(__webpack_exports__);
       first_name: null,
       surname: null,
       email: null,
-      password: null,
-      remember: true
+      password: null
     });
 
     var signup = function signup() {
       if (!signUpForm.processing) {
-        signUpForm.post(route('account.create'), {
-          onSuccess: function onSuccess(response) {}
-        });
+        signUpForm.post(route('account.create'));
       }
     };
 
@@ -103,24 +100,29 @@ var _hoisted_8 = {
 };
 var _hoisted_9 = ["onSubmit"];
 var _hoisted_10 = {
-  "class": "grid md:grid-cols-2 md:gap-6"
+  "class": "grid md:grid-cols-2 md:gap-4"
 };
 var _hoisted_11 = {
-  "class": "mb-6"
+  key: 0,
+  "class": "w-full text-red text-sm font-semibold tracking-wide mt-2 ml-1"
 };
 var _hoisted_12 = {
-  "class": "mb-6"
+  key: 0,
+  "class": "w-full text-red text-sm font-semibold tracking-wide mt-2 ml-1"
 };
-
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-  type: "submit",
-  "data-mdb-ripple": "true",
-  "data-mdb-ripple-color": "light",
-  "class": "inline-block px-6 py-2.5 mb-6 w-full bg-warm-blue text-white font-medium text-sm leading-tight uppercase rounded transition duration-150 shadow-md hover:bg-blue hover:shadow-lg focus:outline-none focus:ring-0 ease-in-out"
-}, "Sign up", -1
-/* HOISTED */
-);
-
+var _hoisted_13 = {
+  key: 0,
+  "class": "w-full text-red text-sm font-semibold tracking-wide ml-1"
+};
+var _hoisted_14 = {
+  key: 1,
+  "class": "w-full text-red text-sm font-semibold tracking-wide ml-1"
+};
+var _hoisted_15 = ["disabled"];
+var _hoisted_16 = {
+  key: 0,
+  "class": "w-full relative"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)($setup["GeneralLayout"], {
     title: 'Sign Up'
@@ -130,18 +132,21 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         action: "/",
         method: "POST",
         enctype: "multipart/form-data",
+        "class": "flex flex-col gap-4",
         onSubmit: (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)($setup.signup, ["prevent"])
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         autocomplete: "false",
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return $setup.signUpForm.first_name = $event;
         }),
         "class": "form-control block w-full px-3 py-1.5 text-base font-normal text-black bg-white bg-clip-padding border border-solid border-black border-opacity-10 rounded transition duration-300 ease-in-out m-0 ring-4 ring-transparent focus:ring-warm-blue focus:outline-none",
-        placeholder: "First name"
+        placeholder: "First Name"
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.signUpForm.first_name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.signUpForm.first_name]]), $setup.signUpForm.errors.first_name ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.signUpForm.errors.first_name), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "text",
         autocomplete: "false",
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
@@ -151,29 +156,52 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         placeholder: "Last name"
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.signUpForm.surname]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.signUpForm.surname]]), $setup.signUpForm.errors.surname ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.signUpForm.errors.surname), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "email",
         autocomplete: "false",
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return $setup.signUpForm.email = $event;
         }),
-        "class": "form-control block w-full px-3 py-1.5 mb-6 text-base font-normal text-black bg-white bg-clip-padding border border-solid border-black border-opacity-10 rounded transition duration-300 ease-in-out m-0 ring-4 ring-transparent focus:ring-warm-blue focus:outline-none",
+        "class": "form-control block w-full px-3 py-1.5 text-base font-normal text-black bg-white bg-clip-padding border border-solid border-black border-opacity-10 rounded transition duration-300 ease-in-out m-0 ring-4 ring-transparent focus:ring-warm-blue focus:outline-none",
         placeholder: "Email address"
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.signUpForm.email]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.signUpForm.email]]), $setup.signUpForm.errors.email ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.signUpForm.errors.email), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         type: "password",
         autocomplete: "false",
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
           return $setup.signUpForm.password = $event;
         }),
-        "class": "form-control block w-full px-3 py-1.5 mb-6 text-base font-normal text-black bg-white bg-clip-padding border border-solid border-black border-opacity-10 rounded transition duration-300 ease-in-out m-0 ring-4 ring-transparent focus:ring-warm-blue focus:outline-none",
+        "class": "form-control block w-full px-3 py-1.5 text-base font-normal text-black bg-white bg-clip-padding border border-solid border-black border-opacity-10 rounded transition duration-300 ease-in-out m-0 ring-4 ring-transparent focus:ring-warm-blue focus:outline-none",
         placeholder: "Password"
       }, null, 512
       /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.signUpForm.password]]), _hoisted_13], 40
+      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $setup.signUpForm.password]]), $setup.signUpForm.errors.password ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.signUpForm.errors.password), 1
+      /* TEXT */
+      )) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        disabled: $setup.signUpForm.processing || !$setup.signUpForm.isDirty,
+        type: "submit",
+        "data-mdb-ripple": "true",
+        "data-mdb-ripple-color": "light",
+        "class": "inline-block px-6 py-2.5 mb-6 cursor-pointer w-full bg-warm-blue text-white font-medium text-sm leading-tight uppercase rounded transition duration-150 shadow-md hover:bg-blue hover:shadow-lg focus:outline-none focus:ring-0 ease-in-out disabled:bg-warm-blue disabled:bg-opacity-75"
+      }, "Sign up", 8
+      /* PROPS */
+      , _hoisted_15)], 40
       /* PROPS, HYDRATE_EVENTS */
-      , _hoisted_9)])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Section: Design Block ")])];
+      , _hoisted_9), _ctx.$page.props.flash.message ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(_ctx.$page.props.flash.message, function (message, i) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", {
+          "class": "w-full relative block text-red text-sm tracking-wide font-semibold",
+          key: i
+        }, " ✗ " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(message), 1
+        /* TEXT */
+        );
+      }), 128
+      /* KEYED_FRAGMENT */
+      ))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Section: Design Block ")])];
     }),
     _: 1
     /* STABLE */
