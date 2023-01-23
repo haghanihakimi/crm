@@ -95,13 +95,10 @@ class CustomersController extends Controller
      * Delete selected customer
      * @return response
      */
-    public function deleteCustomer ($customer_id, Request $request) {
+    public function deleteCustomer ($customer_id) {
         try {
-            $request->validate([
-                'customer_id' => ['required', 'numeric', 'min:1']
-            ]);
             
-            $customer = Customer::find($request->customer_id);
+            $customer = Customer::find($customer_id);
         
             if ($customer->delete()) {
                 return back()->with('message', ['customer_delete' => $customer->first_name.' deleted from record.']);

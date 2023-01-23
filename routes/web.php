@@ -89,6 +89,7 @@ Route::middleware(['auth','verified'])->group(function () {
         Route::get('/dashboard/brand/view/edit/{brand}', 'viewBrandEdit')->whereNumber('brand')->middleware(['role_or_permission:admin|edit brands'])->name('brands.edit.view');
         Route::post('/dashboard/brands/create/new', 'newBrandCreate')->middleware(['role_or_permission:admin|create brands'])->name('brands.create.new');
         Route::post('/dashboard/brand/submit/edits/{brand}', 'editBrand')->whereNumber('brand')->middleware(['role_or_permission:admin|edit brands'])->name('brand.edit.submit');
+        Route::delete('/dashboard/brand/delete/{brand}', 'destroy')->whereNumber('brand')->middleware(['role_or_permission:admin|edit brands'])->name('brand.delete');
     });
 
     //Products Page Routes

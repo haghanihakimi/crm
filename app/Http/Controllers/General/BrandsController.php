@@ -157,6 +157,22 @@ class BrandsController extends Controller
         return back()->with('message', ['brand_updates_failure' => $brand->name." update failed. Please try again later."]);
     }
 
+    /**
+     * Permanently delte brand
+     */
+    public function destroy($brand) {
+        try {            
+            $brand = Brand::find($brand);
+        
+            if ($brand->delete()) {
+                return back()->with('message', ['brand_delete' => $brand->name.' deleted from record.']);
+            }
+            return back()->with('message', ['brand_delete' => 'Brand deletion failed.']);
+        } catch (\Exception $e) {
+            return back()->with('message', ['brand_delete' => $e->getMessage()]);
+        } 
+    }
+
     //Validation for New Brand Form inputs
     private function newBrandValidateInputs ($request) {
         return $request->validate([
