@@ -67,9 +67,11 @@
                                     <Edit class="w-4 h-4 text-white" />
                                 </a>
                                 <button 
+                                type="button"
+                                @click="openDeleteModal(brand)"
                                 v-if="$page.props.abilities.canExportBrands"
-                                class="basis-1 flex justify-center items-center w-6 h-6 min-w-[24px] rounded bg-green font-medium text-blue">
-                                    <Download class="w-4 h-4 text-white" />
+                                class="basis-1 flex justify-center items-center w-6 h-6 min-w-[24px] rounded bg-red font-medium text-blue">
+                                    <Delete class="w-4 h-4 text-white" />
                                 </button>
                             </td>
                         </tr>
@@ -80,6 +82,14 @@
             <div class="w-full flex justify-center items-center">
                 <Pagination :links="brands.links" :params="params" />
             </div>
+
+            <!-- Empty brands list message -->
+            <strong v-if="Object.keys(brands.data).length <= 0" class="w-full block relative text-center text-xl opacity-80 text-black font-semibold tracking-wider m-auto">
+                No brands found
+            </strong>
+            
+            <!-- Delete Modal Component -->
+            <DeleteModal v-if="store.getters.deleteModal" />
         </div>
     </Layout>
 </template>
@@ -90,10 +100,11 @@
     import moment from 'moment'
     import {
         PencilIcon as Edit,
-        ArrowDownTrayIcon as Download,
+        TrashIcon as Delete,
     } from '@heroicons/vue/24/solid'
     import BrandsFilter from '../../Partials/NamingFilter'
     import Pagination from '../../Partials/Pagination'
+    import DeleteModal from '../../Partials/DeleteModal'
 
 
     const props = defineProps({
@@ -103,6 +114,21 @@
     });
 
     const store = useStore()
+
+    const openDeleteModal = data => {
+        store.dispatch('toggleDeleteModal', true)
+        store.dispatch('fillContents', {
+            row: {
+                id: data.id,
+                name: data.name
+            },
+            texts: {
+                heading: `Delete ${data.name}`,
+                paragraph: `You're about to permanently delete ${data.name} brand.<br/><br/><strong>This action is irreversible.</strong>`
+            },
+            action: route('brand.delete', {brand: data.id}),
+        })
+    }
     
     onMounted(() => {
         store.commit('fillDbDuplicates', [])

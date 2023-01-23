@@ -77,11 +77,6 @@
                                 class="basis-1 flex justify-center items-center w-6 h-6 min-w-[24px] rounded bg-blue font-medium text-blue">
                                     <Edit class="w-4 h-4 text-white" />
                                 </a>
-                                <button 
-                                v-if="$page.props.abilities.canEditCustomers"
-                                class="basis-1 flex justify-center items-center w-6 h-6 min-w-[24px] rounded bg-green font-medium text-blue">
-                                    <Download class="w-4 h-4 text-white" />
-                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -110,7 +105,6 @@
     import { 
         PencilIcon as Edit,
         ArchiveBoxXMarkIcon as Delete,
-        ArrowDownTrayIcon as Download,
     } from '@heroicons/vue/24/solid'
     import {
         FunnelIcon as Filter

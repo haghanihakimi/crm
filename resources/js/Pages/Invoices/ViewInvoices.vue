@@ -89,12 +89,6 @@
                                 class="basis-1 flex justify-center items-center w-6 h-6 min-w-[24px] rounded bg-blue font-medium text-blue">
                                     <Edit class="w-4 h-4 text-white" />
                                 </a>
-                                <a 
-                                v-if="$page.props.abilities.canExportInvoices"
-                                href="#" 
-                                class="basis-1 flex justify-center items-center w-6 h-6 min-w-[24px] rounded bg-green font-medium text-blue">
-                                    <Download class="w-4 h-4 text-white" />
-                                </a>
                             </td>
                         </tr>
                     </tbody>
