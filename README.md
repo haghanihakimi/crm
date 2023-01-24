@@ -5,7 +5,7 @@
 <div style="padding: 12px 36px;">
     <h2>Description</h2>
     <p>
-    This is a simple customer management system. You can have your own account as <strong>administrator</strong> then you can manage
+    This simple customer management system is created using Laravel + Inertia Vue JS. You can have your own account as <strong>administrator</strong> then you can manage
     customers, invoices, products and others.<br/>
     </p>
     <h2>Features</h2>
