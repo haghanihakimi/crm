@@ -420,7 +420,7 @@
             service: null,
             quantity: 1,
             price: 0,
-            gst: false
+            gst: false,
         }]
     })
     

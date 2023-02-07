@@ -19,7 +19,7 @@
     <h2>Requirements</h2>
     <ol start="1">
         <li>PHP 8 or above</li>
-        <li>MySQL 8</li>
+        <li>MySQL</li>
         <li>A local server (<a href="https://www.apachefriends.org/download.html" target="_blank">XAMPP</a>, <a href="https://www.wampserver.com/en/" target="_blank">WAMPServer</a> or <a href="https://laragon.org/" target="_blank">Laragon</a>)</li>
         <li><a href="https://getcomposer.org/" target="_blank">Composer</a></li>
         <li><a href="https://nodejs.org/en/" target="_blank">NodeJS</a></li>
@@ -36,6 +36,6 @@
         <li><code>php artisan migrate:fresh --seed</code></li>
         <li><code>php artisan db:seed --class=GeneralSeeder</code></li>
     </ol>
-    <h3>User with ID number 1 is always admin.</h3>
+    <h3><strong>User with ID number 1 is always admin.</strong></h3>
     <h3>You <strong>cannot</strong> set anyone else as admin.</h3>
 </div>

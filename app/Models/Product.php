@@ -24,15 +24,11 @@ class Product extends Model
     ];
 
     public function invoices () {
-        return $this->hasMany(Invoice::class, 'invoice_id');
+        return $this->belongsTo(InvoiceOrder::class, 'product_id');
     }
 
     public function brands () {
         return $this->belongsTo(Brand::class, 'brand_id');
-    }
-
-    public function invoiceProducts() {
-        return $this->hasMany(InvoiceProduct::class, 'product_id');
     }
 
     public function scopeSearch ($query, $input) {

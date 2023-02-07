@@ -73,6 +73,7 @@ class InvoiceController extends Controller
      * @return Inertia\Inertia
      */
     public function viewEditInvoice($invoice) {
+        // dd(Invoice::where('id', $invoice)->with(['products', 'customers'])->get());
         Cache::add('countries', Countries::getCountries());
         return Inertia::render('Invoices/ViewInvoiceEdit', [
             'invoice' => Invoice::where('id', $invoice)->with(['products', 'products.products', 'customers', 'customers.customers'])->get(),
@@ -161,14 +162,18 @@ class InvoiceController extends Controller
      */
     private function saveInvoiceOrderChanges($request, $invoice) {
         $order_keys = [];
+        $total_price = 0;
         foreach ($request->inputs as $input) {
+            $gst = ($input['price'] * $input['quantity']) / 10;
+            $total_price = $input['gst'] ? $input['price'] * $input['quantity'] + $gst : $input['price'] * $input['quantity'];
             if (isset($input['order'])) {
                 $order_keys[] = $input['order'];
                 InvoiceOrder::where('id', $input['order'])->update([
                     'product_id' => $input['service'],
                     'quantity' => $input['quantity'],
                     'price' => $input['price'],
-                    'gst' => $input['gst']
+                    'gst' => $input['gst'],
+                    'total_price' => $total_price,
                 ]);
             }
             $removeProduct = InvoiceOrder::whereNotIn('id', $order_keys)->delete();
@@ -178,6 +183,7 @@ class InvoiceController extends Controller
                 'quantity' => $input['quantity'],
                 'price' => $input['price'],
                 'gst' => $input['gst'],
+                'total_price' => $total_price,
             ]);
         }
     }
@@ -205,12 +211,15 @@ class InvoiceController extends Controller
      * @return collection
      */
     private function createInvoiceOrder($invoice, $input, $request){
+        $gst = ($input['price'] * $input['quantity']) / 10;
+        $total_price = $input['gst'] ? $input['price'] * $input['quantity'] + $gst : $input['price'] * $input['quantity'];
         InvoiceOrder::create([
             'invoice_id' => $invoice->id,
             'product_id' => $input['service'],
             'quantity' => $input['quantity'],
             'price' => $input['price'],
             'gst' => $input['gst'],
+            'total_price' => number_format((float)$total_price, 2, '.', ''),
         ]);
     }
 

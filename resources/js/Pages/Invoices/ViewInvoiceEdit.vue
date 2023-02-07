@@ -4,6 +4,7 @@
             <h1 class="w-full text-black font-semibold tracking-wider text-xl mb-4">
                 Edit Invoice
             </h1>
+            {{ invoice.products }}
             <!-- All fields/inputs container -->
             <div class="w-full flex flex-col gap-4 mx-auto">
                 <div class="w-full flex flex-row flex-wrap gap-4 mx-auto">
