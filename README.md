@@ -4,6 +4,8 @@
 
 <h3>
 <a href="https://crm.mylabprojects.com/" target="_blank">Demo</a>
+User: admin@email.com
+password: <strong>password</strong>
 </h3>
 
 <div style="padding: 12px 36px;">
