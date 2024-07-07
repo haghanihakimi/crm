@@ -42,6 +42,4 @@ password: <strong>password</strong>
         <li><code>php artisan migrate:fresh --seed</code></li>
         <li><code>php artisan db:seed --class=GeneralSeeder</code></li>
     </ol>
-    <h3><strong>User with ID number 1 is always admin.</strong></h3>
-    <h3>You <strong>cannot</strong> set anyone else as admin.</h3>
 </div>
