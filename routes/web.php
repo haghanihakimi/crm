@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\General\GroupsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\General\HomeController;
 use App\Http\Controllers\General\Dashboard;

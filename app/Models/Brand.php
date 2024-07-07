@@ -20,7 +20,8 @@ class Brand extends Model
         'description',
     ];
 
-    public function scopeFindDuplicateBrand ($query, $input) {
-        return $query->where('name', 'RLIKE', '^'.$input);
+    public function scopeFindDuplicateBrand($query, $input)
+    {
+        return $query->where('name', 'RLIKE', '^' . $input);
     }
 }

@@ -25,7 +25,7 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     protected $fillable = [
         'fname',
         'sname',
-        'email', 
+        'email',
         'email_verified_at',
         'password',
         'default_password',
@@ -63,7 +63,8 @@ class User extends Authenticatable implements MustVerifyEmail, CanResetPassword
     //     'profile_photo_url',
     // ];
 
-    public function customers () {
+    public function customers()
+    {
         return $this->hasMany(Customer::class, 'id');
     }
 }

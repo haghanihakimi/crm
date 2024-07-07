@@ -22,7 +22,7 @@ class GeneralSeeder extends Seeder
     public function run()
     {
         // Run: 
-        // php artisan db:seed --class=CountrySeeder 
+        // php artisan db:seed --class=GeneralSeeder 
         // to populate data into Countries table
 
         $countries = [

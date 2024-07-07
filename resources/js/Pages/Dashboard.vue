@@ -13,7 +13,7 @@
 
             <div class="w-full relative flex flex-row gap-4 py-8 px-4">
                 <!-- Number of customers statics box -->
-                <div class="select-none w-full min-w-[280px] flex-1 rounded bg-warm-blue bg-opacity-80 shadow-md-spread">
+                <div class="select-none w-full min-w-[280px] flex-1 rounded bg-warm-blue bg-opacity-70 shadow-md-spread">
                     <!-- Heading row -->
                     <div class="w-full py-2 px-6 flex flex-row justify-between items-center">
                         <!-- Sales icon box -->
@@ -127,13 +127,6 @@
     import { useStore } from 'vuex'
     import Chart from 'chart.js/auto'
     import zoomPlugin from 'chartjs-plugin-zoom';
-    import { 
-        UserGroupIcon as Customers,
-        CurrencyDollarIcon as Money,
-        ArrowSmallUpIcon as Increased,
-        ArrowSmallDownIcon as Decreased,
-        ShoppingBagIcon as Orders,
-    } from '@heroicons/vue/24/outline'
 
     const props = defineProps({
         auth: Object,

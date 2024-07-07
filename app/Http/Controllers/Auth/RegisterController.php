@@ -36,8 +36,7 @@ class RegisterController extends Controller
         ]);
         if ($user) {
             EmailVerification::sendLink(EmailVerification::url('verification.verify', $user), $user);
-            Auth::attempt($this->only('email', 'password'), 'on');
-            $loginRequest->session()->regenerate();
+            Auth::attempt($request->only('email', 'password'), 'on');
 
             return redirect()->route('verification.notice');
         }

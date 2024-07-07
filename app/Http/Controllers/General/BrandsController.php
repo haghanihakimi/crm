@@ -38,6 +38,8 @@ class BrandsController extends Controller
      * @return Collection
      */
     private function listBrands($sort) {
+        $user = Auth::guard('web')->user();
+        
         $brands = Brand::select('id', 'name', 'logo_path', 'created_at')->paginate(15);
 
         $this->sortBrands($sort, $brands);
